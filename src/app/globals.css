@@ -151,3 +151,12 @@
 .animate-marquee-reverse {
   animation: marquee var(--duration, 30s) linear infinite reverse;
 }
+
+@keyframes loading-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
