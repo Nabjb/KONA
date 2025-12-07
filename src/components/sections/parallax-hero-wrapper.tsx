@@ -8,6 +8,7 @@ import { MacbookScroll } from "@/components/ui/macbook-scroll";
 import { Marquee } from "@/components/ui/marquee";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import IPhoneMockup from "@/components/ui/iphone-mockup";
+import { FloatingParticles } from "@/components/ui/floating-particles";
 
 // Elegant floating shape with parallax
 function ElegantShape({
@@ -339,6 +340,9 @@ export default function ParallaxHeroWrapper() {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-950/[0.15] via-transparent to-indigo-950/[0.15] md:blur-3xl" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent_50%)]" />
                 <div className="hidden md:block absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(99,102,241,0.08),transparent_50%)]" />
+                
+                {/* Floating particles - mobile only (lightweight alternative to shapes) */}
+                {isMobile && <FloatingParticles particleCount={15} />}
             </div>
 
             {/* Floating shapes with parallax - DESKTOP ONLY for performance */}
