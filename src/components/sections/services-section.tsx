@@ -216,6 +216,9 @@ export default function ServicesSection() {
 
   return (
     <section className="relative w-full overflow-hidden bg-[#030014]">
+      {/* Top fade for smooth transition from previous section */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#030014] to-transparent z-10 pointer-events-none" />
+      
       {/* Background effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(59,130,246,0.08),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(99,102,241,0.08),transparent_50%)]" />

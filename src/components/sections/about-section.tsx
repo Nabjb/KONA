@@ -199,14 +199,28 @@ export default function AboutSection() {
           </div>
 
           {/* Right side - Creative visual */}
-          <div className="relative h-[400px] md:h-[600px] flex items-center justify-center">
-            {/* Central image */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] h-[90vw] max-w-[400px] max-h-[400px] md:w-[550px] md:h-[550px] md:max-w-none md:max-h-none">
-              <img 
-                src="/kona websites screenshots/aboutus_pic.png" 
-                alt="KONA SOCIALS Team"
-                className="w-full h-full object-contain"
-              />
+          <div className="relative h-[300px] md:h-[600px] flex items-center justify-center">
+            {/* Central image - animated logo on mobile, full image on desktop */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              {/* Mobile: Animated logo */}
+              {isMobile ? (
+                <div className="w-[250px] h-[250px]">
+                  <img 
+                    src="/kona websites screenshots/animatedlogo.gif" 
+                    alt="KONA SOCIALS"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              ) : (
+                /* Desktop: Full team image */
+                <div className="w-[550px] h-[550px]">
+                  <img 
+                    src="/kona websites screenshots/aboutus_pic.png" 
+                    alt="KONA SOCIALS Team"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              )}
             </div>
 
 

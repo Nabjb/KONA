@@ -607,7 +607,10 @@ export default function ParallaxHeroWrapper() {
 
             {/* ===== MOBILE PROJECTS SECTION ===== */}
             {isMobile && (
-                <section className="relative w-full py-16 overflow-hidden">
+                <section className="relative w-full py-16 pb-24 overflow-hidden">
+                    {/* Bottom fade for smooth transition to next section */}
+                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#030014] to-transparent z-10 pointer-events-none" />
+                    
                     <div className="relative z-[5] max-w-7xl mx-auto px-4">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
