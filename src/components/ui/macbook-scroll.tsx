@@ -85,6 +85,9 @@ export const MacbookScroll = ({
 
   // Navigation opacity - fades in after MacBook opens
   const navOpacity = useTransform(scrollYProgress, [0, 0.15, 0.3], [0, 0, 1]);
+  
+  // Fade out the entire MacBook as user scrolls past it
+  const macbookFadeOut = useTransform(scrollYProgress, [0.5, 0.75], [1, 0]);
 
   return (
     <div
@@ -110,7 +113,10 @@ export const MacbookScroll = ({
       </motion.h2>
 
       {/* MacBook Container - Fixed size, scaled uniformly based on viewport */}
-      <div className="flex flex-col items-center [perspective:800px] scale-[0.4] sm:scale-[0.5] md:scale-[0.65] lg:scale-[0.75] xl:scale-[0.85] 2xl:scale-100 origin-top">
+      <motion.div 
+        className="flex flex-col items-center [perspective:800px] scale-[0.4] sm:scale-[0.5] md:scale-[0.65] lg:scale-[0.75] xl:scale-[0.85] 2xl:scale-100 origin-top"
+        style={{ opacity: macbookFadeOut }}
+      >
         {/* Lid */}
         <Lid
           projects={projects}
@@ -146,7 +152,7 @@ export const MacbookScroll = ({
           )}
           {badge && <div className="absolute bottom-4 left-4">{badge}</div>}
         </div>
-      </div>
+      </motion.div>
 
       {/* Project Navigation - Only visible on mobile (hidden on md and up) */}
       <motion.div 

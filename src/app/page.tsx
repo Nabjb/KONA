@@ -1,23 +1,17 @@
-import { HeroGeometric } from "@/components/ui/shape-landing-hero";
-import PortfolioSection from "@/components/sections/portfolio-section";
-import ProjectsGallery from "@/components/sections/projects-gallery";
 import ServicesSection from "@/components/sections/services-section";
 import SiteNavbar from "@/components/layout/site-navbar";
+import ParallaxHeroWrapper from "@/components/sections/parallax-hero-wrapper";
+import ContactSection from "@/components/sections/contact-section";
+import Footer from "@/components/sections/footer";
 
 export default function Home() {
   return (
     <main>
       <SiteNavbar />
-      <HeroGeometric 
-        badge="KONA SOCIALS"
-        title1="We Build Websites"
-        title2="That Print Money"
-        subtitle="Premium web design & social media management for brands that refuse to blend in."
-        ctaText="Book a Free Strategy Call"
-      />
-      <PortfolioSection />
-      <ProjectsGallery />
+      <ParallaxHeroWrapper />
       <ServicesSection />
+      <ContactSection />
+      <Footer />
     </main>
   );
 }

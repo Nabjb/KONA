@@ -233,10 +233,13 @@ export const NavbarLogo = () => {
   return (
     <a
       href="#"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal"
+      className="relative z-20 mr-4 flex items-center px-2 py-1"
     >
-      <span className="font-bold text-xl text-white tracking-tight">KONA</span>
-      <span className="font-light text-white/60">SOCIALS</span>
+      <img 
+        src="/kona websites screenshots/KONALOGO.png" 
+        alt="KONA SOCIALS" 
+        className="h-8 w-auto"
+      />
     </a>
   );
 };
