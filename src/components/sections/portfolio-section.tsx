@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { MacbookScroll } from "@/components/ui/macbook-scroll";
-import { IPhoneMockup } from "@/components/ui/iphone-mockup";
 import dynamic from "next/dynamic";
 
 // Dynamically import the shader background to avoid SSR issues with Three.js
@@ -17,18 +16,16 @@ interface Project {
   title: string;
   description: string;
   src: string;
-  mobileSrc: string;
   link?: string;
 }
 
-// Real KONA SOCIALS projects
-const projects: Project[] = [
+// Real KONA SOCIALS projects (for MacBook on desktop)
+const desktopProjects: Project[] = [
   {
     id: 1,
     title: "APT Metal Construction",
     description: "Metal construction company in Cyprus",
     src: "/kona websites screenshots/apt_macbook.png",
-    mobileSrc: "/kona websites screenshots/apt_iphone.png",
     link: "https://www.aptmetalconstruction.com",
   },
   {
@@ -36,7 +33,6 @@ const projects: Project[] = [
     title: "Sivory Design",
     description: "Premium pergolas & outdoor design",
     src: "/kona websites screenshots/sivory_macbook.png",
-    mobileSrc: "/kona websites screenshots/sivory_iphone.png",
     link: "https://sivory.vercel.app",
   },
   {
@@ -44,28 +40,9 @@ const projects: Project[] = [
     title: "TDK Design & Build",
     description: "Residential development in Nicosia",
     src: "/kona websites screenshots/tdk_macbook.png",
-    mobileSrc: "/kona websites screenshots/tdk_iphone.png",
     link: "https://tdkdb.com",
   },
 ];
-
-// Desktop projects (use macbook screenshots)
-const desktopProjects = projects.map(p => ({
-  id: p.id,
-  title: p.title,
-  description: p.description,
-  src: p.src,
-  link: p.link,
-}));
-
-// Mobile projects (use iphone screenshots)
-const mobileProjects = projects.map(p => ({
-  id: p.id,
-  title: p.title,
-  description: p.description,
-  src: p.mobileSrc,
-  link: p.link,
-}));
 
 export default function PortfolioSection() {
   const [isMobile, setIsMobile] = useState(false);
@@ -91,6 +68,11 @@ export default function PortfolioSection() {
     );
   }
 
+  // On mobile, don't show this section (Projects Gallery will handle it)
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <section className="relative w-full overflow-hidden">
       {/* WebGL Shader Background */}
@@ -104,36 +86,20 @@ export default function PortfolioSection() {
       {/* Bottom fade - smooth transition to next section */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#030014] to-transparent z-10 pointer-events-none" />
 
-      {/* Content */}
+      {/* Content - MacBook only on desktop */}
       <div className="relative z-[5]">
-        {isMobile ? (
-          // iPhone mockup for mobile (uses iphone screenshots)
-          <IPhoneMockup
-            projects={mobileProjects}
-            title={
-              <span className="text-3xl">
-                Our Work Speaks{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
-                  For Itself
-                </span>
+        <MacbookScroll
+          projects={desktopProjects}
+          title={
+            <span className="text-4xl md:text-5xl">
+              Our Work Speaks <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
+                For Itself
               </span>
-            }
-          />
-        ) : (
-          // MacBook mockup for desktop (uses macbook screenshots)
-          <MacbookScroll
-            projects={desktopProjects}
-            title={
-              <span className="text-4xl md:text-5xl">
-                Our Work Speaks <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
-                  For Itself
-                </span>
-              </span>
-            }
-            showGradient={false}
-          />
-        )}
+            </span>
+          }
+          showGradient={false}
+        />
       </div>
     </section>
   );

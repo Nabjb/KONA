@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CircularGallery, GalleryItem } from '@/components/ui/circular-gallery';
 import { motion } from 'framer-motion';
 
@@ -51,8 +51,19 @@ const projects: GalleryItem[] = [
 ];
 
 const ProjectsGallery = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
-    <section className="relative w-full py-20 md:py-32 bg-[#030014] overflow-hidden hidden md:block">
+    <section className="relative w-full py-16 md:py-32 bg-[#030014] overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[150px]" />
@@ -94,7 +105,7 @@ const ProjectsGallery = () => {
         >
           <CircularGallery 
             items={projects} 
-            radius={380}
+            radius={isMobile ? 250 : 380}
             autoRotateSpeed={0.08}
           />
         </motion.div>
