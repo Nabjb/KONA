@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, User, MessageSquare, ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { Send, Mail, User, MessageSquare, CheckCircle2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function ContactSection() {
@@ -14,6 +14,14 @@ export default function ContactSection() {
   const [focused, setFocused] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,23 +49,27 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="relative w-full py-20 md:py-32 bg-[#030014] overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[150px]" />
-      </div>
+      {/* Background effects - desktop only for performance */}
+      {!isMobile && (
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[150px]" />
+        </div>
+      )}
 
-      {/* Animated grid pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px',
-          }}
-        />
-      </div>
+      {/* Animated grid pattern - desktop only */}
+      {!isMobile && (
+        <div className="absolute inset-0 opacity-[0.02]">
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '50px 50px',
+            }}
+          />
+        </div>
+      )}
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -125,19 +137,27 @@ export default function ContactSection() {
             viewport={{ once: true }}
           >
             <div className="relative">
-              {/* Form glow effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-2xl blur-xl opacity-50" />
+              {/* Form glow effect - desktop only */}
+              {!isMobile && (
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-2xl blur-xl opacity-50" />
+              )}
               
               <form
                 onSubmit={handleSubmit}
-                className="relative bg-[#0a0a1a]/80 backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 md:p-10"
+                className={cn(
+                  "relative border border-white/[0.08] rounded-2xl p-8 md:p-10",
+                  isMobile ? "bg-[#0a0a1a]" : "bg-[#0a0a1a]/80 backdrop-blur-xl"
+                )}
               >
                 {/* Success overlay */}
                 {isSubmitted && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="absolute inset-0 bg-[#0a0a1a]/95 backdrop-blur-xl rounded-2xl flex flex-col items-center justify-center z-10"
+                    className={cn(
+                      "absolute inset-0 rounded-2xl flex flex-col items-center justify-center z-10",
+                      isMobile ? "bg-[#0a0a1a]" : "bg-[#0a0a1a]/95 backdrop-blur-xl"
+                    )}
                   >
                     <motion.div
                       initial={{ scale: 0 }}
