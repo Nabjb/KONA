@@ -125,7 +125,6 @@ export const MacbookScroll = ({
           scaleY={scaleY}
           rotate={rotate}
           translate={translate}
-          showStaticCover={!isMobile}
         />
 
         {/* Base area */}
@@ -237,7 +236,6 @@ export const Lid = ({
   translate,
   projects,
   activeProject,
-  showStaticCover = false,
 }: {
   scaleX: MotionValue<number>;
   scaleY: MotionValue<number>;
@@ -245,7 +243,6 @@ export const Lid = ({
   translate: MotionValue<number>;
   projects: Project[];
   activeProject: number;
-  showStaticCover?: boolean;
 }) => {
   return (
     <div className="relative [perspective:800px]">
@@ -280,26 +277,11 @@ export const Lid = ({
         className="absolute inset-0 h-96 w-[32rem] rounded-2xl bg-[#010101] p-2"
       >
         <div className="absolute inset-0 rounded-lg bg-[#272729]" />
-        {showStaticCover ? (
-          <img
-            src="/kona websites screenshots/kona_cover.jpg"
-            alt="KONA SOCIALS Portfolio"
-            className="absolute inset-0 h-full w-full rounded-lg object-cover object-left-top"
-          />
-        ) : (
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={activeProject}
-              src={projects[activeProject]?.src}
-              alt={projects[activeProject]?.title || "Project screenshot"}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 h-full w-full rounded-lg object-cover object-left-top"
-            />
-          </AnimatePresence>
-        )}
+        <img
+          src="/kona websites screenshots/kona_cover.jpg"
+          alt="KONA SOCIALS Portfolio"
+          className="absolute inset-0 h-full w-full rounded-lg object-cover object-left-top"
+        />
       </motion.div>
     </div>
   );

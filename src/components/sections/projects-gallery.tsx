@@ -63,18 +63,7 @@ const ProjectsGallery = () => {
   }, []);
 
   return (
-    <section className="relative w-full py-16 md:py-32 bg-[#030014] overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[150px]" />
-      </div>
-      
-      {/* Top fade */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#030014] to-transparent z-10 pointer-events-none" />
-      
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#030014] to-transparent z-10 pointer-events-none" />
+    <section className="relative w-full py-16 md:py-32 overflow-hidden">
 
       <div className="relative z-[5] max-w-7xl mx-auto px-4">
         {/* Section Header */}

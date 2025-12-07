@@ -12,6 +12,7 @@ import {
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 export default function SiteNavbar() {
   const navItems = [
@@ -38,9 +39,13 @@ export default function SiteNavbar() {
         <NavbarLogo />
         <NavItems items={navItems} />
         <div className="flex items-center gap-4">
-          <NavbarButton variant="primary" href="#contact">
+          <HoverBorderGradient
+            containerClassName="rounded-full"
+            as="a"
+            className="bg-[#030014] text-white flex items-center gap-2 px-4 py-2 text-sm font-medium"
+          >
             Book a Call
-          </NavbarButton>
+          </HoverBorderGradient>
         </div>
       </NavBody>
 

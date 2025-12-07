@@ -222,10 +222,6 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
           })}
         </div>
         
-        {/* Center glow effect */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[100px]" />
-        </div>
 
         {/* Current Project Name */}
         <div className="absolute -bottom-44 md:-bottom-52 left-0 right-0 flex justify-center pointer-events-none z-20">
