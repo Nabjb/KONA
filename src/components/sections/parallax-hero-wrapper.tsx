@@ -333,73 +333,75 @@ export default function ParallaxHeroWrapper() {
 
     return (
         <div ref={containerRef} className="relative bg-[#030014]">
-            {/* Unified background that spans all sections */}
+            {/* Unified background that spans all sections - simplified on mobile */}
             <div className="absolute inset-0 pointer-events-none">
-                {/* Deep blue luxury gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-950/[0.15] via-transparent to-indigo-950/[0.15] blur-3xl" />
+                {/* Deep blue luxury gradient background - no blur on mobile */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-950/[0.15] via-transparent to-indigo-950/[0.15] md:blur-3xl" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent_50%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(99,102,241,0.08),transparent_50%)]" />
+                <div className="hidden md:block absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(99,102,241,0.08),transparent_50%)]" />
             </div>
 
-            {/* Floating shapes with parallax - fade out with MacBook */}
-            <motion.div 
-                className="absolute inset-0 overflow-hidden pointer-events-none"
-                style={{ opacity: shapesOpacity }}
-            >
-                {/* Top layer shapes */}
-                <ElegantShape
-                    delay={0.3}
-                    width={600}
-                    height={140}
-                    rotate={12}
-                    gradient="from-blue-500/[0.12]"
-                    className="left-[-10%] md:left-[-5%] top-[15%]"
-                    parallaxSpeed={-150}
-                    scrollYProgress={scrollYProgress}
-                />
-                <ElegantShape
-                    delay={0.6}
-                    width={200}
-                    height={60}
-                    rotate={20}
-                    gradient="from-blue-300/[0.10]"
-                    className="right-[15%] md:right-[20%] top-[10%]"
-                    parallaxSpeed={-250}
-                    scrollYProgress={scrollYProgress}
-                />
-                <ElegantShape
-                    delay={0.7}
-                    width={150}
-                    height={40}
-                    rotate={-25}
-                    gradient="from-indigo-300/[0.10]"
-                    className="left-[20%] md:left-[25%] top-[5%]"
-                    parallaxSpeed={-300}
-                    scrollYProgress={scrollYProgress}
-                />
-                
-                {/* Middle layer shapes */}
-                <ElegantShape
-                    delay={0.5}
-                    width={500}
-                    height={120}
-                    rotate={-15}
-                    gradient="from-indigo-400/[0.12]"
-                    className="right-[-5%] md:right-[0%] top-[45%]"
-                    parallaxSpeed={-200}
-                    scrollYProgress={scrollYProgress}
-                />
-                <ElegantShape
-                    delay={0.4}
-                    width={300}
-                    height={80}
-                    rotate={-8}
-                    gradient="from-sky-500/[0.12]"
-                    className="left-[5%] md:left-[10%] top-[55%]"
-                    parallaxSpeed={-180}
-                    scrollYProgress={scrollYProgress}
-                />
-            </motion.div>
+            {/* Floating shapes with parallax - DESKTOP ONLY for performance */}
+            {!isMobile && (
+                <motion.div 
+                    className="absolute inset-0 overflow-hidden pointer-events-none"
+                    style={{ opacity: shapesOpacity }}
+                >
+                    {/* Top layer shapes */}
+                    <ElegantShape
+                        delay={0.3}
+                        width={600}
+                        height={140}
+                        rotate={12}
+                        gradient="from-blue-500/[0.12]"
+                        className="left-[-10%] md:left-[-5%] top-[15%]"
+                        parallaxSpeed={-150}
+                        scrollYProgress={scrollYProgress}
+                    />
+                    <ElegantShape
+                        delay={0.6}
+                        width={200}
+                        height={60}
+                        rotate={20}
+                        gradient="from-blue-300/[0.10]"
+                        className="right-[15%] md:right-[20%] top-[10%]"
+                        parallaxSpeed={-250}
+                        scrollYProgress={scrollYProgress}
+                    />
+                    <ElegantShape
+                        delay={0.7}
+                        width={150}
+                        height={40}
+                        rotate={-25}
+                        gradient="from-indigo-300/[0.10]"
+                        className="left-[20%] md:left-[25%] top-[5%]"
+                        parallaxSpeed={-300}
+                        scrollYProgress={scrollYProgress}
+                    />
+                    
+                    {/* Middle layer shapes */}
+                    <ElegantShape
+                        delay={0.5}
+                        width={500}
+                        height={120}
+                        rotate={-15}
+                        gradient="from-indigo-400/[0.12]"
+                        className="right-[-5%] md:right-[0%] top-[45%]"
+                        parallaxSpeed={-200}
+                        scrollYProgress={scrollYProgress}
+                    />
+                    <ElegantShape
+                        delay={0.4}
+                        width={300}
+                        height={80}
+                        rotate={-8}
+                        gradient="from-sky-500/[0.12]"
+                        className="left-[5%] md:left-[10%] top-[55%]"
+                        parallaxSpeed={-180}
+                        scrollYProgress={scrollYProgress}
+                    />
+                </motion.div>
+            )}
 
             {/* ===== HERO SECTION ===== */}
             <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
@@ -487,8 +489,8 @@ export default function ParallaxHeroWrapper() {
                                 Trusted by <span className="text-white/50 font-medium">50+</span> brands worldwide
                             </p>
                             
-                            {/* Tech Stack Marquee */}
-                            <Marquee pauseOnHover speed={30} className="max-w-3xl mx-auto">
+                            {/* Tech Stack Marquee - hidden on mobile for performance */}
+                            <Marquee pauseOnHover speed={30} className="max-w-3xl mx-auto hidden md:flex">
                                 {/* React */}
                                 <div className="mx-4 flex items-center gap-2 h-10 px-4 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] hover:border-white/[0.15] transition-all">
                                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
