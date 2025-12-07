@@ -104,9 +104,9 @@ const ProjectsGallery = () => {
           viewport={{ once: true }}
         >
           <CircularGallery 
-            items={projects} 
+            items={isMobile ? projects.slice(0, 4) : projects} 
             radius={isMobile ? 250 : 380}
-            autoRotateSpeed={0.08}
+            autoRotateSpeed={isMobile ? 0.05 : 0.08}
           />
         </motion.div>
 

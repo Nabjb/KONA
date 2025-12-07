@@ -27,14 +27,32 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const [rotation, setRotation] = useState(0);
     const [isHovering, setIsHovering] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const lastMouseX = useRef(0);
+    const lastTouchX = useRef(0);
     const animationFrameRef = useRef<number | null>(null);
+    const lastFrameTime = useRef(0);
+
+    // Check if mobile
+    useEffect(() => {
+      setIsMobile(window.innerWidth < 768);
+      const handleResize = () => setIsMobile(window.innerWidth < 768);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Effect for auto-rotation when not hovering or dragging
     useEffect(() => {
-      const autoRotate = () => {
-        if (!isHovering && !isDragging) {
-          setRotation(prev => prev + autoRotateSpeed);
+      const targetFPS = isMobile ? 30 : 60;
+      const frameInterval = 1000 / targetFPS;
+      
+      const autoRotate = (timestamp: number) => {
+        // Throttle on mobile
+        if (timestamp - lastFrameTime.current >= frameInterval) {
+          if (!isHovering && !isDragging) {
+            setRotation(prev => prev + (isMobile ? autoRotateSpeed * 0.5 : autoRotateSpeed));
+          }
+          lastFrameTime.current = timestamp;
         }
         animationFrameRef.current = requestAnimationFrame(autoRotate);
       };
@@ -46,7 +64,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
           cancelAnimationFrame(animationFrameRef.current);
         }
       };
-    }, [isHovering, isDragging, autoRotateSpeed]);
+    }, [isHovering, isDragging, autoRotateSpeed, isMobile]);
 
     // Mouse drag handlers
     const handleMouseDown = (e: React.MouseEvent) => {
@@ -71,7 +89,26 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       setIsHovering(false);
     };
 
+    // Touch handlers for mobile
+    const handleTouchStart = (e: React.TouchEvent) => {
+      setIsDragging(true);
+      lastTouchX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+      if (isDragging) {
+        const delta = e.touches[0].clientX - lastTouchX.current;
+        setRotation(prev => prev + delta * 0.3);
+        lastTouchX.current = e.touches[0].clientX;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      setIsDragging(false);
+    };
+
     const anglePerItem = 360 / items.length;
+    const effectiveRadius = isMobile ? Math.min(radius, 280) : radius;
     
     return (
       <div
@@ -82,12 +119,15 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
           "relative w-full h-[500px] md:h-[600px] flex items-center justify-center cursor-grab active:cursor-grabbing select-none",
           className
         )}
-        style={{ perspective: '1200px' }}
+        style={{ perspective: isMobile ? '800px' : '1200px' }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onMouseEnter={() => setIsHovering(true)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         {...props}
       >
         <div
@@ -112,7 +152,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                 aria-label={item.title}
                 className="absolute w-[180px] h-[240px] sm:w-[200px] sm:h-[270px] md:w-[260px] md:h-[340px] lg:w-[280px] lg:h-[360px]"
                 style={{
-                  transform: `rotateY(${itemAngle}deg) translateZ(${radius}px)`,
+                  transform: `rotateY(${itemAngle}deg) translateZ(${effectiveRadius}px)`,
                   left: '50%',
                   top: '50%',
                   marginLeft: '-90px',

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface ShaderBackgroundProps {
   className?: string;
@@ -8,6 +8,11 @@ interface ShaderBackgroundProps {
 
 const AnimatedShaderBackground = ({ className }: ShaderBackgroundProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -33,9 +38,9 @@ const AnimatedShaderBackground = ({ className }: ShaderBackgroundProps) => {
       twinkleOffset: number;
     }
 
-    // Generate stars
+    // Generate stars - fewer on mobile for performance
     const stars: Star[] = [];
-    const numStars = 150;
+    const numStars = isMobile ? 50 : 150;
 
     for (let i = 0; i < numStars; i++) {
       stars.push({
@@ -50,55 +55,74 @@ const AnimatedShaderBackground = ({ className }: ShaderBackgroundProps) => {
 
     let animationId: number;
     let time = 0;
+    let lastFrame = 0;
+    const targetFPS = isMobile ? 30 : 60; // Lower FPS on mobile
+    const frameInterval = 1000 / targetFPS;
 
-    const animate = () => {
+    const animate = (timestamp: number) => {
+      animationId = requestAnimationFrame(animate);
+      
+      // Throttle frame rate on mobile
+      if (timestamp - lastFrame < frameInterval) return;
+      lastFrame = timestamp;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw stars
+      // Draw stars - simpler rendering on mobile (no gradients)
       stars.forEach((star) => {
         const twinkle = Math.sin(time * star.twinkleSpeed + star.twinkleOffset) * 0.3 + 0.7;
         const currentOpacity = star.opacity * twinkle;
 
-        // Star glow
-        const gradient = ctx.createRadialGradient(
-          star.x, star.y, 0,
-          star.x, star.y, star.size * 2
-        );
-        gradient.addColorStop(0, `rgba(200, 220, 255, ${currentOpacity})`);
-        gradient.addColorStop(0.5, `rgba(150, 180, 255, ${currentOpacity * 0.3})`);
-        gradient.addColorStop(1, 'rgba(100, 150, 255, 0)');
+        if (isMobile) {
+          // Simple circles on mobile - much faster
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 220, 255, ${currentOpacity})`;
+          ctx.fill();
+        } else {
+          // Star glow - only on desktop
+          const gradient = ctx.createRadialGradient(
+            star.x, star.y, 0,
+            star.x, star.y, star.size * 2
+          );
+          gradient.addColorStop(0, `rgba(200, 220, 255, ${currentOpacity})`);
+          gradient.addColorStop(0.5, `rgba(150, 180, 255, ${currentOpacity * 0.3})`);
+          gradient.addColorStop(1, 'rgba(100, 150, 255, 0)');
 
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size * 2, 0, Math.PI * 2);
-        ctx.fillStyle = gradient;
-        ctx.fill();
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.size * 2, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
 
-        // Star core
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size * 0.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
-        ctx.fill();
+          // Star core
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.size * 0.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
+          ctx.fill();
+        }
       });
 
       time += 1;
-      animationId = requestAnimationFrame(animate);
     };
 
-    animate();
+    animationId = requestAnimationFrame(animate);
 
-    window.addEventListener('resize', () => {
+    const handleResize = () => {
       resize();
       // Redistribute stars on resize
       stars.forEach((star) => {
         star.x = Math.random() * canvas.width;
         star.y = Math.random() * canvas.height;
       });
-    });
+    };
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
       cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className={`absolute inset-0 ${className || ''}`} style={{ zIndex: 0 }}>
