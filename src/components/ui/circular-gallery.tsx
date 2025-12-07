@@ -50,7 +50,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
         // Throttle on mobile
         if (timestamp - lastFrameTime.current >= frameInterval) {
           if (!isHovering && !isDragging) {
-            setRotation(prev => prev + (isMobile ? autoRotateSpeed * 0.5 : autoRotateSpeed));
+            setRotation(prev => prev + autoRotateSpeed);
           }
           lastFrameTime.current = timestamp;
         }
@@ -172,26 +172,23 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                   />
                   
                   {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                   
-                  {/* Content */}
-                  <div className="absolute bottom-0 left-0 w-full p-5">
-                    <h3 className="text-xl font-bold text-white mb-1">{item.title}</h3>
-                    <p className="text-sm text-white/60 mb-3">{item.description}</p>
-                    
-                    {item.link && (
+                  {/* Content - Only View Project link */}
+                  {item.link && (
+                    <div className="absolute bottom-0 left-0 w-full p-4">
                       <a
                         href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                        className="inline-flex items-center gap-2 text-sm text-white hover:text-blue-300 transition-colors font-medium"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <span>View Project</span>
                         <ExternalLink className="w-4 h-4" />
                       </a>
-                    )}
-                  </div>
+                    </div>
+                  )}
                   
                   {/* Shine effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
