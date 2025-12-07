@@ -125,18 +125,21 @@ const mobileProjects: MobileProject[] = [
 // Desktop projects for MacBook scroll
 const desktopProjects = [
   {
+    id: 1,
     title: "APT Metal Construction",
     description: "Metal construction company in Cyprus",
     src: "/kona websites screenshots/apt_macbook.png",
     link: "https://www.aptmetalconstruction.com",
   },
   {
+    id: 2,
     title: "Sivory Design",
     description: "Premium pergolas & outdoor design",
     src: "/kona websites screenshots/sivory_macbook.png",
     link: "https://sivory.vercel.app",
   },
   {
+    id: 3,
     title: "TDK Design & Build",
     description: "Residential development in Nicosia",
     src: "/kona websites screenshots/tdk_macbook.png",
