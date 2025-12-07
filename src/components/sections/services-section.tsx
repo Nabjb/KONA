@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Timeline } from "@/components/ui/timeline";
+import OrbitingSkills from "@/components/ui/orbiting-skills";
 import { 
   Globe, 
   Palette, 
@@ -219,17 +220,26 @@ export default function ServicesSection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(59,130,246,0.08),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(99,102,241,0.08),transparent_50%)]" />
       
-      {/* Section header */}
+      {/* Section header with Orbiting Skills */}
       <div className="max-w-7xl mx-auto pt-20 md:pt-32 px-4 md:px-8 lg:px-10">
-        <h2 className="text-3xl md:text-5xl font-bold text-white max-w-4xl mb-4">
-          What We{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
-            Do Best
-          </span>
-        </h2>
-        <p className="text-white/40 text-base md:text-lg max-w-xl">
-          From concept to launch, we provide end-to-end digital solutions that help your business grow.
-        </p>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div>
+            <h2 className="text-3xl md:text-5xl font-bold text-white max-w-4xl mb-4">
+              What We{" "}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
+                Do Best
+              </span>
+            </h2>
+            <p className="text-white/40 text-base md:text-lg max-w-xl">
+              From concept to launch, we provide end-to-end digital solutions that help your business grow.
+            </p>
+          </div>
+          
+          {/* Orbiting Skills - Hidden on mobile for performance */}
+          <div className="hidden lg:block">
+            <OrbitingSkills />
+          </div>
+        </div>
       </div>
 
       <Timeline data={data} />

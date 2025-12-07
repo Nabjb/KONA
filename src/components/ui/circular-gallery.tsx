@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef, HTMLAttributes } from 'react';
+import React, { useState, useEffect, useRef, useMemo, HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 import { ExternalLink } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Define the type for a single gallery item
 interface GalleryItem {
@@ -110,6 +111,29 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const anglePerItem = 360 / items.length;
     const effectiveRadius = isMobile ? Math.min(radius, 280) : radius;
     
+    // Calculate which item is currently in front
+    const currentFrontIndex = useMemo(() => {
+      const normalizedRotation = ((rotation % 360) + 360) % 360;
+      // Find which item is closest to facing front (0 degrees)
+      let closestIndex = 0;
+      let closestAngle = 360;
+      
+      items.forEach((_, i) => {
+        const itemAngle = i * anglePerItem;
+        const relativeAngle = (itemAngle + normalizedRotation + 360) % 360;
+        const distanceFromFront = Math.abs(relativeAngle > 180 ? 360 - relativeAngle : relativeAngle);
+        
+        if (distanceFromFront < closestAngle) {
+          closestAngle = distanceFromFront;
+          closestIndex = i;
+        }
+      });
+      
+      return closestIndex;
+    }, [rotation, items, anglePerItem]);
+
+    const currentProject = items[currentFrontIndex];
+    
     return (
       <div
         ref={ref}
@@ -201,6 +225,27 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
         {/* Center glow effect */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[100px]" />
+        </div>
+
+        {/* Current Project Name */}
+        <div className="absolute -bottom-44 md:-bottom-52 left-0 right-0 flex justify-center pointer-events-none z-20">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentProject?.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="text-center"
+            >
+              <p className="text-xl md:text-2xl font-bold text-white">
+                {currentProject?.title}
+              </p>
+              <p className="text-sm text-white/50 mt-1">
+                {currentProject?.description}
+              </p>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     );

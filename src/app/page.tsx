@@ -2,10 +2,12 @@ import { HeroGeometric } from "@/components/ui/shape-landing-hero";
 import PortfolioSection from "@/components/sections/portfolio-section";
 import ProjectsGallery from "@/components/sections/projects-gallery";
 import ServicesSection from "@/components/sections/services-section";
+import SiteNavbar from "@/components/layout/site-navbar";
 
 export default function Home() {
   return (
     <main>
+      <SiteNavbar />
       <HeroGeometric 
         badge="KONA SOCIALS"
         title1="We Build Websites"

@@ -102,24 +102,14 @@ const ProjectsGallery = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
+          className="pb-40 md:pb-56"
         >
           <CircularGallery 
             items={projects} 
             radius={isMobile ? 220 : 380}
-            autoRotateSpeed={0.15}
+            autoRotateSpeed={0.35}
           />
         </motion.div>
-
-        {/* Hint text */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center text-white/30 text-sm mt-8"
-        >
-          ← Drag to rotate →
-        </motion.p>
       </div>
     </section>
   );
