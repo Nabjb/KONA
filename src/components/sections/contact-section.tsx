@@ -272,7 +272,7 @@ export default function ContactSection() {
                 <div className="mt-6 text-center">
                   <p className="text-white/30 text-sm">
                     Prefer to talk?{" "}
-                    <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                    <a href="https://calendly.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
                       Book a call instead →
                     </a>
                   </p>

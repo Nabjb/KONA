@@ -472,7 +472,8 @@ export default function ParallaxHeroWrapper() {
                         >
                             <HoverBorderGradient
                                 containerClassName="rounded-full"
-                                as="button"
+                                as="a"
+                                href="#contact"
                                 className="bg-[#030014] text-white flex items-center gap-3 px-6 py-3 text-lg font-semibold"
                             >
                                 Book a Free Strategy Call

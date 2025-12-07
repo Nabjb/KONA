@@ -18,11 +18,15 @@ export default function SiteNavbar() {
   const navItems = [
     {
       name: "Work",
-      link: "#work",
+      link: "#projects-showcase",
     },
     {
       name: "Services",
       link: "#services",
+    },
+    {
+      name: "About",
+      link: "#about",
     },
     {
       name: "Contact",
@@ -42,6 +46,7 @@ export default function SiteNavbar() {
           <HoverBorderGradient
             containerClassName="rounded-full"
             as="a"
+            href="#contact"
             className="bg-[#030014] text-white flex items-center gap-2 px-4 py-2 text-sm font-medium"
           >
             Book a Call

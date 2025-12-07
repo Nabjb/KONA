@@ -215,7 +215,7 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#030014]">
+    <section id="services" className="relative w-full overflow-hidden bg-[#030014]">
       {/* Top fade for smooth transition from previous section */}
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#030014] to-transparent z-10 pointer-events-none" />
       
