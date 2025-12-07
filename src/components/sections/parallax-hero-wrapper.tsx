@@ -342,7 +342,7 @@ export default function ParallaxHeroWrapper() {
                 <div className="hidden md:block absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(99,102,241,0.08),transparent_50%)]" />
                 
                 {/* Floating particles - mobile only (lightweight alternative to shapes) */}
-                {isMobile && <FloatingParticles particleCount={15} />}
+                {isMobile && <FloatingParticles particleCount={40} enableParallax={true} />}
             </div>
 
             {/* Floating shapes with parallax - DESKTOP ONLY for performance */}
