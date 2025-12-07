@@ -470,15 +470,16 @@ export default function ParallaxHeroWrapper() {
                             style={{ y: heroSubtitleY }}
                             className="flex justify-center"
                         >
-                            <HoverBorderGradient
-                                containerClassName="rounded-full"
-                                as="a"
-                                href="#contact"
-                                className="bg-[#030014] text-white flex items-center gap-3 px-6 py-3 text-lg font-semibold"
-                            >
-                                Book a Free Strategy Call
-                                <ArrowRight className="w-5 h-5" />
-                            </HoverBorderGradient>
+                            <a href="#contact">
+                                <HoverBorderGradient
+                                    containerClassName="rounded-full"
+                                    as="button"
+                                    className="bg-[#030014] text-white flex items-center gap-3 px-6 py-3 text-lg font-semibold"
+                                >
+                                    Book a Free Strategy Call
+                                    <ArrowRight className="w-5 h-5" />
+                                </HoverBorderGradient>
+                            </a>
                         </motion.div>
 
                         {/* Social proof */}
