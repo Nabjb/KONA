@@ -58,28 +58,27 @@ export function AstronautZoomPortal() {
             />
           ))}
         </div>
-        {/* Astronaut image that zooms */}
+        {/* Mobile astronaut image that zooms */}
         <motion.div
-          style={{ scale, opacity }}
-          className="absolute inset-0 flex items-center justify-center origin-center"
+          style={{ scale, opacity, transformOrigin: '50% 25%' }}
+          className="md:hidden absolute inset-0 flex items-center justify-center"
         >
-          {/* Mobile image */}
           <img
             src="/astonaut_figure_mobile.png"
             alt="Astronaut"
-            className="md:hidden w-full h-full object-cover object-top"
-            style={{ 
-              transformOrigin: '50% 25%'
-            }}
+            className="w-full h-full object-cover object-top"
           />
-          {/* Desktop image */}
+        </motion.div>
+        
+        {/* Desktop astronaut image that zooms */}
+        <motion.div
+          style={{ scale, opacity, transformOrigin: '50% 35%' }}
+          className="hidden md:flex absolute inset-0 items-center justify-center"
+        >
           <img
             src="/astronaut_figure1.png"
             alt="Astronaut"
-            className="hidden md:block w-full h-full object-contain"
-            style={{ 
-              transformOrigin: '50% 35%'
-            }}
+            className="w-full h-full object-contain"
           />
         </motion.div>
         
