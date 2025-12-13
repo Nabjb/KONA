@@ -233,6 +233,36 @@
   pointer-events: none;
 }
 
+.parallax-badge-top {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  background: linear-gradient(to right, #60a5fa, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  animation: fadeInDown 1s cubic-bezier(0.25, 0.4, 0.25, 1) 0.2s forwards;
+  opacity: 0;
+  z-index: 10;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 .parallax-title-container {
   overflow: hidden;
 }
@@ -341,6 +371,12 @@
 
 /* Mobile responsive styles */
 @media (max-width: 768px) {
+  .parallax-badge-top {
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    top: 12%;
+  }
+  
   .parallax-img--figure {
     width: 90%;
   }

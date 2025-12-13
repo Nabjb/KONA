@@ -84,6 +84,9 @@ export function ParallaxComponent() {
 
           {/* Layer 3: Text - with entrance animation */}
           <div className="parallax-layer parallax-layer--text" data-parallax-layer="3">
+            {/* KONAVERSE badge at top */}
+            <p className="parallax-badge-top">KONAVERSE</p>
+            
             <div className="parallax-title-container">
               <h1 className="parallax-title parallax-title-animate">
                 <span className="parallax-title-line">We Build Websites</span>

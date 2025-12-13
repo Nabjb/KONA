@@ -211,10 +211,10 @@ export default function ParallaxHeroWrapper() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="mb-6"
+                        className="mb-8"
                     >
-                        <span className="text-xs tracking-[0.4em] uppercase font-medium bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-                            KONA VERSE
+                        <span className="text-2xl font-bold tracking-[0.3em] uppercase bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                            KONAVERSE
                         </span>
                     </motion.div>
 
