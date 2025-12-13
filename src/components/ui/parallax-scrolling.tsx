@@ -82,27 +82,34 @@ export function ParallaxComponent() {
             />
           </div>
 
-          {/* Layer 3: Text - with entrance animation */}
-          <div className="parallax-layer parallax-layer--text" data-parallax-layer="3">
+          {/* Layer 3a: "That Print Money" - BEHIND astronaut */}
+          <div className="parallax-layer parallax-layer--text-back" data-parallax-layer="3">
             {/* KONAVERSE badge at top */}
             <p className="parallax-badge-top">KONAVERSE</p>
             
             <div className="parallax-title-container">
               <h1 className="parallax-title parallax-title-animate">
-                <span className="parallax-title-line">We Build Websites</span>
-                <br />
                 <span className="parallax-title-line parallax-title-line--gradient">That Print Money</span>
               </h1>
             </div>
           </div>
 
-          {/* Layer 4: Foreground - hero4 (astronaut) */}
+          {/* Layer 4: Astronaut - MIDDLE */}
           <div className="parallax-layer parallax-layer--fg" data-parallax-layer="4">
             <img 
               src="/hero4.png" 
               alt="" 
               className="parallax-img parallax-img--figure"
             />
+          </div>
+
+          {/* Layer 3b: "We Build Websites" - IN FRONT of astronaut */}
+          <div className="parallax-layer parallax-layer--text-front" data-parallax-layer="3">
+            <div className="parallax-title-container parallax-title-container--front">
+              <h1 className="parallax-title parallax-title-animate">
+                <span className="parallax-title-line">We Build Websites</span>
+              </h1>
+            </div>
           </div>
 
           {/* Bottom fade gradient - INSIDE sticky container */}
