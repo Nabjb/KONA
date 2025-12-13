@@ -152,11 +152,221 @@
   animation: marquee var(--duration, 30s) linear infinite reverse;
 }
 
-@keyframes loading-slide {
+/* Parallax Scrolling Component Styles */
+.parallax-wrapper {
+  position: relative;
+  width: 100%;
+  background: #030014;
+}
+
+.parallax-section {
+  position: relative;
+  width: 100%;
+  height: 120vh; /* Even shorter - Why Us appears quickly */
+  overflow: hidden;
+}
+
+.parallax-layers {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.parallax-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Layer 1: Background */
+.parallax-layer--bg {
+  z-index: 1;
+  animation: bgFadeIn 1.5s ease-out forwards;
+}
+
+/* Layer 2: Middle */
+.parallax-layer--mid {
+  z-index: 2;
+  animation: midLayerReveal 1.3s cubic-bezier(0.25, 0.4, 0.25, 1) 0.2s forwards;
+  opacity: 0;
+}
+
+@keyframes bgFadeIn {
   0% {
-    transform: translateX(-100%);
+    opacity: 0;
+    transform: scale(1.1);
   }
   100% {
-    transform: translateX(200%);
+    opacity: 1;
+    transform: scale(1);
   }
 }
+
+@keyframes midLayerReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Layer 3: Text */
+.parallax-layer--text {
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.parallax-title-container {
+  overflow: hidden;
+}
+
+.parallax-title {
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1.05;
+  text-align: center;
+  color: white;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  letter-spacing: -0.02em;
+}
+
+.parallax-title-animate {
+  animation: titleReveal 1.2s cubic-bezier(0.25, 0.4, 0.25, 1) forwards;
+}
+
+.parallax-title-line {
+  display: inline-block;
+  animation: lineSlideUp 1s cubic-bezier(0.25, 0.4, 0.25, 1) forwards;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.parallax-title-line:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.parallax-title-line--gradient {
+  background: linear-gradient(to right, #60a5fa, #818cf8, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation-delay: 0.5s;
+}
+
+@keyframes lineSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes titleReveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Stars twinkling animation */
+.star-twinkle {
+  animation: twinkle ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Layer 4: Foreground figure */
+.parallax-layer--fg {
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parallax-img--figure {
+  width: 50%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  animation: figureFloat 1.2s cubic-bezier(0.25, 0.4, 0.25, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes figureFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .parallax-img--figure {
+    width: 90%;
+  }
+  
+  .parallax-title {
+    font-size: clamp(2rem, 10vw, 4rem);
+    padding: 0 1rem;
+  }
+}
+
+/* Bottom fade - only at very bottom, images fully visible above */
+.parallax-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%; /* Only bottom 20% - 80% of screen shows full images */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(3, 0, 20, 0.4) 25%,
+    rgba(3, 0, 20, 0.7) 50%,
+    rgba(3, 0, 20, 0.9) 75%,
+    #030014 100%
+  );
+  z-index: 10;
+  pointer-events: none;
+}
+

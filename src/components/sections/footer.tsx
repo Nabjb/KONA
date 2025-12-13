@@ -33,7 +33,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative w-full bg-[#020010] overflow-hidden">
+    <footer className="relative w-full overflow-hidden -mt-px">
       {/* Top gradient line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
 

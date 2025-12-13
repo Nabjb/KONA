@@ -48,7 +48,7 @@ export default function ContactSection() {
   );
 
   return (
-    <section id="contact" className="relative w-full py-20 md:py-32 bg-[#030014] overflow-hidden">
+    <section id="contact" className="relative w-full py-20 md:py-32 overflow-hidden -mt-px -mb-px">
       {/* Background effects - desktop only for performance */}
       {!isMobile && (
         <div className="absolute inset-0">

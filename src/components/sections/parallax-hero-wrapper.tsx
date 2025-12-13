@@ -1,13 +1,11 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Circle, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Circle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRef, useState, useEffect } from "react";
-import { MacbookScroll } from "@/components/ui/macbook-scroll";
 import { Marquee } from "@/components/ui/marquee";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import IPhoneMockup from "@/components/ui/iphone-mockup";
 import { FloatingParticles } from "@/components/ui/floating-particles";
 
 // Elegant floating shape with parallax
@@ -90,209 +88,6 @@ function ElegantShape({
     );
 }
 
-// Mobile projects with iPhone screenshots
-type MobileProject = {
-  id: number;
-  title: string;
-  description: string;
-  src: string;
-  link: string;
-};
-
-const mobileProjects: MobileProject[] = [
-  {
-    id: 1,
-    title: "APT Metal Construction",
-    description: "Metal construction company in Cyprus",
-    src: "/kona websites screenshots/apt_iphone.png",
-    link: "https://www.aptmetalconstruction.com",
-  },
-  {
-    id: 2,
-    title: "Sivory Design",
-    description: "Premium pergolas & outdoor design",
-    src: "/kona websites screenshots/sivory_iphone.png",
-    link: "https://sivory.vercel.app",
-  },
-  {
-    id: 3,
-    title: "TDK Design & Build",
-    description: "Residential development in Nicosia",
-    src: "/kona websites screenshots/tdk_iphone.png",
-    link: "https://tdkdb.com",
-  },
-];
-
-// Desktop projects for MacBook scroll
-const desktopProjects = [
-  {
-    id: 1,
-    title: "APT Metal Construction",
-    description: "Metal construction company in Cyprus",
-    src: "/kona websites screenshots/apt_macbook.png",
-    link: "https://www.aptmetalconstruction.com",
-  },
-  {
-    id: 2,
-    title: "Sivory Design",
-    description: "Premium pergolas & outdoor design",
-    src: "/kona websites screenshots/sivory_macbook.png",
-    link: "https://sivory.vercel.app",
-  },
-  {
-    id: 3,
-    title: "TDK Design & Build",
-    description: "Residential development in Nicosia",
-    src: "/kona websites screenshots/tdk_macbook.png",
-    link: "https://tdkdb.com",
-  },
-];
-
-// Mobile Project Slider Component
-function MobileProjectSlider({ projects }: { projects: MobileProject[] }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [touchStart, setTouchStart] = useState(0);
-    const [touchEnd, setTouchEnd] = useState(0);
-
-    const nextProject = () => {
-        setCurrentIndex((prev) => (prev + 1) % projects.length);
-    };
-
-    const prevProject = () => {
-        setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
-    };
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        setTouchStart(e.targetTouches[0].clientX);
-    };
-
-    const handleTouchMove = (e: React.TouchEvent) => {
-        setTouchEnd(e.targetTouches[0].clientX);
-    };
-
-    const handleTouchEnd = () => {
-        if (touchStart - touchEnd > 75) {
-            nextProject();
-        }
-        if (touchStart - touchEnd < -75) {
-            prevProject();
-        }
-    };
-
-    const currentProject = projects[currentIndex];
-
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="flex flex-col items-center justify-center pb-16"
-        >
-            {/* iPhone with project screenshot */}
-            <motion.div 
-                className="flex justify-center w-full"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-                initial={{ opacity: 0, y: 80, rotateX: 15, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-                transition={{ 
-                    duration: 0.8, 
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                    delay: 0.1
-                }}
-                viewport={{ once: true }}
-                style={{ perspective: 1000 }}
-            >
-                <IPhoneMockup
-                    model="15-pro"
-                    color="space-black"
-                    scale={0.55}
-                    safeArea={false}
-                    style={{ transformOrigin: 'center top' }}
-                >
-                    <AnimatePresence mode="wait">
-                        <motion.img
-                            key={currentIndex}
-                            src={currentProject.src}
-                            alt={currentProject.title}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="w-full h-full object-cover object-top"
-                        />
-                    </AnimatePresence>
-                </IPhoneMockup>
-            </motion.div>
-
-            {/* Project info */}
-            <div className="-mt-80 text-center relative z-10">
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={currentIndex}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <h3 className="text-xl font-bold text-white mb-1">
-                            {currentProject.title}
-                        </h3>
-                        <p className="text-white/50 text-sm mb-3">
-                            {currentProject.description}
-                        </p>
-                        {currentProject.link && (
-                            <a
-                                href={currentProject.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-blue-400 text-sm font-medium"
-                            >
-                                View Project
-                                <ArrowRight className="w-4 h-4" />
-                            </a>
-                        )}
-                    </motion.div>
-                </AnimatePresence>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex items-center gap-6 mt-3">
-                <button
-                    onClick={prevProject}
-                    className="w-10 h-10 rounded-full bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-white/60 hover:bg-white/[0.1] transition-colors"
-                >
-                    <ChevronLeft className="w-5 h-5" />
-                </button>
-                
-                {/* Dots */}
-                <div className="flex gap-2">
-                    {projects.map((_, idx) => (
-                        <button
-                            key={idx}
-                            onClick={() => setCurrentIndex(idx)}
-                            className={cn(
-                                "w-2 h-2 rounded-full transition-all",
-                                idx === currentIndex 
-                                    ? "bg-blue-400 w-6" 
-                                    : "bg-white/20 hover:bg-white/40"
-                            )}
-                        />
-                    ))}
-                </div>
-                
-                <button
-                    onClick={nextProject}
-                    className="w-10 h-10 rounded-full bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-white/60 hover:bg-white/[0.1] transition-colors"
-                >
-                    <ChevronRight className="w-5 h-5" />
-                </button>
-            </div>
-        </motion.div>
-    );
-}
 
 export default function ParallaxHeroWrapper() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -409,8 +204,120 @@ export default function ParallaxHeroWrapper() {
 
             {/* ===== HERO SECTION ===== */}
             <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+                {/* MOBILE HERO - Full-width bold takeover */}
+                <div className="md:hidden relative z-10 w-full min-h-screen flex flex-col justify-center px-5 py-20">
+                    {/* Badge */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="flex items-center gap-2 mb-6"
+                    >
+                        <div className="w-8 h-px bg-blue-500" />
+                        <span className="text-xs text-blue-400 tracking-[0.25em] uppercase font-medium">
+                            KONA SOCIALS
+                        </span>
+                    </motion.div>
+
+                    {/* Title - HUGE stacked lines */}
+                    <div className="space-y-1 mb-8">
+                        <motion.h1
+                            initial={{ opacity: 0, x: -40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                            className="text-[13vw] leading-[0.9] font-black tracking-tight text-white"
+                        >
+                            We Build
+                        </motion.h1>
+                        <motion.h1
+                            initial={{ opacity: 0, x: -40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.7, delay: 0.45, ease: [0.25, 0.4, 0.25, 1] }}
+                            className="text-[13vw] leading-[0.9] font-black tracking-tight text-white"
+                        >
+                            Websites
+                        </motion.h1>
+                        <motion.h1
+                            initial={{ opacity: 0, x: -40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.7, delay: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+                            className="text-[13vw] leading-[0.9] font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
+                        >
+                            That Print
+                        </motion.h1>
+                        <motion.h1
+                            initial={{ opacity: 0, x: -40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.7, delay: 0.75, ease: [0.25, 0.4, 0.25, 1] }}
+                            className="text-[13vw] leading-[0.9] font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
+                        >
+                            Money
+                        </motion.h1>
+                    </div>
+
+                    {/* Subtitle */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.9 }}
+                        className="text-white/50 text-base leading-relaxed mb-10 max-w-[280px]"
+                    >
+                        Premium web design for brands that refuse to blend in.
+                    </motion.p>
+
+                    {/* CTA Button */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 1.05 }}
+                    >
+                        <a 
+                            href="#contact"
+                            className="inline-flex items-center gap-3 px-6 py-4 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-base shadow-lg shadow-blue-500/25"
+                        >
+                            Book a Free Call
+                            <ArrowRight className="w-5 h-5" />
+                        </a>
+                    </motion.div>
+
+                    {/* Trust badge */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 1.2 }}
+                        className="mt-12 flex items-center gap-3"
+                    >
+                        <div className="flex -space-x-2">
+                            {[1, 2, 3].map((i) => (
+                                <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 border-2 border-[#030014]" />
+                            ))}
+                        </div>
+                        <p className="text-white/40 text-sm">
+                            Trusted by <span className="text-white/60 font-medium">50+</span> brands
+                        </p>
+                    </motion.div>
+
+                    {/* Scroll indicator */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.5 }}
+                        className="absolute bottom-8 left-5"
+                    >
+                        <motion.div
+                            animate={{ y: [0, 8, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                            className="flex flex-col items-center gap-2"
+                        >
+                            <span className="text-white/30 text-[10px] tracking-widest uppercase">Scroll</span>
+                            <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+                        </motion.div>
+                    </motion.div>
+                </div>
+
+                {/* DESKTOP HERO - Original centered layout */}
                 <motion.div 
-                    className="relative z-10 container mx-auto px-4 md:px-6"
+                    className="hidden md:block relative z-10 container mx-auto px-4 md:px-6"
                     style={{ opacity: heroOpacity }}
                 >
                     <div className="max-w-4xl mx-auto text-center">
@@ -587,54 +494,24 @@ export default function ParallaxHeroWrapper() {
                         </motion.div>
                     </div>
                 </motion.div>
-            </section>
 
-            {/* ===== PORTFOLIO SECTION (MacBook) ===== */}
-            <section className="relative w-full overflow-hidden hidden md:block">
-                <div className="relative z-[5]">
-                    <MacbookScroll
-                        projects={desktopProjects}
-                        title={
-                            <span className="text-4xl md:text-5xl">
-                                Our Work Speaks <br />
-                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
-                                    For Itself
-                                </span>
-                            </span>
-                        }
-                        showGradient={false}
-                    />
-                </div>
+                {/* Scroll hint - Desktop only */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
+                >
+                    <span className="text-white/30 text-xs tracking-widest uppercase">Scroll</span>
+                    <motion.div
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                        className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1"
+                    >
+                        <motion.div className="w-1 h-2 rounded-full bg-white/40" />
+                    </motion.div>
+                </motion.div>
             </section>
-
-            {/* ===== MOBILE PROJECTS SECTION ===== */}
-            {isMobile && (
-                <section className="relative w-full py-16 pb-24 overflow-hidden">
-                    {/* Bottom fade for smooth transition to next section */}
-                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#030014] to-transparent z-10 pointer-events-none" />
-                    
-                    <div className="relative z-[5] max-w-7xl mx-auto px-4">
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            viewport={{ once: true }}
-                            className="text-center mb-8"
-                        >
-                            <h2 className="text-3xl font-bold text-white mb-4">
-                                Explore Our{" "}
-                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
-                                    Projects
-                                </span>
-                            </h2>
-                            <p className="text-white/50 text-lg max-w-2xl mx-auto">
-                                Swipe to browse our work.
-                            </p>
-                        </motion.div>
-                        <MobileProjectSlider projects={mobileProjects} />
-                    </div>
-                </section>
-            )}
         </div>
     );
 }

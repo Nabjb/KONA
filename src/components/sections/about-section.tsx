@@ -84,8 +84,11 @@ export default function AboutSection() {
     <section 
       ref={containerRef}
       id="about" 
-      className="relative w-full py-24 md:py-40 bg-[#030014] overflow-hidden"
+      className="relative w-full pt-32 md:pt-48 pb-24 md:pb-40 overflow-hidden -mt-px -mb-px"
     >
+      {/* Top fade gradient for smooth transition from previous section */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#030014] to-transparent pointer-events-none z-10" />
+
       {/* Animated background grid */}
       <div className="absolute inset-0 opacity-[0.03]">
         <div 
