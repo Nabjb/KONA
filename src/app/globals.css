@@ -367,7 +367,7 @@
 }
 
 .parallax-img--figure {
-  width: 50%;
+  width: 65%;
   height: auto;
   object-fit: contain;
   object-position: center;
@@ -398,8 +398,9 @@
   }
   
   .parallax-img--figure {
-    width: 75%;
-    margin-top: 20px;
+    width: 110%;
+    max-width: none;
+    margin-top: 40px;
   }
   
   .parallax-title {
@@ -408,11 +409,11 @@
   }
   
   .parallax-layer--text-back .parallax-title-container {
-    margin-top: 70px;
+    margin-top: 100px;
   }
   
   .parallax-title-container--front {
-    margin-bottom: 70px;
+    margin-bottom: 100px;
   }
 }
 
