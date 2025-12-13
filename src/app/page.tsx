@@ -8,6 +8,7 @@ import AboutSection from "@/components/sections/about-section";
 import ContactSection from "@/components/sections/contact-section";
 import Footer from "@/components/sections/footer";
 import ProjectsShowcase from "@/components/sections/projects-showcase";
+import { AstronautZoomPortal } from "@/components/ui/astronaut-zoom-portal";
 
 // Generate stars for shared background
 function generateStars(count: number) {
@@ -52,6 +53,7 @@ export default function Home() {
           ))}
         </div>
         <WhyUsSection />
+        <AstronautZoomPortal />
         <ProjectsShowcase />
         <ServicesSection />
         <AboutSection />
