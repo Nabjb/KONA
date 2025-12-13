@@ -206,16 +206,15 @@ export default function ParallaxHeroWrapper() {
             <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
                 {/* MOBILE HERO - Full-width bold takeover */}
                 <div className="md:hidden relative z-10 w-full min-h-screen flex flex-col justify-center px-5 py-20">
-                    {/* Badge */}
+                    {/* KONA VERSE header */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="flex items-center gap-2 mb-6"
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="mb-6"
                     >
-                        <div className="w-8 h-px bg-blue-500" />
-                        <span className="text-xs text-blue-400 tracking-[0.25em] uppercase font-medium">
-                            KONA SOCIALS
+                        <span className="text-xs tracking-[0.4em] uppercase font-medium bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                            KONA VERSE
                         </span>
                     </motion.div>
 
