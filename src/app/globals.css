@@ -226,7 +226,7 @@
 
 /* Layer 3a: Text BEHIND astronaut */
 .parallax-layer--text-back {
-  z-index: 3;
+  z-index: 9;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -240,7 +240,7 @@
 
 /* Layer 3b: Text IN FRONT of astronaut */
 .parallax-layer--text-front {
-  z-index: 5;
+  z-index: 11;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -360,7 +360,7 @@
 
 /* Layer 4: Foreground figure */
 .parallax-layer--fg {
-  z-index: 4;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -434,5 +434,89 @@
   );
   z-index: 10;
   pointer-events: none;
+}
+
+/* Tech Marquee Styles */
+.tech-marquee-container {
+  position: absolute;
+  bottom: 15%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 8;
+  padding: 1rem 0;
+}
+
+.tech-marquee {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 25s linear infinite;
+  width: max-content;
+}
+
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.tech-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.tech-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.02em;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .tech-marquee-container {
+    bottom: 10%;
+    padding: 0.75rem 0;
+  }
+  
+  .tech-marquee {
+    gap: 1.5rem;
+    animation-duration: 15s;
+  }
+  
+  .tech-item {
+    padding: 0.4rem 0.75rem;
+  }
+  
+  .tech-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .tech-name {
+    font-size: 0.75rem;
+  }
 }
 

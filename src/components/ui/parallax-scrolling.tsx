@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import TechMarquee from './tech-marquee';
 
 export function ParallaxComponent() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -111,6 +112,9 @@ export function ParallaxComponent() {
               </h1>
             </div>
           </div>
+
+          {/* Tech Stack Marquee */}
+          <TechMarquee />
 
           {/* Bottom fade gradient - INSIDE sticky container */}
           <div className="parallax-fade"></div>
