@@ -1,46 +1,39 @@
 'use client';
 
 import { useScroll, useTransform, motion } from 'framer-motion';
-import { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 
-// Generate stars for the background
+// Generate stars for the background (fixed seed for consistent positions)
 function generateStars(count: number) {
   const stars = [];
   for (let i = 0; i < count; i++) {
+    // Use deterministic values based on index for consistent rendering
+    const seed = i * 13.37;
     stars.push({
       id: i,
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      size: Math.random() * 2 + 1,
-      delay: Math.random() * 3,
-      duration: Math.random() * 2 + 2,
+      left: `${(seed * 7.91) % 100}%`,
+      top: `${(seed * 3.14) % 100}%`,
+      size: (seed % 2) + 1,
+      delay: (seed % 3),
+      duration: (seed % 2) + 2,
     });
   }
   return stars;
 }
 
+// Generate stars once - same for mobile and desktop
+const STARS = generateStars(50);
+
 export function AstronautZoomPortal() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  // Detect mobile on mount
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-  
-  // Fewer stars on mobile for performance (30 vs 150)
-  const stars = useMemo(() => generateStars(isMobile ? 30 : 150), [isMobile]);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // Less aggressive zoom on mobile for performance (12 vs 15)
-  const scale = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 12 : 15]);
+  // Fixed zoom scale - works for both mobile and desktop
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 12]);
   
   // Fade out the astronaut as we zoom in fully
   const opacity = useTransform(scrollYProgress, [0.7, 1], [1, 0]);
@@ -54,7 +47,7 @@ export function AstronautZoomPortal() {
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* Starry background matching previous section */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {stars.map((star) => (
+          {STARS.map((star) => (
             <div
               key={star.id}
               className="absolute rounded-full bg-white star-twinkle"
