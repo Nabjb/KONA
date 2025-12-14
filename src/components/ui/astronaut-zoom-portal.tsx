@@ -34,8 +34,8 @@ export function AstronautZoomPortal() {
   // Fade out the astronaut as we zoom in fully
   const opacity = useTransform(scrollYProgress, [0.7, 1], [1, 0]);
   
-  // Fade in the next section content
-  const contentOpacity = useTransform(scrollYProgress, [0.6, 0.9], [0, 1]);
+  // Fade in the next section content (after visor fills screen)
+  const contentOpacity = useTransform(scrollYProgress, [0.75, 0.9], [0, 1]);
 
   return (
     <div ref={containerRef} className="relative h-[500vh] bg-[#030014]">
