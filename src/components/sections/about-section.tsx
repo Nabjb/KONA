@@ -143,7 +143,7 @@ export default function AboutSection() {
             >
               We Don't Just Build
               <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
                 Websites.
               </span>
             </motion.h2>
@@ -172,7 +172,7 @@ export default function AboutSection() {
                 "Code that's clean, fast & scalable",
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
@@ -203,30 +203,6 @@ export default function AboutSection() {
 
           {/* Right side - Creative visual */}
           <div className="relative h-[300px] md:h-[600px] flex items-center justify-center">
-            {/* Central image - animated logo on mobile, full image on desktop */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              {/* Mobile: Animated logo */}
-              {isMobile ? (
-                <div className="w-[250px] h-[250px]">
-                  <img 
-                    src="/kona websites screenshots/animatedlogo.gif" 
-                    alt="KONA SOCIALS"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              ) : (
-                /* Desktop: Full team image */
-                <div className="w-[550px] h-[550px]">
-                  <img 
-                    src="/kona websites screenshots/aboutus_pic.png" 
-                    alt="KONA SOCIALS Team"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              )}
-            </div>
-
-
             {/* Orbiting dots - desktop only for performance */}
             {!isMobile && (
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[500px] md:h-[500px]">
@@ -265,14 +241,14 @@ export default function AboutSection() {
               Your website is your{" "}
               <span className="text-white font-medium not-italic">24/7 salesperson</span>. 
               Make sure it's{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400 font-medium not-italic">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 font-medium not-italic">
                 damn good
               </span>{" "}
               at its job.
             </p>
           </div>
           <div className="mt-8 flex items-center justify-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">
               K
             </div>
             <div className="text-left">

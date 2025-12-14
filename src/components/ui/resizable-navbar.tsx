@@ -266,7 +266,7 @@ export const NavbarButton = ({
 
   const variantStyles = {
     primary:
-      "bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.3)]",
+      "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.3)]",
     secondary: "bg-transparent text-white/70 hover:text-white",
     dark: "bg-white/10 text-white border border-white/10 hover:bg-white/20",
     gradient:

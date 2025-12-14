@@ -1,13 +1,13 @@
 "use client";
 
-import ServicesSection from "@/components/sections/services-section";
+import ServicesStickySection from "@/components/sections/services-sticky-section";
 import SiteNavbar from "@/components/layout/site-navbar";
 import HeroWhyUsWrapper from "@/components/sections/hero-why-us-wrapper";
 import WhyUsSection from "@/components/sections/why-us-section";
 import AboutSection from "@/components/sections/about-section";
 import ContactSection from "@/components/sections/contact-section";
 import Footer from "@/components/sections/footer";
-import ProjectsShowcase from "@/components/sections/projects-showcase";
+import ProjectsVideoSection from "@/components/sections/projects-video-section";
 import { AstronautZoomPortal } from "@/components/ui/astronaut-zoom-portal";
 
 // Generate stars for shared background
@@ -54,8 +54,8 @@ export default function Home() {
         </div>
         <WhyUsSection />
         <AstronautZoomPortal />
-        <ProjectsShowcase />
-        <ServicesSection />
+        <ProjectsVideoSection />
+        <ServicesStickySection />
         <AboutSection />
         <ContactSection />
         <Footer />

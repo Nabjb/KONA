@@ -3,30 +3,29 @@
 import { motion } from "framer-motion";
 import { Target, Lightbulb, TrendingUp, Sparkles } from "lucide-react";
 
+// Brand colors - consistent blue/purple gradient
+const brandGradient = "from-blue-500 via-purple-500 to-pink-500";
+
 const features = [
   {
     icon: Target,
     title: "Conversion Focused",
     description: "Every pixel designed to drive action",
-    color: "from-blue-500 to-cyan-500",
   },
   {
     icon: Lightbulb,
     title: "Strategic Thinking",
     description: "Data-backed design decisions",
-    color: "from-purple-500 to-pink-500",
   },
   {
     icon: TrendingUp,
     title: "Growth Driven",
     description: "Websites that scale with you",
-    color: "from-orange-500 to-red-500",
   },
   {
     icon: Sparkles,
     title: "Premium Quality",
     description: "Attention to every detail",
-    color: "from-emerald-500 to-teal-500",
   },
 ];
 
@@ -147,10 +146,10 @@ export default function WhyUsSection() {
               className="group relative p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] md:hover:border-white/10 md:hover:bg-white/[0.04] md:hover:-translate-y-1 transition-all duration-300"
             >
               {/* Glow effect on hover */}
-              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${brandGradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
               
               {/* Icon */}
-              <div className={`relative w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${feature.color} p-[1px] mb-5`}>
+              <div className={`relative w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${brandGradient} p-[1px] mb-5`}>
                 <div className="w-full h-full rounded-xl bg-[#0a0a1a] flex items-center justify-center">
                   <feature.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
@@ -173,7 +172,7 @@ export default function WhyUsSection() {
           className="mt-16 md:mt-24 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16"
         >
           <div className="flex items-center gap-4">
-            <div className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
+            <div className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
               3x
             </div>
             <div className="text-left">
@@ -185,7 +184,7 @@ export default function WhyUsSection() {
           <div className="hidden md:block w-px h-12 bg-white/10" />
           
           <div className="flex items-center gap-4">
-            <div className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+            <div className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
               98%
             </div>
             <div className="text-left">
@@ -197,7 +196,7 @@ export default function WhyUsSection() {
           <div className="hidden md:block w-px h-12 bg-white/10" />
           
           <div className="flex items-center gap-4">
-            <div className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-400">
+            <div className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
               50+
             </div>
             <div className="text-left">

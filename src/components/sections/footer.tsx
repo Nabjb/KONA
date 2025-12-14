@@ -171,7 +171,7 @@ export default function Footer() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg text-white text-sm font-medium hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-shadow"
+                  className="px-4 py-2.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg text-white text-sm font-medium hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-shadow"
                 >
                   Subscribe
                 </motion.button>
