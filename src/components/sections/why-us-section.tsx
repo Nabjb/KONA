@@ -36,20 +36,20 @@ export default function WhyUsSection() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.08,
+        delayChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        ease: [0.25, 0.4, 0.25, 1] as const,
+        duration: 0.5,
+        ease: "easeOut",
       },
     },
   };
@@ -144,8 +144,7 @@ export default function WhyUsSection() {
             <motion.div
               key={feature.title}
               variants={itemVariants}
-              whileHover={{ y: -5, scale: 1.02 }}
-              className="group relative p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-white/10 hover:bg-white/[0.04] transition-all duration-300"
+              className="group relative p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] md:hover:border-white/10 md:hover:bg-white/[0.04] md:hover:-translate-y-1 transition-all duration-300"
             >
               {/* Glow effect on hover */}
               <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />

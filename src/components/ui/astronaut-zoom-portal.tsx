@@ -46,7 +46,7 @@ export function AstronautZoomPortal() {
   const opacity = useTransform(scrollYProgress, [0.7, 1], [1, 0]);
   
   // Fade in the next section content (after visor fills screen)
-  const contentOpacity = useTransform(scrollYProgress, [0.75, 0.9], [0, 1]);
+  const contentOpacity = useTransform(scrollYProgress, [0.30, 0.50], [0, 1]);
 
   return (
     <div ref={containerRef} className="relative h-[500vh] bg-[#030014]">
