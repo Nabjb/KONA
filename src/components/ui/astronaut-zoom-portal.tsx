@@ -32,21 +32,23 @@ export function AstronautZoomPortal() {
     offset: ['start start', 'end end'],
   });
 
-  // Fixed zoom scale - works for both mobile and desktop
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 12]);
+  // DESKTOP: Zoom IN (1 → 12) as you scroll down
+  const scaleDesktop = useTransform(scrollYProgress, [0, 1], [1, 12]);
+  const opacityDesktop = useTransform(scrollYProgress, [0.7, 1], [1, 0]);
+  const contentOpacityDesktop = useTransform(scrollYProgress, [0.30, 0.50], [0, 1]);
+  const overlayOpacityDesktop = useTransform(scrollYProgress, [0.5, 0.9], [0, 0.7]);
   
-  // Fade out the astronaut as we zoom in fully
-  const opacity = useTransform(scrollYProgress, [0.7, 1], [1, 0]);
-  
-  // Fade in the next section content (after visor fills screen)
-  const contentOpacity = useTransform(scrollYProgress, [0.30, 0.50], [0, 1]);
+  // MOBILE: Zoom OUT (4 → 1) as you scroll down - smaller scale for better performance
+  const scaleMobile = useTransform(scrollYProgress, [0, 1], [4, 1]); // Reduced from 12x to 4x
+  const contentOpacityMobile = useTransform(scrollYProgress, [0, 0.3], [1, 0]); // Text fades OUT
+  const overlayOpacityMobile = useTransform(scrollYProgress, [0, 0.4], [0.8, 0]); // Overlay fades OUT
 
   return (
-    <div ref={containerRef} className="relative h-[500vh] bg-[#030014]">
+    <div ref={containerRef} className="relative h-[300vh] md:h-[500vh] bg-[#030014]">
       {/* Sticky container for the zoom effect */}
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Starry background matching previous section */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Starry background - hidden on mobile for performance */}
+        <div className="hidden md:block absolute inset-0 pointer-events-none overflow-hidden">
           {STARS.map((star) => (
             <div
               key={star.id}
@@ -62,9 +64,9 @@ export function AstronautZoomPortal() {
             />
           ))}
         </div>
-        {/* Mobile astronaut image that zooms */}
+        {/* Mobile astronaut image - ZOOMS OUT (reversed), stays visible */}
         <motion.div
-          style={{ scale, opacity, transformOrigin: '50% 25%', willChange: 'transform' }}
+          style={{ scale: scaleMobile, transformOrigin: '50% 35%' }}
           className="md:hidden absolute inset-0 flex items-center justify-center"
         >
           <img
@@ -74,9 +76,12 @@ export function AstronautZoomPortal() {
           />
         </motion.div>
         
-        {/* Desktop astronaut image that zooms */}
+        {/* Mobile bottom fade - OUTSIDE scaled div so it stays fixed */}
+        <div className="md:hidden absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#030014] to-transparent pointer-events-none z-20" />
+        
+        {/* Desktop astronaut image - ZOOMS IN (normal) */}
         <motion.div
-          style={{ scale, opacity, transformOrigin: '50% 35%', willChange: 'transform' }}
+          style={{ scale: scaleDesktop, opacity: opacityDesktop, transformOrigin: '50% 35%' }}
           className="hidden md:flex absolute inset-0 items-center justify-center"
         >
           <img
@@ -86,18 +91,39 @@ export function AstronautZoomPortal() {
           />
         </motion.div>
         
-        {/* Dark overlay that builds up as we zoom */}
+        {/* Dark overlay - Desktop: builds up, Mobile: fades out */}
         <motion.div 
-          className="absolute inset-0 bg-[#030014] pointer-events-none"
-          style={{ 
-            opacity: useTransform(scrollYProgress, [0.5, 0.9], [0, 0.7])
-          }}
+          className="hidden md:block absolute inset-0 bg-[#030014] pointer-events-none"
+          style={{ opacity: overlayOpacityDesktop }}
+        />
+        <motion.div 
+          className="md:hidden absolute inset-0 bg-[#030014] pointer-events-none"
+          style={{ opacity: overlayOpacityMobile }}
         />
         
-        {/* Teaser text that appears as we enter the portal */}
+        {/* Text - Desktop: fades IN, Mobile: fades OUT */}
         <motion.div
-          style={{ opacity: contentOpacity }}
-          className="absolute inset-0 flex items-center justify-center px-4"
+          style={{ opacity: contentOpacityDesktop }}
+          className="hidden md:flex absolute inset-0 items-center justify-center px-4"
+        >
+          <div className="text-center">
+            <p className="text-white/60 text-sm uppercase tracking-[0.3em] mb-4">Entering the</p>
+            <h2 
+              className="text-7xl font-bold uppercase tracking-[0.35em]"
+              style={{
+                background: 'linear-gradient(to right, #60a5fa, #a855f7, #ec4899)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              Konaverse
+            </h2>
+          </div>
+        </motion.div>
+        <motion.div
+          style={{ opacity: contentOpacityMobile }}
+          className="md:hidden absolute inset-0 flex items-center justify-center px-4"
         >
           <div className="text-center">
             <p className="text-white/60 text-xs md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] mb-4">Entering the</p>
