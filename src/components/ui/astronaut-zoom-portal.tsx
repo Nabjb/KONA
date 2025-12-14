@@ -1,7 +1,7 @@
 'use client';
 
 import { useScroll, useTransform, motion } from 'framer-motion';
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 
 // Generate stars for the background
 function generateStars(count: number) {
@@ -21,15 +21,26 @@ function generateStars(count: number) {
 
 export function AstronautZoomPortal() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const stars = useMemo(() => generateStars(150), []);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Detect mobile on mount
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  // Fewer stars on mobile for performance (30 vs 150)
+  const stars = useMemo(() => generateStars(isMobile ? 30 : 150), [isMobile]);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // Scale from 1 to 15 (zoom into the visor)
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 15]);
+  // Less aggressive zoom on mobile for performance (12 vs 15)
+  const scale = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 12 : 15]);
   
   // Fade out the astronaut as we zoom in fully
   const opacity = useTransform(scrollYProgress, [0.7, 1], [1, 0]);
@@ -60,7 +71,7 @@ export function AstronautZoomPortal() {
         </div>
         {/* Mobile astronaut image that zooms */}
         <motion.div
-          style={{ scale, opacity, transformOrigin: '50% 25%' }}
+          style={{ scale, opacity, transformOrigin: '50% 25%', willChange: 'transform' }}
           className="md:hidden absolute inset-0 flex items-center justify-center"
         >
           <img
@@ -72,7 +83,7 @@ export function AstronautZoomPortal() {
         
         {/* Desktop astronaut image that zooms */}
         <motion.div
-          style={{ scale, opacity, transformOrigin: '50% 35%' }}
+          style={{ scale, opacity, transformOrigin: '50% 35%', willChange: 'transform' }}
           className="hidden md:flex absolute inset-0 items-center justify-center"
         >
           <img
