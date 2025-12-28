@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { useState, useEffect } from "react";
+import { MasonryGrid } from "@/components/ui/image-testimonial-grid";
 
 const projects = [
   {
@@ -9,24 +11,40 @@ const projects = [
     title: "APT Metal Construction",
     category: "Construction",
     link: "https://www.aptmetalconstruction.com",
+    description: "Modern construction company website with project galleries and client testimonials.",
+    technologies: ["React", "Next.js", "TypeScript"],
+    achievement: "3x increase in lead generation",
+    image: "/kona websites screenshots/apt_macbook.png",
   },
   {
     id: "sivory",
     title: "Sivory Design",
     category: "Outdoor Design",
     link: "https://sivory.vercel.app",
+    description: "Elegant outdoor design portfolio showcasing luxury landscape projects.",
+    technologies: ["React", "Next.js", "Tailwind"],
+    achievement: "98% client satisfaction rate",
+    image: "/kona websites screenshots/sivory_macbook.png",
   },
   {
     id: "tdk",
     title: "TDK Design & Build",
     category: "Development",
     link: "https://tdkdb.com",
+    description: "Full-stack development solution for design and construction services.",
+    technologies: ["React", "Next.js", "TypeScript"],
+    achievement: "50% faster page load time",
+    image: "/kona websites screenshots/tdk_macbook.png",
   },
   {
     id: "lossantos",
     title: "Los Santos Barbers",
     category: "Barbershop",
     link: "https://lossantosbarbers.com",
+    description: "Stylish barbershop booking system with online scheduling and gallery.",
+    technologies: ["React", "Next.js", "Tailwind"],
+    achievement: "2x online bookings increase",
+    image: "/kona websites screenshots/lossantosbarbers.png",
   },
 ];
 
@@ -56,7 +74,66 @@ const itemVariants = {
   },
 };
 
+// Project Card Component for Masonry Grid
+const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
+  return (
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative rounded-2xl overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.02] block"
+    >
+      <img
+        src={project.image}
+        alt={project.title}
+        className="w-full h-auto object-cover"
+        onError={(e) => {
+          e.currentTarget.src = 'https://placehold.co/800x600/1a1a1a/ffffff?text=Website';
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 p-6 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div>
+          <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white text-xs font-medium mb-3">
+            {project.category}
+          </span>
+          <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">
+            {project.title}
+          </h3>
+          <p className="text-white/90 text-sm leading-relaxed drop-shadow-md mb-4">
+            {project.description}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 text-white/80 text-sm">
+          <ExternalLink className="w-4 h-4" />
+          <span>{project.link.replace('https://', '')}</span>
+        </div>
+      </div>
+    </a>
+  );
+};
+
 export default function ProjectsVideoSection() {
+  const [columns, setColumns] = useState(3);
+
+  // Function to determine columns based on screen width
+  const getColumns = (width: number) => {
+    if (width < 640) return 1;    // sm
+    if (width < 1024) return 2;    // lg
+    if (width < 1280) return 3;   // xl
+    return 4;                     // 2xl and up
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setColumns(getColumns(window.innerWidth));
+    };
+
+    handleResize(); // Set initial columns on mount
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <section id="work" className="relative -mt-px -mb-px">
       {/* Top fade for blending with previous section */}
@@ -102,53 +179,14 @@ export default function ProjectsVideoSection() {
           </p>
         </motion.div>
 
-        {/* Project Cards Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
-        >
-          {projects.map((project) => (
-            <motion.a
-              key={project.id}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              variants={itemVariants}
-              className="group relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6 md:p-8 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500"
-            >
-              {/* Glow effect on hover */}
-              <div className={`absolute -inset-1 bg-gradient-to-r ${brandGradient} opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500 rounded-2xl`} />
-              
-              <div className="relative flex items-center justify-between">
-                <div>
-                  {/* Category */}
-                  <span className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${brandGradient} text-white text-xs font-medium mb-3`}>
-                    {project.category}
-                  </span>
-                  
-                  {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-white transition-colors">
-                    {project.title}
-                  </h3>
-                </div>
-                
-                {/* Arrow */}
-                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300">
-                  <ArrowUpRight className="w-5 h-5 text-white/50 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                </div>
-              </div>
-              
-              {/* Link hint */}
-              <div className="mt-4 flex items-center gap-2 text-white/30 text-sm group-hover:text-white/50 transition-colors">
-                <ExternalLink className="w-4 h-4" />
-                <span>{project.link.replace('https://', '')}</span>
-              </div>
-            </motion.a>
-          ))}
-        </motion.div>
+        {/* Masonry Grid with Website Screenshots */}
+        <div className="max-w-7xl mx-auto px-6">
+          <MasonryGrid columns={columns} gap={4}>
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </MasonryGrid>
+        </div>
         
         {/* Bottom fade to blend with next section */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#030014] to-transparent pointer-events-none" />

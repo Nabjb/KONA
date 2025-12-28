@@ -4,6 +4,8 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import TechMarquee from './tech-marquee';
+import { HoverBorderGradient } from './hover-border-gradient';
+import { ArrowRight } from 'lucide-react';
 
 export function ParallaxComponent() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -83,16 +85,15 @@ export function ParallaxComponent() {
             />
           </div>
 
+          {/* Dark overlay layer for text readability */}
+          <div className="parallax-layer parallax-layer--overlay" data-parallax-layer="2.5">
+            <div className="parallax-overlay"></div>
+          </div>
+
           {/* Layer 3a: "That Print Money" - BEHIND astronaut */}
           <div className="parallax-layer parallax-layer--text-back" data-parallax-layer="3">
             {/* KONAVERSE badge at top */}
             <p className="parallax-badge-top">KONAVERSE</p>
-            
-            <div className="parallax-title-container">
-              <h1 className="parallax-title parallax-title-animate">
-                <span className="parallax-title-line parallax-title-line--gradient">That Print Money</span>
-              </h1>
-            </div>
           </div>
 
           {/* Layer 4: Astronaut - MIDDLE */}
@@ -104,12 +105,36 @@ export function ParallaxComponent() {
             />
           </div>
 
-          {/* Layer 3b: "We Build Websites" - IN FRONT of astronaut */}
+          {/* Layer 3b: All text content - IN FRONT of astronaut */}
           <div className="parallax-layer parallax-layer--text-front" data-parallax-layer="3">
             <div className="parallax-title-container parallax-title-container--front">
+              {/* Title - First */}
               <h1 className="parallax-title parallax-title-animate">
-                <span className="parallax-title-line">We Build Websites</span>
+                <span className="parallax-title-line">
+                  We Build Websites
+                </span>
+                <br />
+                <span className="parallax-title-line parallax-title-line--gradient">That Print Money</span>
               </h1>
+              
+              {/* Subtitle - Second */}
+              <p className="parallax-subtitle parallax-title-animate">
+                Websites that convert visitors into customers and turn brands into legends.
+              </p>
+              
+              {/* CTA Button - Third */}
+              <div className="parallax-cta parallax-title-animate" style={{ pointerEvents: 'auto' }}>
+                <a href="#contact" style={{ pointerEvents: 'auto' }}>
+                  <HoverBorderGradient
+                    containerClassName="rounded-full"
+                    as="button"
+                    className="bg-[#030014] text-white flex items-center gap-3 px-6 py-3 text-base font-semibold"
+                  >
+                    Book a Free Strategy Call
+                    <ArrowRight className="w-5 h-5" />
+                  </HoverBorderGradient>
+                </a>
+              </div>
             </div>
           </div>
 

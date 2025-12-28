@@ -202,6 +202,25 @@
   opacity: 0;
 }
 
+/* Dark overlay layer */
+.parallax-layer--overlay {
+  z-index: 3;
+  pointer-events: none;
+}
+
+.parallax-overlay {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(3, 0, 20, 0.6) 0%,
+    rgba(3, 0, 20, 0.4) 40%,
+    rgba(3, 0, 20, 0.2) 60%,
+    rgba(3, 0, 20, 0.1) 80%,
+    transparent 100%
+  );
+}
+
 @keyframes bgFadeIn {
   0% {
     opacity: 0;
@@ -229,13 +248,14 @@
   z-index: 9;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   pointer-events: none;
+  padding-left: clamp(2rem, 8vw, 8rem);
 }
 
 .parallax-layer--text-back .parallax-title-container {
-  margin-top: 180px; /* Push "That Print Money" down */
+  /* No longer needed - "That Print Money" moved to front layer */
 }
 
 /* Layer 3b: Text IN FRONT of astronaut */
@@ -243,12 +263,38 @@
   z-index: 11;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   pointer-events: none;
+  padding-left: clamp(2rem, 8vw, 8rem);
 }
 
 .parallax-title-container--front {
-  margin-bottom: 180px; /* Push "We Build Websites" up */
+  margin-bottom: 0; /* Centered vertically */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.parallax-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.01em;
+  max-width: 600px;
+  margin-top: 1rem;
+  animation: lineFadeIn 1.4s cubic-bezier(0.25, 0.4, 0.25, 1) 0.6s forwards;
+  opacity: 0;
+}
+
+.parallax-cta {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  animation: lineFadeIn 1.4s cubic-bezier(0.25, 0.4, 0.25, 1) 0.9s forwards;
+  opacity: 0;
 }
 
 .parallax-badge-top {
@@ -287,14 +333,11 @@
 
 .parallax-title {
   font-size: clamp(2.5rem, 8vw, 7rem);
-  font-weight: 900;
-  line-height: 1.05;
-  text-align: center;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: left;
   color: white;
-  text-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.8),
-    0 4px 8px rgba(0, 0, 0, 0.4);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .parallax-title-animate {
@@ -303,7 +346,7 @@
 
 .parallax-title-line {
   display: inline-block;
-  animation: lineFadeIn 1.2s cubic-bezier(0.25, 0.4, 0.25, 1) forwards;
+  animation: lineFadeIn 1.4s cubic-bezier(0.25, 0.4, 0.25, 1) forwards;
   opacity: 0;
 }
 
@@ -316,18 +359,42 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation-delay: 0.6s;
+  animation-delay: 0.8s;
+  font-size: clamp(1.875rem, 6.5vw, 5.25rem);
+  line-height: 1.15;
+  display: block;
+  margin-top: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.parallax-morph-word {
+  position: relative;
+  display: inline-block;
+  min-width: fit-content;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  vertical-align: baseline;
+}
+
+.parallax-morph-word span {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  display: inline-block;
 }
 
 @keyframes lineFadeIn {
   0% {
     opacity: 0;
-    filter: blur(12px);
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
   100% {
     opacity: 1;
-    filter: blur(0);
     transform: scale(1);
   }
 }
@@ -363,7 +430,35 @@
   z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: clamp(2rem, 8vw, 6rem);
+  position: relative;
+}
+
+/* Subtle glow connection from astronaut to text */
+.parallax-layer--fg::before {
+  content: '';
+  position: absolute;
+  left: -20%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(to left, rgba(59, 130, 246, 0.3), transparent);
+  filter: blur(4px);
+  pointer-events: none;
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(-50%) scaleX(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(-50%) scaleX(1.2);
+  }
 }
 
 .parallax-img--figure {
@@ -392,28 +487,90 @@
 /* Mobile responsive styles */
 @media (max-width: 768px) {
   .parallax-badge-top {
-    font-size: 1rem;
-    letter-spacing: 0.25em;
-    top: 12%;
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    top: 8%;
   }
   
   .parallax-img--figure {
-    width: 110%;
+    width: 100%;
     max-width: none;
-    margin-top: 40px;
+    margin-top: 0;
+    object-fit: contain;
   }
   
   .parallax-title {
-    font-size: clamp(1.8rem, 9vw, 3.5rem);
+    font-size: clamp(2rem, 10vw, 3.5rem);
     padding: 0 1rem;
+    text-align: center;
+    line-height: 1.1;
   }
   
-  .parallax-layer--text-back .parallax-title-container {
-    margin-top: 100px;
+  .parallax-layer--text-back {
+    padding-left: 1rem;
+    align-items: center;
+  }
+  
+  .parallax-layer--text-front {
+    padding-left: 1rem;
+    justify-content: center;
+    align-items: center;
   }
   
   .parallax-title-container--front {
-    margin-bottom: 100px;
+    margin-bottom: 0;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+    width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .parallax-subtitle {
+    text-align: center;
+    max-width: 100%;
+    margin: 0;
+    font-size: clamp(0.875rem, 3.5vw, 1rem);
+    padding: 0 0.5rem;
+  }
+  
+  .parallax-cta {
+    margin: 0.5rem auto 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .parallax-cta a {
+    width: auto;
+    max-width: none;
+  }
+  
+  .parallax-cta button {
+    width: auto;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .parallax-cta button svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  
+  .parallax-layer--fg {
+    justify-content: center;
+    padding-right: 0;
+  }
+  
+  .parallax-layer--fg::before {
+    display: none;
+  }
+  
+  .parallax-title-line--gradient {
+    font-size: clamp(1.5rem, 8vw, 2.75rem);
+    margin-top: 0.25rem;
   }
 }
 

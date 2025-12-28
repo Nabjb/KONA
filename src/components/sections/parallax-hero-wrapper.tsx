@@ -224,7 +224,7 @@ export default function ParallaxHeroWrapper() {
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-                            className="text-[13vw] leading-[0.9] font-black tracking-tight text-white"
+                            className="text-[13vw] leading-[0.9] font-semibold tracking-tight text-white"
                         >
                             We Build
                         </motion.h1>
@@ -232,7 +232,7 @@ export default function ParallaxHeroWrapper() {
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.7, delay: 0.45, ease: [0.25, 0.4, 0.25, 1] }}
-                            className="text-[13vw] leading-[0.9] font-black tracking-tight text-white"
+                            className="text-[13vw] leading-[0.9] font-semibold tracking-tight text-white"
                         >
                             Websites
                         </motion.h1>
@@ -240,7 +240,7 @@ export default function ParallaxHeroWrapper() {
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.7, delay: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-                            className="text-[13vw] leading-[0.9] font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
+                            className="text-[13vw] leading-[0.9] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
                         >
                             That Print
                         </motion.h1>
@@ -248,7 +248,7 @@ export default function ParallaxHeroWrapper() {
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.7, delay: 0.75, ease: [0.25, 0.4, 0.25, 1] }}
-                            className="text-[13vw] leading-[0.9] font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
+                            className="text-[13vw] leading-[0.9] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
                         >
                             Money
                         </motion.h1>
