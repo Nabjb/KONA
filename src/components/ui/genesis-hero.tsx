@@ -4,30 +4,6 @@ import { useRef, useMemo, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useScroll, useTransform, motion, useMotionValueEvent, useMotionValue, animate } from "framer-motion";
-import { 
-  SiReact, 
-  SiNextdotjs, 
-  SiTypescript, 
-  SiThreedotjs, 
-  SiTailwindcss, 
-  SiFramer,
-  SiHtml5,
-  SiCss3,
-  SiJavascript,
-  SiNodedotjs,
-  SiGit,
-  SiGithub,
-  SiFigma,
-  SiVercel,
-  SiInstagram,
-  SiFacebook,
-  SiX,
-  SiLinkedin,
-  SiYoutube,
-  SiTiktok,
-  SiPinterest,
-  SiDiscord
-} from "react-icons/si";
 
 // ============================================
 // CIRCULAR PARTICLE TEXTURE - Makes particles round, not square!
@@ -244,13 +220,6 @@ export default function GenesisHero() {
   );
   const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
   
-  // Tech stack HUD visibility - combined with entrance animation
-  const techHudScrollOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
-  const techHudOpacity = useTransform(
-    [entranceOpacity, techHudScrollOpacity],
-    ([entrance, scroll]: number[]) => entrance * scroll
-  );
-  
   // Astronaut opacity - combined with entrance animation
   const astronautScrollOpacity = useTransform(scrollYProgress, [0, 0.28, 0.32, 0.38], [1, 1, 0.8, 0]);
   const astronautCombinedOpacity = useTransform(
@@ -323,80 +292,6 @@ export default function GenesisHero() {
           className="absolute inset-0 z-[16] pointer-events-none bg-black"
           style={{ opacity: visorDarknessOpacity }}
         />
-
-        {/* Tech Stack Scrolling Bar - Behind the astronaut */}
-        <motion.div 
-          className="absolute w-full z-[5] pointer-events-none overflow-hidden"
-          initial={{ y: 20 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          style={{ 
-            opacity: techHudOpacity,
-            top: "50%", 
-            transform: "translateY(-50%)"
-          }}
-        >
-          {/* Animated scrolling bar */}
-          <motion.div 
-            className="flex gap-8 md:gap-12"
-            animate={{ x: [0, -2400] }}
-            transition={{ 
-              x: {
-                duration: 40, 
-                repeat: Infinity, 
-                ease: "linear" 
-              }
-            }}
-          >
-            {/* Duplicate the tech logos twice for seamless infinite scroll */}
-            {[...Array(2)].map((_, setIdx) => (
-              <div key={setIdx} className="flex gap-8 md:gap-12 items-center">
-                {[
-                  { name: 'HTML5', color: '#E34F26', icon: SiHtml5 },
-                  { name: 'CSS3', color: '#1572B6', icon: SiCss3 },
-                  { name: 'JavaScript', color: '#F7DF1E', icon: SiJavascript },
-                  { name: 'React', color: '#61DAFB', icon: SiReact },
-                  { name: 'Next.js', color: '#FFFFFF', icon: SiNextdotjs },
-                  { name: 'TypeScript', color: '#3178C6', icon: SiTypescript },
-                  { name: 'Three.js', color: '#FFFFFF', icon: SiThreedotjs },
-                  { name: 'Tailwind', color: '#06B6D4', icon: SiTailwindcss },
-                  { name: 'Framer', color: '#DD4DDD', icon: SiFramer },
-                  { name: 'Node.js', color: '#339933', icon: SiNodedotjs },
-                  { name: 'Git', color: '#F05032', icon: SiGit },
-                  { name: 'GitHub', color: '#FFFFFF', icon: SiGithub },
-                  { name: 'Figma', color: '#F24E1E', icon: SiFigma },
-                  { name: 'Vercel', color: '#FFFFFF', icon: SiVercel },
-                  { name: 'Instagram', color: '#E4405F', icon: SiInstagram },
-                  { name: 'Facebook', color: '#1877F2', icon: SiFacebook },
-                  { name: 'X', color: '#FFFFFF', icon: SiX },
-                  { name: 'LinkedIn', color: '#0A66C2', icon: SiLinkedin },
-                  { name: 'YouTube', color: '#FF0000', icon: SiYoutube },
-                  { name: 'TikTok', color: '#FFFFFF', icon: SiTiktok },
-                  { name: 'Pinterest', color: '#E60023', icon: SiPinterest },
-                  { name: 'Discord', color: '#5865F2', icon: SiDiscord },
-                ].map((tech, idx) => (
-                  <div
-                    key={`${setIdx}-${tech.name}`}
-                    className="flex-shrink-0"
-                  >
-                    <div 
-                      className="w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center backdrop-blur-md border border-white/10"
-                      style={{ 
-                        backgroundColor: `${tech.color}15`,
-                        boxShadow: `0 0 20px ${tech.color}40, inset 0 0 10px ${tech.color}20`
-                      }}
-                    >
-                      <tech.icon 
-                        className="w-6 h-6 md:w-8 md:h-8"
-                        style={{ color: tech.color }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
 
         {/* Opening text - Inside the visor/glass */}
         <motion.div 
