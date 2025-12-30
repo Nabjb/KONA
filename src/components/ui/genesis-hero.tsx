@@ -240,7 +240,7 @@ export default function GenesisHero() {
   const introTextScrollOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
   const introTextOpacity = useTransform(
     [entranceOpacity, introTextScrollOpacity],
-    ([entrance, scroll]) => entrance * scroll
+    ([entrance, scroll]: number[]) => entrance * scroll
   );
   const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
   
@@ -248,14 +248,14 @@ export default function GenesisHero() {
   const techHudScrollOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
   const techHudOpacity = useTransform(
     [entranceOpacity, techHudScrollOpacity],
-    ([entrance, scroll]) => entrance * scroll
+    ([entrance, scroll]: number[]) => entrance * scroll
   );
   
   // Astronaut opacity - combined with entrance animation
   const astronautScrollOpacity = useTransform(scrollYProgress, [0, 0.28, 0.32, 0.38], [1, 1, 0.8, 0]);
   const astronautCombinedOpacity = useTransform(
     [entranceOpacity, astronautScrollOpacity],
-    ([entrance, scroll]) => entrance * scroll
+    ([entrance, scroll]: number[]) => entrance * scroll
   );
   
   // 3D scene visibility - only shows once we're "inside" the visor
