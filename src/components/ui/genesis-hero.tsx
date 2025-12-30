@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useMemo, useState, useEffect, Suspense } from "react";
+import { useRef, useMemo, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { useScroll, useTransform, motion, useMotionValueEvent, useMotionValue, animate } from "framer-motion";
+import { useScroll, useTransform, motion, useMotionValueEvent } from "framer-motion";
+import { SiReact, SiNextdotjs, SiTypescript, SiThreedotjs, SiTailwindcss, SiFramer } from "react-icons/si";
 
 // ============================================
 // CIRCULAR PARTICLE TEXTURE - Makes particles round, not square!
@@ -49,91 +50,90 @@ function useCircleTexture(color: string = "#ffffff", glow: boolean = true) {
 // UNIVERSE STARS - The stars that form after explosion
 // ============================================
 
-function UniverseStars({ progress, isVisible }: { progress: number; isVisible: boolean }) {
+function UniverseStars({ progress }: { progress: number }) {
   const pointsRef = useRef<THREE.Points>(null);
-  const particleCount = 1500; // Reduced for better mobile performance
+  const particleCount = 2000;
   const circleTexture = useCircleTexture("#ffffff", false);
   
-  const { startPositions, finalPositions, colors } = useMemo(() => {
-    const start = new Float32Array(particleCount * 3);
-    const final = new Float32Array(particleCount * 3);
+  const { positions, starPositions, colors, sizes } = useMemo(() => {
+    const pos = new Float32Array(particleCount * 3);
+    const stars = new Float32Array(particleCount * 3);
     const cols = new Float32Array(particleCount * 3);
+    const szs = new Float32Array(particleCount);
     
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
       
-      // Final star positions - spread across the sky dome
-      const r = 15 + Math.random() * 50;
+      // Start clustered at center
+      pos[i3] = (Math.random() - 0.5) * 0.5;
+      pos[i3 + 1] = (Math.random() - 0.5) * 0.5;
+      pos[i3 + 2] = (Math.random() - 0.5) * 0.5;
+      
+      // Final star positions spread across sky
+      const r = 20 + Math.random() * 60;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
-      final[i3] = r * Math.sin(phi) * Math.cos(theta);
-      final[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      final[i3 + 2] = r * Math.cos(phi) - 5;
+      stars[i3] = r * Math.sin(phi) * Math.cos(theta);
+      stars[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      stars[i3 + 2] = r * Math.cos(phi) - 10;
       
-      // Start positions - closer to camera (creates "flying through space" effect)
-      // Stars start along the same direction but closer to viewer
-      const startDistance = 0.05 + Math.random() * 0.15; // Start closer to center
-      start[i3] = final[i3] * startDistance;
-      start[i3 + 1] = final[i3 + 1] * startDistance;
-      start[i3 + 2] = final[i3 + 2] * startDistance + 10; // Start closer (within camera view)
-      
-      // Star colors: mostly white with some blue/purple tints
+      // Star colors: mostly white with some blue/purple/gold
       const c = Math.random();
-      if (c < 0.6) { 
+      if (c < 0.5) { 
         cols[i3] = 1; cols[i3+1] = 1; cols[i3+2] = 1; // White
-      } else if (c < 0.8) { 
-        cols[i3] = 0.8; cols[i3+1] = 0.85; cols[i3+2] = 1; // Blue-white
+      } else if (c < 0.7) { 
+        cols[i3] = 0.7; cols[i3+1] = 0.8; cols[i3+2] = 1; // Blue-white
+      } else if (c < 0.85) { 
+        cols[i3] = 0.9; cols[i3+1] = 0.7; cols[i3+2] = 1; // Purple-white
       } else { 
-        cols[i3] = 0.95; cols[i3+1] = 0.8; cols[i3+2] = 1; // Purple-white
+        cols[i3] = 1; cols[i3+1] = 0.9; cols[i3+2] = 0.7; // Warm white
       }
+      
+      // Varied sizes - most small, some larger
+      szs[i] = Math.random() < 0.9 ? 0.02 + Math.random() * 0.04 : 0.06 + Math.random() * 0.08;
     }
     
-    return { startPositions: start, finalPositions: final, colors: cols };
+    return { positions: pos, starPositions: stars, colors: cols, sizes: szs };
   }, []);
 
-  useFrame(() => {
-    if (!pointsRef.current || !isVisible) return; // Skip all updates when not visible
-    
-    // Early return if progress is outside visible range - prevents unnecessary calculations
-    if (progress < 0 || progress > 1.1) return;
+  useFrame((state) => {
+    if (!pointsRef.current) return;
     
     const posArray = pointsRef.current.geometry.attributes.position.array as Float32Array;
+    const time = state.clock.elapsedTime;
     
-    // Simple smooth interpolation - very GPU friendly!
-    // Ease out cubic for smooth deceleration as stars reach final positions
-    const t = Math.min(1, Math.max(0, progress)); // Clamp between 0 and 1
-    const easeT = 1 - Math.pow(1 - t, 2); // Smooth ease-out
-    
-    // Cache final positions when animation is complete (progress >= 1)
-    // This prevents recalculating when scrolling back up
-    if (t >= 1) {
-      // Stars are at final positions - only update if not already cached
-      if (posArray[0] !== finalPositions[0]) {
-        for (let i = 0; i < particleCount; i++) {
-          const i3 = i * 3;
-          posArray[i3] = finalPositions[i3];
-          posArray[i3 + 1] = finalPositions[i3 + 1];
-          posArray[i3 + 2] = finalPositions[i3 + 2];
-        }
-        pointsRef.current.geometry.attributes.position.needsUpdate = true;
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      
+      if (progress < 0.15) {
+        // Swirling at center before explosion
+        const swirl = time * 2 + i * 0.01;
+        const radius = 0.3 + progress * 3;
+        posArray[i3] = Math.cos(swirl) * radius * 0.4 * (1 + Math.sin(i));
+        posArray[i3 + 1] = Math.sin(swirl) * radius * 0.4 * (1 + Math.cos(i));
+        posArray[i3 + 2] = Math.sin(time + i * 0.1) * 0.2;
+      } else if (progress < 0.7) {
+        // Explosion outward - SLOWER (longer duration)
+        const t = (progress - 0.15) / 0.55; // Increased from 0.35 to 0.55
+        const easeT = 1 - Math.pow(1 - t, 3); // Slower ease out (cubic instead of quadratic)
+        posArray[i3] = starPositions[i3] * easeT * 0.8;
+        posArray[i3 + 1] = starPositions[i3 + 1] * easeT * 0.8;
+        posArray[i3 + 2] = starPositions[i3 + 2] * easeT * 0.8;
+      } else {
+        // Settle into final positions with subtle twinkle
+        const t = Math.min(1, (progress - 0.7) / 0.2); // Adjusted start point
+        const twinkle = 1 + Math.sin(time * 3 + i) * 0.02;
+        posArray[i3] = starPositions[i3] * (0.8 + t * 0.2) * twinkle;
+        posArray[i3 + 1] = starPositions[i3 + 1] * (0.8 + t * 0.2) * twinkle;
+        posArray[i3 + 2] = starPositions[i3 + 2] * (0.8 + t * 0.2);
       }
-    } else {
-      // Only update positions if still animating
-      for (let i = 0; i < particleCount; i++) {
-        const i3 = i * 3;
-        
-        // Linear interpolation from start to final position
-        posArray[i3] = startPositions[i3] + (finalPositions[i3] - startPositions[i3]) * easeT;
-        posArray[i3 + 1] = startPositions[i3 + 1] + (finalPositions[i3 + 1] - startPositions[i3 + 1]) * easeT;
-        posArray[i3 + 2] = startPositions[i3 + 2] + (finalPositions[i3 + 2] - startPositions[i3 + 2]) * easeT;
-      }
-      pointsRef.current.geometry.attributes.position.needsUpdate = true;
     }
     
-    // Stars visible immediately when scene appears
+    pointsRef.current.geometry.attributes.position.needsUpdate = true;
+    
+    // Fade in
     const mat = pointsRef.current.material as THREE.PointsMaterial;
-    // Ensure stars are always visible (minimum 0.7 opacity), brighter as they approach
-    mat.opacity = Math.max(0.7, Math.min(1, 0.7 + t * 0.3));
+    mat.opacity = progress < 0.1 ? progress * 10 : 1;
   });
 
   return (
@@ -141,7 +141,7 @@ function UniverseStars({ progress, isVisible }: { progress: number; isVisible: b
       <bufferGeometry>
         <bufferAttribute 
           attach="attributes-position" 
-          args={[startPositions.slice(), 3]} 
+          args={[positions.slice(), 3]} 
         />
         <bufferAttribute 
           attach="attributes-color" 
@@ -149,11 +149,11 @@ function UniverseStars({ progress, isVisible }: { progress: number; isVisible: b
         />
       </bufferGeometry>
       <pointsMaterial 
-        size={0.08} 
+        size={0.06} 
         map={circleTexture}
         vertexColors 
         transparent 
-        opacity={0.7} 
+        opacity={0} 
         blending={THREE.AdditiveBlending} 
         sizeAttenuation
         depthWrite={false}
@@ -166,11 +166,11 @@ function UniverseStars({ progress, isVisible }: { progress: number; isVisible: b
 // SCENE - Clean and simple, just stars
 // ============================================
 
-function Scene({ scrollProgress, isVisible }: { scrollProgress: number; isVisible: boolean }) {
+function Scene({ scrollProgress }: { scrollProgress: number }) {
   return (
     <>
       <ambientLight intensity={0.1} />
-      <UniverseStars progress={scrollProgress} isVisible={isVisible} />
+      <UniverseStars progress={scrollProgress} />
     </>
   );
 }
@@ -182,7 +182,6 @@ function Scene({ scrollProgress, isVisible }: { scrollProgress: number; isVisibl
 export default function GenesisHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isSceneVisible, setIsSceneVisible] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -191,9 +190,6 @@ export default function GenesisHero() {
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     setScrollProgress(v);
-    // Only render scene when scroll is in the visible range (0.25 to 0.4)
-    // Add small buffer to prevent flickering at boundaries
-    setIsSceneVisible(v >= 0.24 && v <= 0.41);
   });
 
   // Astronaut zoom: Start ZOOMED OUT, zoom INTO visor as you scroll (VERY SLOW)
@@ -210,31 +206,12 @@ export default function GenesisHero() {
   // Darkness overlay to simulate entering the visor - quick flash
   const visorDarknessOpacity = useTransform(scrollYProgress, [0.26, 0.30, 0.35], [0, 0.8, 0]);
   
-  // Entrance animation opacity - fades in on mount
-  const entranceOpacity = useMotionValue(0);
-  
-  useEffect(() => {
-    animate(entranceOpacity, 1, { duration: 1.2, ease: [0.4, 0, 0.2, 1] });
-  }, [entranceOpacity]);
-  
-  // Text overlays - combined with entrance animation
-  const introTextScrollOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
-  const introTextOpacity = useTransform(
-    [entranceOpacity, introTextScrollOpacity],
-    ([entrance, scroll]: number[]) => entrance * scroll
-  );
+  // Text overlays
+  const introTextOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
   const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
   
-  // Astronaut opacity - combined with entrance animation
-  // Extended range for smoother transitions when scrolling back
-  const astronautScrollOpacity = useTransform(scrollYProgress, [0, 0.28, 0.32, 0.4], [1, 1, 0.8, 0]);
-  const astronautCombinedOpacity = useTransform(
-    [entranceOpacity, astronautScrollOpacity],
-    ([entrance, scroll]: number[]) => {
-      // Ensure smooth transitions - clamp values to prevent flickering
-      return Math.max(0, Math.min(1, entrance * scroll));
-    }
-  );
+  // Tech stack HUD visibility - appears as holographic display in visor
+  const techHudOpacity = useTransform(scrollYProgress, [0.08, 0.15, 0.25, 0.3], [0, 1, 1, 0]);
   
   // 3D scene visibility - only shows once we're "inside" the visor
   const sceneOpacity = useTransform(scrollYProgress, [0.25, 0.32], [0, 1]);
@@ -246,14 +223,7 @@ export default function GenesisHero() {
         {/* 3D Canvas - The explosion happens INSIDE the visor */}
         <motion.div 
           className="absolute inset-0 z-10"
-          style={{ 
-            opacity: sceneOpacity,
-            visibility: isSceneVisible ? 'visible' : 'hidden', // Stop rendering when not visible
-            willChange: scrollProgress > 0.25 && scrollProgress < 0.4 ? 'opacity' : 'auto',
-            pointerEvents: 'none',
-            backfaceVisibility: 'hidden',
-            transform: 'translateZ(0)' // Force GPU acceleration
-          }}
+          style={{ opacity: sceneOpacity }}
         >
           <Suspense fallback={null}>
             <Canvas
@@ -262,10 +232,7 @@ export default function GenesisHero() {
               gl={{ antialias: true, alpha: true }}
               style={{ background: "transparent" }}
             >
-              <Scene 
-                scrollProgress={Math.max(0, Math.min(1, (scrollProgress - 0.3) / 0.7))} 
-                isVisible={isSceneVisible}
-              />
+              <Scene scrollProgress={Math.max(0, (scrollProgress - 0.3) / 0.7)} />
             </Canvas>
           </Suspense>
         </motion.div>
@@ -273,17 +240,11 @@ export default function GenesisHero() {
         {/* Astronaut layer - Starts full view, zooms INTO visor */}
         <motion.div 
           className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
-          initial={{ scale: 0.95 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
           style={{ 
             scale: astronautScale,
-            opacity: astronautCombinedOpacity,
+            opacity: astronautOpacity,
             y: astronautY,
             transformOrigin: "50% 35%", // Focus on visor/face area
-            willChange: scrollProgress < 0.4 ? 'transform, opacity' : 'auto',
-            backfaceVisibility: 'hidden',
-            transform: 'translateZ(0)' // Force GPU acceleration
           }}
         >
           <img
@@ -296,12 +257,7 @@ export default function GenesisHero() {
                 : scrollProgress < 0.32
                   ? `drop-shadow(0 0 60px rgba(100, 80, 255, 0.6)) brightness(1.1)`
                   : `drop-shadow(0 0 30px rgba(100, 150, 255, 0.3))`,
-              willChange: scrollProgress < 0.4 ? 'filter, transform, opacity' : 'auto',
-              backfaceVisibility: 'hidden',
-              imageRendering: 'auto',
             }}
-            loading="eager"
-            decoding="async"
           />
         </motion.div>
 
@@ -320,43 +276,119 @@ export default function GenesisHero() {
           style={{ opacity: visorDarknessOpacity }}
         />
 
+        {/* Tech Stack HUD - Holographic display inside visor */}
+        <motion.div 
+          className="absolute inset-0 z-[20] flex items-center justify-center pointer-events-none"
+          style={{ opacity: techHudOpacity }}
+        >
+          <div className="relative w-full max-w-2xl px-4">
+            {/* HUD Frame */}
+            <div className="relative p-8 rounded-lg border border-cyan-400/30 bg-cyan-500/5 backdrop-blur-sm">
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400" />
+              
+              {/* HUD Header */}
+              <div className="flex items-center gap-2 mb-6 pb-3 border-b border-cyan-400/20">
+                <motion.div 
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+                />
+                <span className="text-cyan-400 font-mono text-xs md:text-sm tracking-wider">
+                  CREATOR_TOOLS.SYS
+                </span>
+              </div>
+
+              {/* Tech Logos Grid */}
+              <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6">
+                {[
+                  { name: 'React', color: 'rgba(97, 218, 251, 0.8)', icon: SiReact },
+                  { name: 'Next.js', color: 'rgba(255, 255, 255, 0.8)', icon: SiNextdotjs },
+                  { name: 'TypeScript', color: 'rgba(49, 120, 198, 0.8)', icon: SiTypescript },
+                  { name: 'Three.js', color: 'rgba(255, 255, 255, 0.8)', icon: SiThreedotjs },
+                  { name: 'Tailwind', color: 'rgba(56, 189, 248, 0.8)', icon: SiTailwindcss },
+                  { name: 'Framer', color: 'rgba(221, 70, 221, 0.8)', icon: SiFramer },
+                ].map((tech, idx) => (
+                  <motion.div
+                    key={tech.name}
+                    initial={{ opacity: 0, scale: 0.5, y: 20 }}
+                    animate={{ 
+                      opacity: 1, 
+                      scale: 1, 
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      opacity: { delay: 0.1 + idx * 0.05, duration: 0.3 },
+                      scale: { delay: 0.1 + idx * 0.05, duration: 0.3 },
+                      y: { 
+                        delay: 0.5 + idx * 0.1,
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }
+                    }}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    {/* Tech Icon */}
+                    <div 
+                      className="w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center backdrop-blur-sm border"
+                      style={{ 
+                        backgroundColor: `${tech.color.replace('0.8', '0.05')}`,
+                        borderColor: tech.color,
+                        boxShadow: `0 0 20px ${tech.color.replace('0.8', '0.3')}`
+                      }}
+                    >
+                      <tech.icon 
+                        className="w-6 h-6 md:w-8 md:h-8"
+                        style={{ color: tech.color }}
+                      />
+                    </div>
+                    {/* Tech Name */}
+                    <span 
+                      className="text-[10px] md:text-xs font-mono tracking-wide"
+                      style={{ color: tech.color }}
+                    >
+                      {tech.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* HUD Footer */}
+              <div className="mt-6 pt-3 border-t border-cyan-400/20 flex justify-between items-center">
+                <span className="text-cyan-400/60 font-mono text-[10px] md:text-xs">
+                  STATUS: ONLINE
+                </span>
+                <span className="text-cyan-400/60 font-mono text-[10px] md:text-xs">
+                  READY_TO_CREATE
+                </span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Opening text - Inside the visor/glass */}
         <motion.div 
           className="absolute inset-0 z-30 flex flex-col items-center pointer-events-none px-6"
-          initial={{ y: 30 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
           style={{ 
             opacity: introTextOpacity,
             top: "32%", // Position in the visor area
           }}
         >
-          <motion.h1 
-            className="text-white text-sm md:text-lg lg:text-xl font-light tracking-[0.2em] mb-2 text-center drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]"
-            initial={{ y: 20 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          >
+          <h1 className="text-white text-sm md:text-lg lg:text-xl font-light tracking-[0.2em] mb-2 text-center drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]">
             THE CREATOR AWAITS
-          </motion.h1>
-          <motion.p 
-            className="text-white/60 text-xs md:text-sm tracking-widest drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]"
-            initial={{ y: 10 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7, ease: [0.4, 0, 0.2, 1] }}
-          >
+          </h1>
+          <p className="text-white/60 text-xs md:text-sm tracking-widest drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
             look through the visor
-          </motion.p>
+          </p>
         </motion.div>
 
         {/* Scroll indicator */}
         {scrollProgress < 0.12 && (
-          <motion.div 
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1, ease: [0.4, 0, 0.2, 1] }}
-          >
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
             <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
               <motion.div 
                 className="w-1.5 h-1.5 rounded-full bg-white"
@@ -365,7 +397,7 @@ export default function GenesisHero() {
               />
             </div>
             <span className="text-white/40 text-xs tracking-widest uppercase">Scroll to Enter</span>
-          </motion.div>
+          </div>
         )}
 
         {/* KONAVERSE reveal */}
