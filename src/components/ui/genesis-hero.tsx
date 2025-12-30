@@ -138,8 +138,14 @@ function UniverseStars({ progress }: { progress: number }) {
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={particleCount} array={positions.slice()} itemSize={3} />
-        <bufferAttribute attach="attributes-color" count={particleCount} array={colors} itemSize={3} />
+        <bufferAttribute 
+          attach="attributes-position" 
+          args={[positions.slice(), 3]} 
+        />
+        <bufferAttribute 
+          attach="attributes-color" 
+          args={[colors, 3]} 
+        />
       </bufferGeometry>
       <pointsMaterial 
         size={0.06} 
