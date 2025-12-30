@@ -4,7 +4,7 @@ import SiteNavbar from "@/components/layout/site-navbar";
 import AboutSection from "@/components/sections/about-section";
 import ContactSection from "@/components/sections/contact-section";
 import Footer from "@/components/sections/footer";
-import ProjectsVideoSection from "@/components/sections/projects-video-section";
+import GlobalProjectsSection from "@/components/sections/global-projects-section";
 import MissionSection from "@/components/sections/mission-section";
 import PlanetsSection from "@/components/sections/planets-section";
 import dynamic from "next/dynamic";
@@ -37,10 +37,8 @@ export default function Home() {
       {/* CHAPTER 3: Discover the Planets (Services) */}
       <PlanetsSection />
       
-      {/* CHAPTER 4: Space Station (Projects) */}
-      <section className="relative bg-[#030014]">
-        <ProjectsVideoSection />
-      </section>
+      {/* CHAPTER 4: Global Projects - Interactive Earth */}
+      <GlobalProjectsSection />
       
       {/* CHAPTER 5: About - Meet the Crew */}
       <AboutSection />
