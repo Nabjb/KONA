@@ -127,7 +127,6 @@ export function ParallaxComponent() {
                 <a href="#contact" style={{ pointerEvents: 'auto' }}>
                   <HoverBorderGradient
                     containerClassName="rounded-full"
-                    as="button"
                     className="bg-[#030014] text-white flex items-center gap-3 px-6 py-3 text-base font-semibold"
                   >
                     Book a Free Strategy Call
