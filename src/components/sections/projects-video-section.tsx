@@ -265,12 +265,12 @@ export default function ProjectsVideoSection() {
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="mb-12 md:mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
             className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
-          >
+        >
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-4">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -280,7 +280,7 @@ export default function ProjectsVideoSection() {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
                 Incoming{" "}
                 <span className="text-green-400">Transmissions</span>
-              </h2>
+          </h2>
               <p className="text-white/50 text-lg">
                 Signals from the digital worlds we&apos;ve built
               </p>
@@ -297,7 +297,7 @@ export default function ProjectsVideoSection() {
                 <span>UTC {currentTime}</span>
               </div>
             </div>
-          </motion.div>
+        </motion.div>
         </div>
 
         {/* Main display area */}
@@ -309,15 +309,15 @@ export default function ProjectsVideoSection() {
           <HUDCorner position="br" />
 
           {/* Projects grid */}
-          <motion.div 
+        <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-          >
-            {projects.map((project) => (
+        >
+          {projects.map((project) => (
               <TransmissionCard
-                key={project.id}
+              key={project.id}
                 project={project}
                 isActive={activeProject === project.id}
                 onClick={() => setActiveProject(
@@ -335,7 +335,7 @@ export default function ProjectsVideoSection() {
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            
+              
             <div className="flex items-center gap-2">
               {projects.map((project, i) => (
                 <button
@@ -348,17 +348,17 @@ export default function ProjectsVideoSection() {
                   }`}
                 />
               ))}
-            </div>
-
+                </div>
+                
             <button
               onClick={goNext}
               className="p-2 rounded-lg bg-white/5 border border-white/10 text-white/50 hover:text-white hover:border-green-500/30 transition-all"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
-          </div>
-        </div>
-
+                </div>
+              </div>
+              
         {/* Bottom status bar */}
         <motion.div 
           className="mt-12 p-4 rounded-xl bg-black/40 border border-white/5"
@@ -376,7 +376,7 @@ export default function ProjectsVideoSection() {
               <span className="text-green-400">■</span>
               <span>ALL SYSTEMS NOMINAL</span>
             </div>
-          </div>
+              </div>
         </motion.div>
       </div>
 

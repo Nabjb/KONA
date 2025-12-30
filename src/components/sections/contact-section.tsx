@@ -68,11 +68,11 @@ export default function ContactSection() {
   return (
     <section id="contact" className="relative min-h-screen bg-black overflow-hidden py-16 md:py-24">
       {/* Background effects */}
-      <div className="absolute inset-0">
+        <div className="absolute inset-0">
         {/* Grid */}
         <div 
           className="absolute inset-0 opacity-[0.03]"
-          style={{
+            style={{
             backgroundImage: `
               linear-gradient(rgba(0, 255, 255, 0.5) 1px, transparent 1px),
               linear-gradient(90deg, rgba(0, 255, 255, 0.5) 1px, transparent 1px)
@@ -119,7 +119,7 @@ export default function ContactSection() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6">
             <Radio className="w-4 h-4 text-cyan-400 animate-pulse" />
             <span className="text-cyan-400 text-sm font-mono tracking-wider">COMM_CHANNEL_OPEN</span>
-          </div>
+        </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
             Transmit a{" "}
@@ -158,7 +158,7 @@ export default function ContactSection() {
                   <span className="text-white/40">Signal Strength:</span>
                   <span className="text-green-400 flex items-center gap-1">
                     <Signal className="w-3 h-3" /> EXCELLENT
-                  </span>
+              </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/40">Channel:</span>
@@ -179,7 +179,7 @@ export default function ContactSection() {
               </div>
               
               <div className="space-y-3">
-                {[
+              {[
                   { code: "01", text: "Free 30-minute strategy consultation" },
                   { code: "02", text: "Custom mission plan for your brand" },
                   { code: "03", text: "Zero commitment required" },
@@ -235,30 +235,30 @@ export default function ContactSection() {
 
                 {/* Form content */}
                 <form onSubmit={handleSubmit} className="p-6 md:p-8">
-                  {/* Success overlay */}
+                {/* Success overlay */}
                   <AnimatePresence>
-                    {isSubmitted && (
-                      <motion.div
+                {isSubmitted && (
+                  <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="absolute inset-0 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center z-20 rounded-xl"
-                      >
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
                           transition={{ type: "spring" }}
                           className="w-20 h-20 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center mb-4"
-                        >
+                    >
                           <Send className="w-8 h-8 text-green-400" />
-                        </motion.div>
+                    </motion.div>
                         <h3 className="text-xl font-bold text-green-400 mb-2 font-mono">TRANSMISSION SUCCESSFUL</h3>
                         <p className="text-white/50 text-center text-sm">
                           Signal received at KONA Base.<br />
                           Expect response within 24 hours.
                         </p>
-                      </motion.div>
-                    )}
+                  </motion.div>
+                )}
                   </AnimatePresence>
 
                   {/* Terminal prompt */}
@@ -270,65 +270,65 @@ export default function ContactSection() {
                   {/* Sender ID field */}
                   <div className="mb-4">
                     <label className="text-cyan-500/70 text-xs font-mono mb-2 block">SENDER_ID:</label>
-                    <div className="relative">
-                      <User className={cn(
+                  <div className="relative">
+                    <User className={cn(
                         "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors duration-300",
                         focused === "name" ? "text-cyan-400" : "text-cyan-500/30"
-                      )} />
-                      <input
-                        type="text"
+                    )} />
+                    <input
+                      type="text"
                         placeholder="Enter your designation..."
-                        value={formState.name}
-                        onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        onFocus={() => setFocused("name")}
-                        onBlur={() => setFocused(null)}
-                        className={inputClasses}
-                        required
-                      />
-                    </div>
+                      value={formState.name}
+                      onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                      onFocus={() => setFocused("name")}
+                      onBlur={() => setFocused(null)}
+                      className={inputClasses}
+                      required
+                    />
                   </div>
+                </div>
 
                   {/* Frequency field */}
                   <div className="mb-4">
                     <label className="text-cyan-500/70 text-xs font-mono mb-2 block">RETURN_FREQUENCY:</label>
-                    <div className="relative">
-                      <Mail className={cn(
+                  <div className="relative">
+                    <Mail className={cn(
                         "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors duration-300",
                         focused === "email" ? "text-cyan-400" : "text-cyan-500/30"
-                      )} />
-                      <input
-                        type="email"
+                    )} />
+                    <input
+                      type="email"
                         placeholder="your@email.signal"
-                        value={formState.email}
-                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        onFocus={() => setFocused("email")}
-                        onBlur={() => setFocused(null)}
-                        className={inputClasses}
-                        required
-                      />
-                    </div>
+                      value={formState.email}
+                      onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                      onFocus={() => setFocused("email")}
+                      onBlur={() => setFocused(null)}
+                      className={inputClasses}
+                      required
+                    />
                   </div>
+                </div>
 
-                  {/* Message field */}
-                  <div className="mb-6">
+                {/* Message field */}
+                <div className="mb-6">
                     <label className="text-cyan-500/70 text-xs font-mono mb-2 block">MESSAGE_CONTENT:</label>
-                    <div className="relative">
-                      <MessageSquare className={cn(
+                  <div className="relative">
+                    <MessageSquare className={cn(
                         "absolute left-4 top-4 w-4 h-4 transition-colors duration-300",
                         focused === "message" ? "text-cyan-400" : "text-cyan-500/30"
-                      )} />
-                      <textarea
+                    )} />
+                    <textarea
                         placeholder="Describe your mission requirements..."
-                        value={formState.message}
-                        onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                        onFocus={() => setFocused("message")}
-                        onBlur={() => setFocused(null)}
-                        rows={4}
-                        className={cn(inputClasses, "resize-none")}
-                        required
-                      />
-                    </div>
+                      value={formState.message}
+                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                      onFocus={() => setFocused("message")}
+                      onBlur={() => setFocused(null)}
+                      rows={4}
+                      className={cn(inputClasses, "resize-none")}
+                      required
+                    />
                   </div>
+                </div>
 
                   {/* Transmission progress */}
                   {isSubmitting && (
@@ -347,47 +347,47 @@ export default function ContactSection() {
                     </div>
                   )}
 
-                  {/* Submit button */}
-                  <motion.button
-                    type="submit"
-                    disabled={isSubmitting}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={cn(
+                {/* Submit button */}
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={cn(
                       "w-full py-4 rounded-lg font-mono font-semibold",
                       "bg-gradient-to-r from-cyan-600 to-blue-600",
                       "text-white",
                       "hover:from-cyan-500 hover:to-blue-500",
-                      "transition-all duration-300",
+                    "transition-all duration-300",
                       "flex items-center justify-center gap-3",
                       "disabled:opacity-50 disabled:cursor-not-allowed",
                       "border border-cyan-500/30"
-                    )}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                        />
+                  )}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                      />
                         <span>TRANSMITTING...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
                         <span>TRANSMIT_SIGNAL</span>
-                      </>
-                    )}
-                  </motion.button>
+                    </>
+                  )}
+                </motion.button>
 
                   {/* Terminal footer */}
                   <div className="mt-4 pt-4 border-t border-cyan-500/10 text-center">
                     <p className="text-cyan-500/30 text-xs font-mono">
                       &gt; Secure transmission via KONA_PROTOCOL_v2.0
-                    </p>
-                  </div>
-                </form>
+                  </p>
+                </div>
+              </form>
               </div>
             </div>
           </motion.div>

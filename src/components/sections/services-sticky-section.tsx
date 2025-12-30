@@ -108,27 +108,27 @@ export default function ServicesStickySection() {
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#030014] to-transparent pointer-events-none z-20" />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+              transition={{ duration: 0.6 }}
           className="text-center mb-8 md:mb-12"
-        >
-          <span className="inline-block px-4 py-2 rounded-full bg-white/5 border border-white/10 text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">
-            Our Services
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
-            What We{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-              Do Best
-            </span>
-          </h2>
-        </motion.div>
+            >
+              <span className="inline-block px-4 py-2 rounded-full bg-white/5 border border-white/10 text-blue-400 text-sm font-medium tracking-wider uppercase mb-4">
+                Our Services
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
+                What We{" "}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                  Do Best
+                </span>
+              </h2>
+            </motion.div>
 
         {/* Glowing Grid */}
-        <motion.div
+                  <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -146,7 +146,7 @@ export default function ServicesStickySection() {
             {/* Desktop Grid Items */}
             {services.map((service) => (
               <GridItem
-                key={service.id}
+                    key={service.id}
                 area={service.area}
                 icon={<service.icon className="h-5 w-5 md:h-6 md:w-6" />}
                 title={service.title}
@@ -170,10 +170,10 @@ export default function ServicesStickySection() {
                   movementDuration={2}
                 />
                 <div className="absolute inset-1 rounded-full bg-[#030014]" />
-              </div>
+                        </div>
             </li>
           </ul>
-        </motion.div>
+                  </motion.div>
       </div>
 
       {/* Bottom fade */}

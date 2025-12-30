@@ -33,7 +33,7 @@ function GlitchText({ children, className }: { children: string; className?: str
       <span 
         className="absolute top-0 left-0 -ml-[2px] text-cyan-400 opacity-70 animate-pulse"
         style={{ clipPath: 'inset(0 0 50% 0)' }}
-      >
+    >
         {children}
       </span>
       <span 
@@ -78,7 +78,7 @@ function RadarPing() {
       <div className="absolute inset-0 rounded-full border border-cyan-500/30" />
       <div className="absolute inset-4 rounded-full border border-cyan-500/20" />
       <div className="absolute inset-8 rounded-full border border-cyan-500/10" />
-      <motion.div
+    <motion.div
         className="absolute inset-0 rounded-full border-2 border-cyan-400"
         initial={{ scale: 0, opacity: 1 }}
         animate={{ scale: 1.5, opacity: 0 }}
@@ -169,44 +169,44 @@ export default function AboutSection() {
           style={{ y }}
           className="absolute inset-0"
         >
-          <div 
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
                 linear-gradient(rgba(34, 211, 238, 0.3) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(34, 211, 238, 0.3) 1px, transparent 1px)
-              `,
+            `,
               backgroundSize: '50px 50px',
-            }}
-          />
+          }}
+        />
         </motion.div>
       </div>
 
       {/* Floating orbs */}
-      <motion.div 
+          <motion.div 
         animate={{ 
           x: [0, 30, 0],
           y: [0, -20, 0],
         }}
         transition={{ duration: 8, repeat: Infinity }}
         className="absolute top-40 right-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-[100px]"
-      />
-      <motion.div 
+          />
+          <motion.div 
         animate={{ 
           x: [0, -20, 0],
           y: [0, 30, 0],
         }}
         transition={{ duration: 10, repeat: Infinity }}
         className="absolute bottom-40 left-20 w-48 h-48 bg-purple-500/10 rounded-full blur-[80px]"
-      />
+          />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
-        
+          
         {/* Terminal Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
@@ -221,7 +221,7 @@ export default function AboutSection() {
             <div className="h-px flex-1 bg-gradient-to-r from-cyan-500/50 to-transparent" />
             <span className="text-cyan-400/60 text-xs font-mono">{currentTime} UTC</span>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <div className="text-cyan-400 font-mono text-sm">{'>'}</div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
@@ -351,22 +351,22 @@ export default function AboutSection() {
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-white/40 text-xs font-mono">{stat.label}</span>
                       <span className="text-green-400 text-xs">{stat.status}</span>
-                    </div>
+                  </div>
                     <div className="text-3xl font-bold text-white">
                       <CountUp target={stat.value} suffix={stat.suffix} />
-                    </div>
+                </div>
                     <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden">
-                      <motion.div
+            <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${stat.value}%` }}
-                        viewport={{ once: true }}
+              viewport={{ once: true }}
                         transition={{ duration: 1.5, delay: 0.5 + idx * 0.2 }}
                         className="h-full bg-gradient-to-r from-cyan-400 to-purple-400"
                       />
                     </div>
                   </div>
                 ))}
-              </div>
+                </div>
             </motion.div>
           </div>
         </div>
@@ -389,11 +389,11 @@ export default function AboutSection() {
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 font-bold">
                   unstoppable
                 </span>."
-              </p>
+            </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm">
-                  K
-                </div>
+              K
+            </div>
                 <div>
                   <div className="text-white font-mono text-sm">KONA_COMMAND</div>
                   <div className="text-white/40 text-xs font-mono">AUTHORITY: LEVEL_MAX</div>
