@@ -51,7 +51,7 @@ function ElegantShape({
             transition={{
                 duration: 2.4,
                 delay,
-                ease: [0.23, 0.86, 0.39, 0.96],
+                ease: [0.23, 0.86, 0.39, 0.96] as const,
                 opacity: { duration: 1.2 },
             }}
             style={{ y: parallaxSpeed ? y : 0, opacity: shapeOpacity }}
@@ -223,7 +223,7 @@ export default function ParallaxHeroWrapper() {
                         <motion.h1
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] as const }}
                             className="text-[13vw] leading-[0.9] font-semibold tracking-tight text-white"
                         >
                             We Build
@@ -231,7 +231,7 @@ export default function ParallaxHeroWrapper() {
                         <motion.h1
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.7, delay: 0.45, ease: [0.25, 0.4, 0.25, 1] }}
+                            transition={{ duration: 0.7, delay: 0.45, ease: [0.25, 0.4, 0.25, 1] as const }}
                             className="text-[13vw] leading-[0.9] font-semibold tracking-tight text-white"
                         >
                             Websites
@@ -239,7 +239,7 @@ export default function ParallaxHeroWrapper() {
                         <motion.h1
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.7, delay: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+                            transition={{ duration: 0.7, delay: 0.6, ease: [0.25, 0.4, 0.25, 1] as const }}
                             className="text-[13vw] leading-[0.9] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
                         >
                             That Print
@@ -247,7 +247,7 @@ export default function ParallaxHeroWrapper() {
                         <motion.h1
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.7, delay: 0.75, ease: [0.25, 0.4, 0.25, 1] }}
+                            transition={{ duration: 0.7, delay: 0.75, ease: [0.25, 0.4, 0.25, 1] as const }}
                             className="text-[13vw] leading-[0.9] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
                         >
                             Money

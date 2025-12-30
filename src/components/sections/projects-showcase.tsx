@@ -133,7 +133,7 @@ export default function ProjectsShowcase() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.4, ease: [0.23, 0.86, 0.39, 0.96] }}
+          transition={{ duration: 0.4, ease: [0.23, 0.86, 0.39, 0.96] as const }}
           className="relative"
         >
           {/* Glow effect */}
@@ -239,7 +239,7 @@ export default function ProjectsShowcase() {
                       initial={{ opacity: 0, y: 60 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -60 }}
-                      transition={{ duration: 0.5, ease: [0.23, 0.86, 0.39, 0.96] }}
+                      transition={{ duration: 0.5, ease: [0.23, 0.86, 0.39, 0.96] as const }}
                       className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight"
                     >
                       {currentProject.title}
@@ -345,7 +345,7 @@ export default function ProjectsShowcase() {
                     initial={{ opacity: 0, scale: 0.95, y: 30 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: -30 }}
-                    transition={{ duration: 0.6, ease: [0.23, 0.86, 0.39, 0.96] }}
+                    transition={{ duration: 0.6, ease: [0.23, 0.86, 0.39, 0.96] as const }}
                     className="w-full"
                   >
                     {/* Glow effect */}

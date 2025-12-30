@@ -36,15 +36,11 @@ function Stars({ count = 300 }: { count?: number }) {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
+          args={[positions, 3]}
         />
         <bufferAttribute
           attach="attributes-size"
-          count={count}
-          array={sizes}
-          itemSize={1}
+          args={[sizes, 1]}
         />
       </bufferGeometry>
       <pointsMaterial
@@ -107,7 +103,8 @@ function Nebula({ scrollProgress }: { scrollProgress: number }) {
   useFrame((state) => {
     if (!ref.current) return;
     ref.current.rotation.z = state.clock.elapsedTime * 0.02;
-    ref.current.material.opacity = 0.15 + Math.sin(state.clock.elapsedTime * 0.5) * 0.05;
+    const material = ref.current.material as THREE.MeshBasicMaterial;
+    material.opacity = 0.15 + Math.sin(state.clock.elapsedTime * 0.5) * 0.05;
   });
 
   return (
@@ -223,9 +220,7 @@ function EnergyParticles({ scrollProgress }: { scrollProgress: number }) {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={particleCount}
-          array={positions}
-          itemSize={3}
+          args={[positions, 3]}
         />
       </bufferGeometry>
       <pointsMaterial
