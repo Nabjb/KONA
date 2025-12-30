@@ -94,28 +94,46 @@ function UniverseStars({ progress }: { progress: number }) {
   useFrame(() => {
     if (!pointsRef.current) return;
     
+    // Early return if progress is outside visible range - prevents unnecessary calculations
+    if (progress < 0 || progress > 1.1) return;
+    
     const posArray = pointsRef.current.geometry.attributes.position.array as Float32Array;
     
     // Simple smooth interpolation - very GPU friendly!
     // Ease out cubic for smooth deceleration as stars reach final positions
-    const t = Math.min(1, progress);
+    const t = Math.min(1, Math.max(0, progress)); // Clamp between 0 and 1
     const easeT = 1 - Math.pow(1 - t, 2); // Smooth ease-out
     
-    for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3;
-      
-      // Linear interpolation from start to final position
-      posArray[i3] = startPositions[i3] + (finalPositions[i3] - startPositions[i3]) * easeT;
-      posArray[i3 + 1] = startPositions[i3 + 1] + (finalPositions[i3 + 1] - startPositions[i3 + 1]) * easeT;
-      posArray[i3 + 2] = startPositions[i3 + 2] + (finalPositions[i3 + 2] - startPositions[i3 + 2]) * easeT;
+    // Cache final positions when animation is complete (progress >= 1)
+    // This prevents recalculating when scrolling back up
+    if (t >= 1) {
+      // Stars are at final positions - only update if not already cached
+      if (posArray[0] !== finalPositions[0]) {
+        for (let i = 0; i < particleCount; i++) {
+          const i3 = i * 3;
+          posArray[i3] = finalPositions[i3];
+          posArray[i3 + 1] = finalPositions[i3 + 1];
+          posArray[i3 + 2] = finalPositions[i3 + 2];
+        }
+        pointsRef.current.geometry.attributes.position.needsUpdate = true;
+      }
+    } else {
+      // Only update positions if still animating
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        
+        // Linear interpolation from start to final position
+        posArray[i3] = startPositions[i3] + (finalPositions[i3] - startPositions[i3]) * easeT;
+        posArray[i3 + 1] = startPositions[i3 + 1] + (finalPositions[i3 + 1] - startPositions[i3 + 1]) * easeT;
+        posArray[i3 + 2] = startPositions[i3 + 2] + (finalPositions[i3 + 2] - startPositions[i3 + 2]) * easeT;
+      }
+      pointsRef.current.geometry.attributes.position.needsUpdate = true;
     }
-    
-    pointsRef.current.geometry.attributes.position.needsUpdate = true;
     
     // Stars visible immediately when scene appears
     const mat = pointsRef.current.material as THREE.PointsMaterial;
     // Ensure stars are always visible (minimum 0.7 opacity), brighter as they approach
-    mat.opacity = Math.max(0.7, Math.min(1, 0.7 + progress * 0.3));
+    mat.opacity = Math.max(0.7, Math.min(1, 0.7 + t * 0.3));
   });
 
   return (
@@ -204,10 +222,14 @@ export default function GenesisHero() {
   const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
   
   // Astronaut opacity - combined with entrance animation
-  const astronautScrollOpacity = useTransform(scrollYProgress, [0, 0.28, 0.32, 0.38], [1, 1, 0.8, 0]);
+  // Extended range for smoother transitions when scrolling back
+  const astronautScrollOpacity = useTransform(scrollYProgress, [0, 0.28, 0.32, 0.4], [1, 1, 0.8, 0]);
   const astronautCombinedOpacity = useTransform(
     [entranceOpacity, astronautScrollOpacity],
-    ([entrance, scroll]: number[]) => entrance * scroll
+    ([entrance, scroll]: number[]) => {
+      // Ensure smooth transitions - clamp values to prevent flickering
+      return Math.max(0, Math.min(1, entrance * scroll));
+    }
   );
   
   // 3D scene visibility - only shows once we're "inside" the visor
@@ -220,7 +242,13 @@ export default function GenesisHero() {
         {/* 3D Canvas - The explosion happens INSIDE the visor */}
         <motion.div 
           className="absolute inset-0 z-10"
-          style={{ opacity: sceneOpacity }}
+          style={{ 
+            opacity: sceneOpacity,
+            willChange: scrollProgress > 0.25 && scrollProgress < 0.4 ? 'opacity' : 'auto',
+            pointerEvents: 'none',
+            backfaceVisibility: 'hidden',
+            transform: 'translateZ(0)' // Force GPU acceleration
+          }}
         >
           <Suspense fallback={null}>
             <Canvas
@@ -229,7 +257,7 @@ export default function GenesisHero() {
               gl={{ antialias: true, alpha: true }}
               style={{ background: "transparent" }}
             >
-              <Scene scrollProgress={Math.max(0, (scrollProgress - 0.3) / 0.7)} />
+              <Scene scrollProgress={Math.max(0, Math.min(1, (scrollProgress - 0.3) / 0.7))} />
             </Canvas>
           </Suspense>
         </motion.div>
@@ -245,6 +273,9 @@ export default function GenesisHero() {
             opacity: astronautCombinedOpacity,
             y: astronautY,
             transformOrigin: "50% 35%", // Focus on visor/face area
+            willChange: scrollProgress < 0.4 ? 'transform, opacity' : 'auto',
+            backfaceVisibility: 'hidden',
+            transform: 'translateZ(0)' // Force GPU acceleration
           }}
         >
           <img
