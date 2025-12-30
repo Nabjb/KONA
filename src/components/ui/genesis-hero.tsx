@@ -51,88 +51,70 @@ function useCircleTexture(color: string = "#ffffff", glow: boolean = true) {
 
 function UniverseStars({ progress }: { progress: number }) {
   const pointsRef = useRef<THREE.Points>(null);
-  const particleCount = 2000;
+  const particleCount = 1500; // Reduced for better mobile performance
   const circleTexture = useCircleTexture("#ffffff", false);
   
-  const { positions, starPositions, colors, sizes } = useMemo(() => {
-    const pos = new Float32Array(particleCount * 3);
-    const stars = new Float32Array(particleCount * 3);
+  const { startPositions, finalPositions, colors } = useMemo(() => {
+    const start = new Float32Array(particleCount * 3);
+    const final = new Float32Array(particleCount * 3);
     const cols = new Float32Array(particleCount * 3);
-    const szs = new Float32Array(particleCount);
     
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
       
-      // Start clustered at center
-      pos[i3] = (Math.random() - 0.5) * 0.5;
-      pos[i3 + 1] = (Math.random() - 0.5) * 0.5;
-      pos[i3 + 2] = (Math.random() - 0.5) * 0.5;
-      
-      // Final star positions spread across sky
-      const r = 20 + Math.random() * 60;
+      // Final star positions - spread across the sky dome
+      const r = 15 + Math.random() * 50;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
-      stars[i3] = r * Math.sin(phi) * Math.cos(theta);
-      stars[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      stars[i3 + 2] = r * Math.cos(phi) - 10;
+      final[i3] = r * Math.sin(phi) * Math.cos(theta);
+      final[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      final[i3 + 2] = r * Math.cos(phi) - 5;
       
-      // Star colors: mostly white with some blue/purple/gold
+      // Start positions - far behind viewer (creates "flying through space" effect)
+      // Stars start along the same direction but much further back
+      const startDistance = 0.1 + Math.random() * 0.3; // Start very close to center
+      start[i3] = final[i3] * startDistance;
+      start[i3 + 1] = final[i3 + 1] * startDistance;
+      start[i3 + 2] = final[i3 + 2] * startDistance + 50; // Start behind camera
+      
+      // Star colors: mostly white with some blue/purple tints
       const c = Math.random();
-      if (c < 0.5) { 
+      if (c < 0.6) { 
         cols[i3] = 1; cols[i3+1] = 1; cols[i3+2] = 1; // White
-      } else if (c < 0.7) { 
-        cols[i3] = 0.7; cols[i3+1] = 0.8; cols[i3+2] = 1; // Blue-white
-      } else if (c < 0.85) { 
-        cols[i3] = 0.9; cols[i3+1] = 0.7; cols[i3+2] = 1; // Purple-white
+      } else if (c < 0.8) { 
+        cols[i3] = 0.8; cols[i3+1] = 0.85; cols[i3+2] = 1; // Blue-white
       } else { 
-        cols[i3] = 1; cols[i3+1] = 0.9; cols[i3+2] = 0.7; // Warm white
+        cols[i3] = 0.95; cols[i3+1] = 0.8; cols[i3+2] = 1; // Purple-white
       }
-      
-      // Varied sizes - most small, some larger
-      szs[i] = Math.random() < 0.9 ? 0.02 + Math.random() * 0.04 : 0.06 + Math.random() * 0.08;
     }
     
-    return { positions: pos, starPositions: stars, colors: cols, sizes: szs };
+    return { startPositions: start, finalPositions: final, colors: cols };
   }, []);
 
-  useFrame((state) => {
+  useFrame(() => {
     if (!pointsRef.current) return;
     
     const posArray = pointsRef.current.geometry.attributes.position.array as Float32Array;
-    const time = state.clock.elapsedTime;
+    
+    // Simple smooth interpolation - very GPU friendly!
+    // Ease out cubic for smooth deceleration as stars reach final positions
+    const t = Math.min(1, progress);
+    const easeT = 1 - Math.pow(1 - t, 2); // Smooth ease-out
     
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
       
-      if (progress < 0.15) {
-        // Swirling at center before explosion
-        const swirl = time * 2 + i * 0.01;
-        const radius = 0.3 + progress * 3;
-        posArray[i3] = Math.cos(swirl) * radius * 0.4 * (1 + Math.sin(i));
-        posArray[i3 + 1] = Math.sin(swirl) * radius * 0.4 * (1 + Math.cos(i));
-        posArray[i3 + 2] = Math.sin(time + i * 0.1) * 0.2;
-      } else if (progress < 0.7) {
-        // Explosion outward - SLOWER (longer duration)
-        const t = (progress - 0.15) / 0.55; // Increased from 0.35 to 0.55
-        const easeT = 1 - Math.pow(1 - t, 3); // Slower ease out (cubic instead of quadratic)
-        posArray[i3] = starPositions[i3] * easeT * 0.8;
-        posArray[i3 + 1] = starPositions[i3 + 1] * easeT * 0.8;
-        posArray[i3 + 2] = starPositions[i3 + 2] * easeT * 0.8;
-      } else {
-        // Settle into final positions with subtle twinkle
-        const t = Math.min(1, (progress - 0.7) / 0.2); // Adjusted start point
-        const twinkle = 1 + Math.sin(time * 3 + i) * 0.02;
-        posArray[i3] = starPositions[i3] * (0.8 + t * 0.2) * twinkle;
-        posArray[i3 + 1] = starPositions[i3 + 1] * (0.8 + t * 0.2) * twinkle;
-        posArray[i3 + 2] = starPositions[i3 + 2] * (0.8 + t * 0.2);
-      }
+      // Linear interpolation from start to final position
+      posArray[i3] = startPositions[i3] + (finalPositions[i3] - startPositions[i3]) * easeT;
+      posArray[i3 + 1] = startPositions[i3 + 1] + (finalPositions[i3 + 1] - startPositions[i3 + 1]) * easeT;
+      posArray[i3 + 2] = startPositions[i3 + 2] + (finalPositions[i3 + 2] - startPositions[i3 + 2]) * easeT;
     }
     
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
     
-    // Fade in
+    // Smooth fade in
     const mat = pointsRef.current.material as THREE.PointsMaterial;
-    mat.opacity = progress < 0.1 ? progress * 10 : 1;
+    mat.opacity = Math.min(1, progress * 3); // Fade in over first 33% of scroll
   });
 
   return (
@@ -140,7 +122,7 @@ function UniverseStars({ progress }: { progress: number }) {
       <bufferGeometry>
         <bufferAttribute 
           attach="attributes-position" 
-          args={[positions.slice(), 3]} 
+          args={[startPositions.slice(), 3]} 
         />
         <bufferAttribute 
           attach="attributes-color" 
