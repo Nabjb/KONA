@@ -49,7 +49,7 @@ function useCircleTexture(color: string = "#ffffff", glow: boolean = true) {
 // UNIVERSE STARS - The stars that form after explosion
 // ============================================
 
-function UniverseStars({ progress }: { progress: number }) {
+function UniverseStars({ progress, isVisible }: { progress: number; isVisible: boolean }) {
   const pointsRef = useRef<THREE.Points>(null);
   const particleCount = 1500; // Reduced for better mobile performance
   const circleTexture = useCircleTexture("#ffffff", false);
@@ -92,7 +92,7 @@ function UniverseStars({ progress }: { progress: number }) {
   }, []);
 
   useFrame(() => {
-    if (!pointsRef.current) return;
+    if (!pointsRef.current || !isVisible) return; // Skip all updates when not visible
     
     // Early return if progress is outside visible range - prevents unnecessary calculations
     if (progress < 0 || progress > 1.1) return;
@@ -166,11 +166,11 @@ function UniverseStars({ progress }: { progress: number }) {
 // SCENE - Clean and simple, just stars
 // ============================================
 
-function Scene({ scrollProgress }: { scrollProgress: number }) {
+function Scene({ scrollProgress, isVisible }: { scrollProgress: number; isVisible: boolean }) {
   return (
     <>
       <ambientLight intensity={0.1} />
-      <UniverseStars progress={scrollProgress} />
+      <UniverseStars progress={scrollProgress} isVisible={isVisible} />
     </>
   );
 }
@@ -182,6 +182,7 @@ function Scene({ scrollProgress }: { scrollProgress: number }) {
 export default function GenesisHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isSceneVisible, setIsSceneVisible] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -190,6 +191,9 @@ export default function GenesisHero() {
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     setScrollProgress(v);
+    // Only render scene when scroll is in the visible range (0.25 to 0.4)
+    // Add small buffer to prevent flickering at boundaries
+    setIsSceneVisible(v >= 0.24 && v <= 0.41);
   });
 
   // Astronaut zoom: Start ZOOMED OUT, zoom INTO visor as you scroll (VERY SLOW)
@@ -244,6 +248,7 @@ export default function GenesisHero() {
           className="absolute inset-0 z-10"
           style={{ 
             opacity: sceneOpacity,
+            visibility: isSceneVisible ? 'visible' : 'hidden', // Stop rendering when not visible
             willChange: scrollProgress > 0.25 && scrollProgress < 0.4 ? 'opacity' : 'auto',
             pointerEvents: 'none',
             backfaceVisibility: 'hidden',
@@ -257,7 +262,10 @@ export default function GenesisHero() {
               gl={{ antialias: true, alpha: true }}
               style={{ background: "transparent" }}
             >
-              <Scene scrollProgress={Math.max(0, Math.min(1, (scrollProgress - 0.3) / 0.7))} />
+              <Scene 
+                scrollProgress={Math.max(0, Math.min(1, (scrollProgress - 0.3) / 0.7))} 
+                isVisible={isSceneVisible}
+              />
             </Canvas>
           </Suspense>
         </motion.div>
@@ -288,7 +296,12 @@ export default function GenesisHero() {
                 : scrollProgress < 0.32
                   ? `drop-shadow(0 0 60px rgba(100, 80, 255, 0.6)) brightness(1.1)`
                   : `drop-shadow(0 0 30px rgba(100, 150, 255, 0.3))`,
+              willChange: scrollProgress < 0.4 ? 'filter, transform, opacity' : 'auto',
+              backfaceVisibility: 'hidden',
+              imageRendering: 'auto',
             }}
+            loading="eager"
+            decoding="async"
           />
         </motion.div>
 
