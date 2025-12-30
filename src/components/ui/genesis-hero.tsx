@@ -4,7 +4,30 @@ import { useRef, useMemo, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useScroll, useTransform, motion, useMotionValueEvent } from "framer-motion";
-import { SiReact, SiNextdotjs, SiTypescript, SiThreedotjs, SiTailwindcss, SiFramer } from "react-icons/si";
+import { 
+  SiReact, 
+  SiNextdotjs, 
+  SiTypescript, 
+  SiThreedotjs, 
+  SiTailwindcss, 
+  SiFramer,
+  SiHtml5,
+  SiCss3,
+  SiJavascript,
+  SiNodedotjs,
+  SiGit,
+  SiGithub,
+  SiFigma,
+  SiVercel,
+  SiInstagram,
+  SiFacebook,
+  SiTwitter,
+  SiLinkedin,
+  SiYoutube,
+  SiTiktok,
+  SiPinterest,
+  SiDiscord
+} from "react-icons/si";
 
 // ============================================
 // CIRCULAR PARTICLE TEXTURE - Makes particles round, not square!
@@ -276,84 +299,75 @@ export default function GenesisHero() {
           style={{ opacity: visorDarknessOpacity }}
         />
 
-        {/* Tech Stack HUD - Holographic display in visor glass */}
+        {/* Tech Stack Scrolling Bar - Behind the astronaut */}
         <motion.div 
-          className="absolute inset-0 z-[20] flex flex-col items-center pointer-events-none px-4"
+          className="absolute w-full z-[5] pointer-events-none overflow-hidden"
           style={{ 
             opacity: techHudOpacity,
-            top: "42%", // Positioned below the intro text
+            top: "50%", 
+            transform: "translateY(-50%)"
           }}
         >
-          <div className="relative w-full max-w-lg">
-            {/* Compact HUD Frame */}
-            <div className="relative p-4 md:p-5 rounded-lg border border-cyan-400/20 bg-cyan-500/5 backdrop-blur-sm">
-              {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-cyan-400/50" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-cyan-400/50" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-cyan-400/50" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-400/50" />
-              
-              {/* HUD Label */}
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <motion.div 
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
-                />
-                <span className="text-cyan-400/80 font-mono text-[10px] md:text-xs tracking-wider">
-                  CREATOR_TOOLS
-                </span>
-              </div>
-
-              {/* Tech Logos Grid - Compact */}
-              <div className="grid grid-cols-6 gap-3 md:gap-4">
+          {/* Animated scrolling bar */}
+          <motion.div 
+            className="flex gap-8 md:gap-12"
+            animate={{ x: [0, -2400] }}
+            transition={{ 
+              x: {
+                duration: 40, 
+                repeat: Infinity, 
+                ease: "linear" 
+              }
+            }}
+          >
+            {/* Duplicate the tech logos twice for seamless infinite scroll */}
+            {[...Array(2)].map((_, setIdx) => (
+              <div key={setIdx} className="flex gap-8 md:gap-12 items-center">
                 {[
-                  { name: 'React', color: 'rgba(97, 218, 251, 0.8)', icon: SiReact },
-                  { name: 'Next.js', color: 'rgba(255, 255, 255, 0.8)', icon: SiNextdotjs },
-                  { name: 'TypeScript', color: 'rgba(49, 120, 198, 0.8)', icon: SiTypescript },
-                  { name: 'Three.js', color: 'rgba(255, 255, 255, 0.8)', icon: SiThreedotjs },
-                  { name: 'Tailwind', color: 'rgba(56, 189, 248, 0.8)', icon: SiTailwindcss },
-                  { name: 'Framer', color: 'rgba(221, 70, 221, 0.8)', icon: SiFramer },
+                  { name: 'HTML5', color: '#E34F26', icon: SiHtml5 },
+                  { name: 'CSS3', color: '#1572B6', icon: SiCss3 },
+                  { name: 'JavaScript', color: '#F7DF1E', icon: SiJavascript },
+                  { name: 'React', color: '#61DAFB', icon: SiReact },
+                  { name: 'Next.js', color: '#FFFFFF', icon: SiNextdotjs },
+                  { name: 'TypeScript', color: '#3178C6', icon: SiTypescript },
+                  { name: 'Three.js', color: '#FFFFFF', icon: SiThreedotjs },
+                  { name: 'Tailwind', color: '#06B6D4', icon: SiTailwindcss },
+                  { name: 'Framer', color: '#DD4DDD', icon: SiFramer },
+                  { name: 'Node.js', color: '#339933', icon: SiNodedotjs },
+                  { name: 'Git', color: '#F05032', icon: SiGit },
+                  { name: 'GitHub', color: '#FFFFFF', icon: SiGithub },
+                  { name: 'Figma', color: '#F24E1E', icon: SiFigma },
+                  { name: 'Vercel', color: '#FFFFFF', icon: SiVercel },
+                  { name: 'Instagram', color: '#E4405F', icon: SiInstagram },
+                  { name: 'Facebook', color: '#1877F2', icon: SiFacebook },
+                  { name: 'Twitter', color: '#1DA1F2', icon: SiTwitter },
+                  { name: 'LinkedIn', color: '#0A66C2', icon: SiLinkedin },
+                  { name: 'YouTube', color: '#FF0000', icon: SiYoutube },
+                  { name: 'TikTok', color: '#FFFFFF', icon: SiTiktok },
+                  { name: 'Pinterest', color: '#E60023', icon: SiPinterest },
+                  { name: 'Discord', color: '#5865F2', icon: SiDiscord },
                 ].map((tech, idx) => (
-                  <motion.div
-                    key={tech.name}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ 
-                      opacity: 1, 
-                      scale: 1,
-                      y: [0, -3, 0],
-                    }}
-                    transition={{
-                      opacity: { delay: 0.2 + idx * 0.05, duration: 0.3 },
-                      scale: { delay: 0.2 + idx * 0.05, duration: 0.3 },
-                      y: { 
-                        delay: 0.8 + idx * 0.1,
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }
-                    }}
-                    className="flex items-center justify-center"
+                  <div
+                    key={`${setIdx}-${tech.name}`}
+                    className="flex-shrink-0"
                   >
-                    {/* Tech Icon */}
                     <div 
-                      className="w-8 h-8 md:w-10 md:h-10 rounded flex items-center justify-center backdrop-blur-sm border border-opacity-50"
+                      className="w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center backdrop-blur-md border border-white/10"
                       style={{ 
-                        backgroundColor: `${tech.color.replace('0.8', '0.05')}`,
-                        borderColor: tech.color,
-                        boxShadow: `0 0 15px ${tech.color.replace('0.8', '0.2')}`
+                        backgroundColor: `${tech.color}15`,
+                        boxShadow: `0 0 20px ${tech.color}40, inset 0 0 10px ${tech.color}20`
                       }}
                     >
                       <tech.icon 
-                        className="w-4 h-4 md:w-5 md:h-5"
+                        className="w-6 h-6 md:w-8 md:h-8"
                         style={{ color: tech.color }}
                       />
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </div>
-          </div>
+            ))}
+          </motion.div>
         </motion.div>
 
         {/* Opening text - Inside the visor/glass */}
