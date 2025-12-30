@@ -6,6 +6,16 @@ import { cn } from "@/lib/utils";
 
 type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
 
+interface HoverBorderGradientProps {
+  children: React.ReactNode;
+  as?: React.ElementType;
+  containerClassName?: string;
+  className?: string;
+  duration?: number;
+  clockwise?: boolean;
+  [key: string]: unknown;
+}
+
 export function HoverBorderGradient({
   children,
   containerClassName,
@@ -14,15 +24,7 @@ export function HoverBorderGradient({
   duration = 1,
   clockwise = true,
   ...props
-}: React.PropsWithChildren<
-  {
-    as?: React.ElementType;
-    containerClassName?: string;
-    className?: string;
-    duration?: number;
-    clockwise?: boolean;
-  } & React.HTMLAttributes<HTMLElement>
->) {
+}: HoverBorderGradientProps) {
   const [hovered, setHovered] = useState<boolean>(false);
   const [direction, setDirection] = useState<Direction>("TOP");
 
@@ -56,8 +58,10 @@ export function HoverBorderGradient({
     }
   }, [hovered, duration]);
 
+  const Component = Tag as React.ElementType;
+  
   return (
-    <Tag
+    <Component
       onMouseEnter={() => {
         setHovered(true);
       }}
@@ -95,7 +99,7 @@ export function HoverBorderGradient({
         transition={{ ease: "linear", duration: duration ?? 1 }}
       />
       <div className="bg-black absolute z-1 flex-none inset-[2px] rounded-[100px]" />
-    </Tag>
+    </Component>
   );
 }
 
