@@ -210,8 +210,8 @@ export default function GenesisHero() {
   const introTextOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
   const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
   
-  // Tech stack HUD visibility - appears as holographic display in visor
-  const techHudOpacity = useTransform(scrollYProgress, [0.08, 0.15, 0.25, 0.3], [0, 1, 1, 0]);
+  // Tech stack HUD visibility - visible from start, fades with intro text
+  const techHudOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
   
   // 3D scene visibility - only shows once we're "inside" the visor
   const sceneOpacity = useTransform(scrollYProgress, [0.25, 0.32], [0, 1]);
@@ -276,34 +276,37 @@ export default function GenesisHero() {
           style={{ opacity: visorDarknessOpacity }}
         />
 
-        {/* Tech Stack HUD - Holographic display inside visor */}
+        {/* Tech Stack HUD - Holographic display in visor glass */}
         <motion.div 
-          className="absolute inset-0 z-[20] flex items-center justify-center pointer-events-none"
-          style={{ opacity: techHudOpacity }}
+          className="absolute inset-0 z-[20] flex flex-col items-center pointer-events-none px-4"
+          style={{ 
+            opacity: techHudOpacity,
+            top: "42%", // Positioned below the intro text
+          }}
         >
-          <div className="relative w-full max-w-2xl px-4">
-            {/* HUD Frame */}
-            <div className="relative p-8 rounded-lg border border-cyan-400/30 bg-cyan-500/5 backdrop-blur-sm">
+          <div className="relative w-full max-w-lg">
+            {/* Compact HUD Frame */}
+            <div className="relative p-4 md:p-5 rounded-lg border border-cyan-400/20 bg-cyan-500/5 backdrop-blur-sm">
               {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400" />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400" />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400" />
+              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-cyan-400/50" />
+              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-cyan-400/50" />
+              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-cyan-400/50" />
+              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-400/50" />
               
-              {/* HUD Header */}
-              <div className="flex items-center gap-2 mb-6 pb-3 border-b border-cyan-400/20">
+              {/* HUD Label */}
+              <div className="flex items-center justify-center gap-2 mb-3">
                 <motion.div 
                   animate={{ opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+                  className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
                 />
-                <span className="text-cyan-400 font-mono text-xs md:text-sm tracking-wider">
-                  CREATOR_TOOLS.SYS
+                <span className="text-cyan-400/80 font-mono text-[10px] md:text-xs tracking-wider">
+                  CREATOR_TOOLS
                 </span>
               </div>
 
-              {/* Tech Logos Grid */}
-              <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6">
+              {/* Tech Logos Grid - Compact */}
+              <div className="grid grid-cols-6 gap-3 md:gap-4">
                 {[
                   { name: 'React', color: 'rgba(97, 218, 251, 0.8)', icon: SiReact },
                   { name: 'Next.js', color: 'rgba(255, 255, 255, 0.8)', icon: SiNextdotjs },
@@ -314,57 +317,40 @@ export default function GenesisHero() {
                 ].map((tech, idx) => (
                   <motion.div
                     key={tech.name}
-                    initial={{ opacity: 0, scale: 0.5, y: 20 }}
+                    initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ 
                       opacity: 1, 
-                      scale: 1, 
-                      y: [0, -5, 0],
+                      scale: 1,
+                      y: [0, -3, 0],
                     }}
                     transition={{
-                      opacity: { delay: 0.1 + idx * 0.05, duration: 0.3 },
-                      scale: { delay: 0.1 + idx * 0.05, duration: 0.3 },
+                      opacity: { delay: 0.2 + idx * 0.05, duration: 0.3 },
+                      scale: { delay: 0.2 + idx * 0.05, duration: 0.3 },
                       y: { 
-                        delay: 0.5 + idx * 0.1,
+                        delay: 0.8 + idx * 0.1,
                         duration: 2,
                         repeat: Infinity,
                         ease: "easeInOut"
                       }
                     }}
-                    className="flex flex-col items-center gap-2"
+                    className="flex items-center justify-center"
                   >
                     {/* Tech Icon */}
                     <div 
-                      className="w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center backdrop-blur-sm border"
+                      className="w-8 h-8 md:w-10 md:h-10 rounded flex items-center justify-center backdrop-blur-sm border border-opacity-50"
                       style={{ 
                         backgroundColor: `${tech.color.replace('0.8', '0.05')}`,
                         borderColor: tech.color,
-                        boxShadow: `0 0 20px ${tech.color.replace('0.8', '0.3')}`
+                        boxShadow: `0 0 15px ${tech.color.replace('0.8', '0.2')}`
                       }}
                     >
                       <tech.icon 
-                        className="w-6 h-6 md:w-8 md:h-8"
+                        className="w-4 h-4 md:w-5 md:h-5"
                         style={{ color: tech.color }}
                       />
                     </div>
-                    {/* Tech Name */}
-                    <span 
-                      className="text-[10px] md:text-xs font-mono tracking-wide"
-                      style={{ color: tech.color }}
-                    >
-                      {tech.name}
-                    </span>
                   </motion.div>
                 ))}
-              </div>
-
-              {/* HUD Footer */}
-              <div className="mt-6 pt-3 border-t border-cyan-400/20 flex justify-between items-center">
-                <span className="text-cyan-400/60 font-mono text-[10px] md:text-xs">
-                  STATUS: ONLINE
-                </span>
-                <span className="text-cyan-400/60 font-mono text-[10px] md:text-xs">
-                  READY_TO_CREATE
-                </span>
               </div>
             </div>
           </div>
