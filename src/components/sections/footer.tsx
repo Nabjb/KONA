@@ -126,31 +126,31 @@ export default function Footer() {
             >
               <div className="p-6 rounded-lg border border-cyan-500/20 bg-black/40 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-4">
-                  <img
-                    src="/kona websites screenshots/KONALOGO.png"
+                <img
+                  src="/kona websites screenshots/KONALOGO.png"
                     alt="KONA"
                     className="w-10 h-10 rounded-lg"
-                  />
+                />
                   <div>
                     <div className="text-white font-bold font-mono">KONA_SOCIALS</div>
                     <div className="text-cyan-400/60 text-xs font-mono">DIGITAL_SYSTEMS</div>
                   </div>
-                </div>
-                
+              </div>
+
                 <p className="text-white/50 text-sm mb-4 font-mono leading-relaxed">
                   {'>'} Crafting mission-critical digital experiences that transform brands into market leaders.
-                </p>
+              </p>
 
                 <div className="space-y-2">
                   <a 
                     href="mailto:hello@konasocials.com" 
                     className="flex items-center gap-2 text-cyan-400/70 hover:text-cyan-400 transition-colors group"
                   >
-                    <Mail className="w-4 h-4" />
+                  <Mail className="w-4 h-4" />
                     <span className="text-xs font-mono">hello@konasocials.com</span>
-                  </a>
+                </a>
                   <div className="flex items-center gap-2 text-cyan-400/70">
-                    <MapPin className="w-4 h-4" />
+                  <MapPin className="w-4 h-4" />
                     <span className="text-xs font-mono">LOCATION: CYPRUS</span>
                   </div>
                 </div>
@@ -171,18 +171,18 @@ export default function Footer() {
                 </div>
                 <ul className="space-y-2">
                   {footerLinks.navigation.map((link) => (
-                    <li key={link.name}>
-                      <a
-                        href={link.href}
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
                         className="text-white/50 hover:text-cyan-400 transition-colors text-xs font-mono inline-flex items-center gap-2 group"
-                      >
+                    >
                         <span className="text-cyan-400/50">{'>'}</span>
-                        {link.name}
+                      {link.name}
                         <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                    </a>
+                  </li>
+                ))}
+              </ul>
               </div>
             </motion.div>
 
@@ -233,33 +233,33 @@ export default function Footer() {
           </div>
 
           {/* Bottom Terminal Bar */}
-          <motion.div
+            <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+              viewport={{ once: true }}
             transition={{ delay: 0.4 }}
             className="pt-6 border-t border-white/[0.05]"
           >
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex items-center gap-2 text-white/30 text-xs font-mono">
                 <span className="text-cyan-400/50">{'>'}</span>
                 <span>© {currentYear} KONA_SOCIALS</span>
                 <span className="text-cyan-400/30">|</span>
                 <span>ALL_SYSTEMS_GO</span>
               </div>
-              
+            
               <div className="flex gap-4">
-                {footerLinks.legal.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
+              {footerLinks.legal.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
                     className="text-white/30 hover:text-cyan-400 transition-colors text-xs font-mono"
-                  >
-                    {link.name}
-                  </a>
-                ))}
-              </div>
+                >
+                  {link.name}
+                </a>
+              ))}
             </div>
+          </div>
 
             <div className="mt-4 text-center">
               <p className="text-white/20 text-xs font-mono">

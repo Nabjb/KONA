@@ -191,19 +191,30 @@ export default function GenesisHero() {
     setScrollProgress(v);
   });
 
-  // Astronaut zoom: Start ZOOMED OUT, zoom INTO visor as you scroll (VERY SLOW)
+  // Astronaut zoom: Start ZOOMED OUT, zoom INTO visor as you scroll (SMOOTH & SLOW)
   // 0%: Full astronaut visible (scale 1)
-  // 30%: Zoomed into visor (scale 12)
-  // After 30%: Stay zoomed in, astronaut fades, explosion happens inside
-  const astronautScale = useTransform(scrollYProgress, [0, 0.3], [1, 12]);
-  const astronautOpacity = useTransform(scrollYProgress, [0, 0.28, 0.32, 0.38], [1, 1, 0.8, 0]);
-  const astronautY = useTransform(scrollYProgress, [0, 0.3], ["0%", "-20%"]); // Move up as we zoom into face
+  // 50%: Zoomed into visor (scale 12) - Extended range for smoother mobile experience
+  // After 50%: Stay zoomed in, astronaut fades, explosion happens inside
+  // Custom easing function for smoother zoom
+  const astronautScale = useTransform(scrollYProgress, (latest) => {
+    if (latest <= 0) return 1;
+    if (latest >= 0.5) return 12;
+    // Smooth easing: easeInOutCubic for smoother transition
+    const t = latest / 0.5;
+    const eased = t < 0.5 
+      ? 4 * t * t * t 
+      : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    return 1 + (eased * 11); // Scale from 1 to 12
+  });
   
-  // Vignette effect - subtle, gets stronger as we zoom in
-  const vignetteOpacity = useTransform(scrollYProgress, [0, 0.18, 0.26, 0.32], [0, 0.3, 0.5, 0]);
+  const astronautOpacity = useTransform(scrollYProgress, [0, 0.45, 0.52, 0.6], [1, 1, 0.8, 0]);
+  const astronautY = useTransform(scrollYProgress, [0, 0.5], ["0%", "-20%"]); // Move up as we zoom into face
   
-  // Darkness overlay to simulate entering the visor - quick flash
-  const visorDarknessOpacity = useTransform(scrollYProgress, [0.26, 0.30, 0.35], [0, 0.8, 0]);
+  // Vignette effect - subtle, gets stronger as we zoom in (extended range)
+  const vignetteOpacity = useTransform(scrollYProgress, [0, 0.3, 0.42, 0.52], [0, 0.3, 0.5, 0]);
+  
+  // Darkness overlay to simulate entering the visor - smoother transition
+  const visorDarknessOpacity = useTransform(scrollYProgress, [0.42, 0.48, 0.55], [0, 0.8, 0]);
   
   // Entrance animation opacity - fades in on mount
   const entranceOpacity = useMotionValue(0);
@@ -212,23 +223,23 @@ export default function GenesisHero() {
     animate(entranceOpacity, 1, { duration: 1.2, ease: [0.4, 0, 0.2, 1] });
   }, [entranceOpacity]);
   
-  // Text overlays - combined with entrance animation
-  const introTextScrollOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  // Text overlays - combined with entrance animation (extended fade out)
+  const introTextScrollOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const introTextOpacity = useTransform(
     [entranceOpacity, introTextScrollOpacity],
     ([entrance, scroll]: number[]) => entrance * scroll
   );
-  const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
+  const konaverseOpacity = useTransform(scrollYProgress, [0.6, 0.75], [0, 1]);
   
-  // Astronaut opacity - combined with entrance animation
-  const astronautScrollOpacity = useTransform(scrollYProgress, [0, 0.28, 0.32, 0.38], [1, 1, 0.8, 0]);
+  // Astronaut opacity - combined with entrance animation (adjusted to match zoom timeline)
+  const astronautScrollOpacity = useTransform(scrollYProgress, [0, 0.45, 0.52, 0.6], [1, 1, 0.8, 0]);
   const astronautCombinedOpacity = useTransform(
     [entranceOpacity, astronautScrollOpacity],
     ([entrance, scroll]: number[]) => entrance * scroll
   );
   
-  // 3D scene visibility - only shows once we're "inside" the visor
-  const sceneOpacity = useTransform(scrollYProgress, [0.25, 0.32], [0, 1]);
+  // 3D scene visibility - only shows once we're "inside" the visor (adjusted timing)
+  const sceneOpacity = useTransform(scrollYProgress, [0.42, 0.52], [0, 1]);
 
   return (
     <div ref={containerRef} className="relative h-[400vh]">
@@ -246,7 +257,7 @@ export default function GenesisHero() {
               gl={{ antialias: true, alpha: true }}
               style={{ background: "transparent" }}
             >
-              <Scene scrollProgress={Math.max(0, (scrollProgress - 0.3) / 0.7)} />
+              <Scene scrollProgress={Math.max(0, (scrollProgress - 0.42) / 0.58)} />
             </Canvas>
           </Suspense>
         </motion.div>
@@ -323,7 +334,7 @@ export default function GenesisHero() {
         </motion.div>
 
         {/* Scroll indicator */}
-        {scrollProgress < 0.12 && (
+        {scrollProgress < 0.2 && (
           <motion.div 
             className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
             initial={{ opacity: 0, y: 20 }}
@@ -358,7 +369,7 @@ export default function GenesisHero() {
         </motion.div>
 
         {/* CTA Button */}
-        {scrollProgress > 0.65 && (
+        {scrollProgress > 0.75 && (
           <motion.div 
             className="absolute bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 z-40"
             initial={{ opacity: 0, y: 20 }}
