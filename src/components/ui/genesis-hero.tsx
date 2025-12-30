@@ -209,6 +209,9 @@ export default function GenesisHero() {
   const introTextOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
   const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
   
+  // Tech stack HUD visibility - appears as holographic display in visor
+  const techHudOpacity = useTransform(scrollYProgress, [0.08, 0.15, 0.25, 0.3], [0, 1, 1, 0]);
+  
   // 3D scene visibility - only shows once we're "inside" the visor
   const sceneOpacity = useTransform(scrollYProgress, [0.25, 0.32], [0, 1]);
 
@@ -271,6 +274,98 @@ export default function GenesisHero() {
           className="absolute inset-0 z-[16] pointer-events-none bg-black"
           style={{ opacity: visorDarknessOpacity }}
         />
+
+        {/* Tech Stack HUD - Holographic display inside visor */}
+        <motion.div 
+          className="absolute inset-0 z-[20] flex items-center justify-center pointer-events-none"
+          style={{ opacity: techHudOpacity }}
+        >
+          <div className="relative w-full max-w-2xl px-4">
+            {/* HUD Frame */}
+            <div className="relative p-8 rounded-lg border border-cyan-400/30 bg-cyan-500/5 backdrop-blur-sm">
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400" />
+              
+              {/* HUD Header */}
+              <div className="flex items-center gap-2 mb-6 pb-3 border-b border-cyan-400/20">
+                <motion.div 
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+                />
+                <span className="text-cyan-400 font-mono text-xs md:text-sm tracking-wider">
+                  CREATOR_TOOLS.SYS
+                </span>
+              </div>
+
+              {/* Tech Logos Grid */}
+              <div className="grid grid-cols-4 md:grid-cols-6 gap-4 md:gap-6">
+                {[
+                  { name: 'React', color: 'rgba(97, 218, 251, 0.8)' },
+                  { name: 'Next.js', color: 'rgba(255, 255, 255, 0.8)' },
+                  { name: 'TypeScript', color: 'rgba(49, 120, 198, 0.8)' },
+                  { name: 'Three.js', color: 'rgba(255, 255, 255, 0.8)' },
+                  { name: 'Tailwind', color: 'rgba(56, 189, 248, 0.8)' },
+                  { name: 'Framer', color: 'rgba(221, 70, 221, 0.8)' },
+                ].map((tech, idx) => (
+                  <motion.div
+                    key={tech.name}
+                    initial={{ opacity: 0, scale: 0.5, y: 20 }}
+                    animate={{ 
+                      opacity: 1, 
+                      scale: 1, 
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      opacity: { delay: 0.1 + idx * 0.05, duration: 0.3 },
+                      scale: { delay: 0.1 + idx * 0.05, duration: 0.3 },
+                      y: { 
+                        delay: 0.5 + idx * 0.1,
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }
+                    }}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    {/* Tech Icon Placeholder */}
+                    <div 
+                      className="w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center font-bold text-xs md:text-sm backdrop-blur-sm border"
+                      style={{ 
+                        backgroundColor: `${tech.color.replace('0.8', '0.1')}`,
+                        borderColor: tech.color,
+                        color: tech.color,
+                        boxShadow: `0 0 20px ${tech.color.replace('0.8', '0.3')}`
+                      }}
+                    >
+                      {tech.name.slice(0, 2).toUpperCase()}
+                    </div>
+                    {/* Tech Name */}
+                    <span 
+                      className="text-[10px] md:text-xs font-mono tracking-wide"
+                      style={{ color: tech.color }}
+                    >
+                      {tech.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* HUD Footer */}
+              <div className="mt-6 pt-3 border-t border-cyan-400/20 flex justify-between items-center">
+                <span className="text-cyan-400/60 font-mono text-[10px] md:text-xs">
+                  STATUS: ONLINE
+                </span>
+                <span className="text-cyan-400/60 font-mono text-[10px] md:text-xs">
+                  READY_TO_CREATE
+                </span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Opening text - Inside the visor/glass */}
         <motion.div 
