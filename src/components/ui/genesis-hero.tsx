@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useMemo, useState, Suspense } from "react";
+import { useRef, useMemo, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { useScroll, useTransform, motion, useMotionValueEvent } from "framer-motion";
+import { useScroll, useTransform, motion, useMotionValueEvent, useMotionValue, animate } from "framer-motion";
 import { 
   SiReact, 
   SiNextdotjs, 
@@ -229,12 +229,34 @@ export default function GenesisHero() {
   // Darkness overlay to simulate entering the visor - quick flash
   const visorDarknessOpacity = useTransform(scrollYProgress, [0.26, 0.30, 0.35], [0, 0.8, 0]);
   
-  // Text overlays
-  const introTextOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  // Entrance animation opacity - fades in on mount
+  const entranceOpacity = useMotionValue(0);
+  
+  useEffect(() => {
+    animate(entranceOpacity, 1, { duration: 1.2, ease: [0.4, 0, 0.2, 1] });
+  }, [entranceOpacity]);
+  
+  // Text overlays - combined with entrance animation
+  const introTextScrollOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  const introTextOpacity = useTransform(
+    [entranceOpacity, introTextScrollOpacity],
+    ([entrance, scroll]) => entrance * scroll
+  );
   const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
   
-  // Tech stack HUD visibility - visible from start, fades with intro text
-  const techHudOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  // Tech stack HUD visibility - combined with entrance animation
+  const techHudScrollOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  const techHudOpacity = useTransform(
+    [entranceOpacity, techHudScrollOpacity],
+    ([entrance, scroll]) => entrance * scroll
+  );
+  
+  // Astronaut opacity - combined with entrance animation
+  const astronautScrollOpacity = useTransform(scrollYProgress, [0, 0.28, 0.32, 0.38], [1, 1, 0.8, 0]);
+  const astronautCombinedOpacity = useTransform(
+    [entranceOpacity, astronautScrollOpacity],
+    ([entrance, scroll]) => entrance * scroll
+  );
   
   // 3D scene visibility - only shows once we're "inside" the visor
   const sceneOpacity = useTransform(scrollYProgress, [0.25, 0.32], [0, 1]);
@@ -263,9 +285,12 @@ export default function GenesisHero() {
         {/* Astronaut layer - Starts full view, zooms INTO visor */}
         <motion.div 
           className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+          initial={{ scale: 0.95 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
           style={{ 
             scale: astronautScale,
-            opacity: astronautOpacity,
+            opacity: astronautCombinedOpacity,
             y: astronautY,
             transformOrigin: "50% 35%", // Focus on visor/face area
           }}
@@ -302,6 +327,9 @@ export default function GenesisHero() {
         {/* Tech Stack Scrolling Bar - Behind the astronaut */}
         <motion.div 
           className="absolute w-full z-[5] pointer-events-none overflow-hidden"
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 1, delay: 0.5, ease: [0.4, 0, 0.2, 1] }}
           style={{ 
             opacity: techHudOpacity,
             top: "50%", 
@@ -373,22 +401,40 @@ export default function GenesisHero() {
         {/* Opening text - Inside the visor/glass */}
         <motion.div 
           className="absolute inset-0 z-30 flex flex-col items-center pointer-events-none px-6"
+          initial={{ y: 30 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
           style={{ 
             opacity: introTextOpacity,
             top: "32%", // Position in the visor area
           }}
         >
-          <h1 className="text-white text-sm md:text-lg lg:text-xl font-light tracking-[0.2em] mb-2 text-center drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]">
+          <motion.h1 
+            className="text-white text-sm md:text-lg lg:text-xl font-light tracking-[0.2em] mb-2 text-center drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]"
+            initial={{ y: 20 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          >
             THE CREATOR AWAITS
-          </h1>
-          <p className="text-white/60 text-xs md:text-sm tracking-widest drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+          </motion.h1>
+          <motion.p 
+            className="text-white/60 text-xs md:text-sm tracking-widest drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]"
+            initial={{ y: 10 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7, ease: [0.4, 0, 0.2, 1] }}
+          >
             look through the visor
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Scroll indicator */}
         {scrollProgress < 0.12 && (
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
+          <motion.div 
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1, ease: [0.4, 0, 0.2, 1] }}
+          >
             <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
               <motion.div 
                 className="w-1.5 h-1.5 rounded-full bg-white"
@@ -397,7 +443,7 @@ export default function GenesisHero() {
               />
             </div>
             <span className="text-white/40 text-xs tracking-widest uppercase">Scroll to Enter</span>
-          </div>
+          </motion.div>
         )}
 
         {/* KONAVERSE reveal */}
