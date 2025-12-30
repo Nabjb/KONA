@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.4.2",
     "@studio-freight/lenis": "^1.0.42",
     "@tabler/icons-react": "^3.35.0",
     "@types/three": "^0.181.0",

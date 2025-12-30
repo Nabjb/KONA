@@ -1,65 +1,55 @@
 "use client";
 
-import ServicesStickySection from "@/components/sections/services-sticky-section";
 import SiteNavbar from "@/components/layout/site-navbar";
-import HeroWhyUsWrapper from "@/components/sections/hero-why-us-wrapper";
-import WhyUsSection from "@/components/sections/why-us-section";
 import AboutSection from "@/components/sections/about-section";
 import ContactSection from "@/components/sections/contact-section";
 import Footer from "@/components/sections/footer";
 import ProjectsVideoSection from "@/components/sections/projects-video-section";
-import { AstronautZoomPortal } from "@/components/ui/astronaut-zoom-portal";
+import MissionSection from "@/components/sections/mission-section";
+import PlanetsSection from "@/components/sections/planets-section";
+import dynamic from "next/dynamic";
 
-// Generate stars for shared background
-function generateStars(count: number) {
-  const stars = [];
-  for (let i = 0; i < count; i++) {
-    stars.push({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      size: Math.random() * 2 + 1,
-      delay: Math.random() * 3,
-      duration: Math.random() * 2 + 2,
-    });
-  }
-  return stars;
-}
-
-const sharedStars = generateStars(300);
+// Dynamically import Genesis Hero (client-side only for Three.js)
+const GenesisHero = dynamic(() => import("@/components/ui/genesis-hero"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-screen w-full bg-black flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-12 h-12 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
+        <p className="text-white/50 text-sm tracking-wider">Initializing universe...</p>
+      </div>
+    </div>
+  ),
+});
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-black">
+      {/* Navbar - fixed on top */}
       <SiteNavbar />
-      <HeroWhyUsWrapper />
-      {/* Connected starry background sections */}
-      <div className="relative bg-[#030014]">
-        {/* Shared stars background for all sections */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {sharedStars.map((star) => (
-            <div
-              key={star.id}
-              className="absolute rounded-full bg-white star-twinkle"
-              style={{
-                left: star.left,
-                top: star.top,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                animationDelay: `${star.delay}s`,
-                animationDuration: `${star.duration}s`,
-              }}
-            />
-          ))}
-        </div>
-        <WhyUsSection />
-        <AstronautZoomPortal />
+      
+      {/* CHAPTER 1: Genesis - The Big Bang */}
+      <GenesisHero />
+      
+      {/* CHAPTER 2: The Mission Briefing */}
+      <MissionSection />
+      
+      {/* CHAPTER 3: Discover the Planets (Services) */}
+      <PlanetsSection />
+      
+      {/* CHAPTER 4: Space Station (Projects) */}
+      <section className="relative bg-[#030014]">
         <ProjectsVideoSection />
-        <ServicesStickySection />
-        <AboutSection />
-        <ContactSection />
-        <Footer />
-        </div>
-      </main>
+      </section>
+      
+      {/* CHAPTER 5: About - Meet the Crew */}
+      <AboutSection />
+      
+      {/* CHAPTER 6: Contact - Transmit Signal */}
+      <ContactSection />
+      
+      {/* Footer */}
+      <Footer />
+    </main>
   );
 }
