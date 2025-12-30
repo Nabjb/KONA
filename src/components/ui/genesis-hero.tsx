@@ -4,6 +4,7 @@ import { useRef, useMemo, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useScroll, useTransform, motion, useMotionValueEvent } from "framer-motion";
+import { SiReact, SiNextdotjs, SiTypescript, SiThreedotjs, SiTailwindcss, SiFramer } from "react-icons/si";
 
 // ============================================
 // CIRCULAR PARTICLE TEXTURE - Makes particles round, not square!
@@ -302,14 +303,14 @@ export default function GenesisHero() {
               </div>
 
               {/* Tech Logos Grid */}
-              <div className="grid grid-cols-4 md:grid-cols-6 gap-4 md:gap-6">
+              <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6">
                 {[
-                  { name: 'React', color: 'rgba(97, 218, 251, 0.8)' },
-                  { name: 'Next.js', color: 'rgba(255, 255, 255, 0.8)' },
-                  { name: 'TypeScript', color: 'rgba(49, 120, 198, 0.8)' },
-                  { name: 'Three.js', color: 'rgba(255, 255, 255, 0.8)' },
-                  { name: 'Tailwind', color: 'rgba(56, 189, 248, 0.8)' },
-                  { name: 'Framer', color: 'rgba(221, 70, 221, 0.8)' },
+                  { name: 'React', color: 'rgba(97, 218, 251, 0.8)', icon: SiReact },
+                  { name: 'Next.js', color: 'rgba(255, 255, 255, 0.8)', icon: SiNextdotjs },
+                  { name: 'TypeScript', color: 'rgba(49, 120, 198, 0.8)', icon: SiTypescript },
+                  { name: 'Three.js', color: 'rgba(255, 255, 255, 0.8)', icon: SiThreedotjs },
+                  { name: 'Tailwind', color: 'rgba(56, 189, 248, 0.8)', icon: SiTailwindcss },
+                  { name: 'Framer', color: 'rgba(221, 70, 221, 0.8)', icon: SiFramer },
                 ].map((tech, idx) => (
                   <motion.div
                     key={tech.name}
@@ -331,17 +332,19 @@ export default function GenesisHero() {
                     }}
                     className="flex flex-col items-center gap-2"
                   >
-                    {/* Tech Icon Placeholder */}
+                    {/* Tech Icon */}
                     <div 
-                      className="w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center font-bold text-xs md:text-sm backdrop-blur-sm border"
+                      className="w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center backdrop-blur-sm border"
                       style={{ 
-                        backgroundColor: `${tech.color.replace('0.8', '0.1')}`,
+                        backgroundColor: `${tech.color.replace('0.8', '0.05')}`,
                         borderColor: tech.color,
-                        color: tech.color,
                         boxShadow: `0 0 20px ${tech.color.replace('0.8', '0.3')}`
                       }}
                     >
-                      {tech.name.slice(0, 2).toUpperCase()}
+                      <tech.icon 
+                        className="w-6 h-6 md:w-8 md:h-8"
+                        style={{ color: tech.color }}
+                      />
                     </div>
                     {/* Tech Name */}
                     <span 
