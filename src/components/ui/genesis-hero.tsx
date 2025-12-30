@@ -70,12 +70,12 @@ function UniverseStars({ progress }: { progress: number }) {
       final[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       final[i3 + 2] = r * Math.cos(phi) - 5;
       
-      // Start positions - far behind viewer (creates "flying through space" effect)
-      // Stars start along the same direction but much further back
-      const startDistance = 0.1 + Math.random() * 0.3; // Start very close to center
+      // Start positions - closer to camera (creates "flying through space" effect)
+      // Stars start along the same direction but closer to viewer
+      const startDistance = 0.05 + Math.random() * 0.15; // Start closer to center
       start[i3] = final[i3] * startDistance;
       start[i3 + 1] = final[i3 + 1] * startDistance;
-      start[i3 + 2] = final[i3 + 2] * startDistance + 50; // Start behind camera
+      start[i3 + 2] = final[i3 + 2] * startDistance + 10; // Start closer (within camera view)
       
       // Star colors: mostly white with some blue/purple tints
       const c = Math.random();
@@ -112,9 +112,10 @@ function UniverseStars({ progress }: { progress: number }) {
     
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
     
-    // Smooth fade in
+    // Stars visible immediately when scene appears
     const mat = pointsRef.current.material as THREE.PointsMaterial;
-    mat.opacity = Math.min(1, progress * 3); // Fade in over first 33% of scroll
+    // Ensure stars are always visible (minimum 0.7 opacity), brighter as they approach
+    mat.opacity = Math.max(0.7, Math.min(1, 0.7 + progress * 0.3));
   });
 
   return (
@@ -130,11 +131,11 @@ function UniverseStars({ progress }: { progress: number }) {
         />
       </bufferGeometry>
       <pointsMaterial 
-        size={0.06} 
+        size={0.08} 
         map={circleTexture}
         vertexColors 
         transparent 
-        opacity={0} 
+        opacity={0.7} 
         blending={THREE.AdditiveBlending} 
         sizeAttenuation
         depthWrite={false}
