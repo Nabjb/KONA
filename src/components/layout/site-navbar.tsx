@@ -46,7 +46,6 @@ export default function SiteNavbar() {
           <a href="#contact">
             <HoverBorderGradient
               containerClassName="rounded-full"
-              as="button"
               className="bg-[#030014] text-white flex items-center gap-2 px-4 py-2 text-sm font-medium"
             >
               Book a Call
