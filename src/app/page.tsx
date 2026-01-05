@@ -1,55 +1,39 @@
 "use client";
 
-import SiteNavbar from "@/components/layout/site-navbar";
-import AboutSection from "@/components/sections/about-section";
-import ContactSection from "@/components/sections/contact-section";
-import Footer from "@/components/sections/footer";
-import ProjectsVideoSection from "@/components/sections/projects-video-section";
-import MissionSection from "@/components/sections/mission-section";
-import PlanetsSection from "@/components/sections/planets-section";
-import dynamic from "next/dynamic";
-
-// Dynamically import Genesis Hero (client-side only for Three.js)
-const GenesisHero = dynamic(() => import("@/components/ui/genesis-hero"), {
-  ssr: false,
-  loading: () => (
-    <div className="h-screen w-full bg-black flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-12 h-12 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
-        <p className="text-white/50 text-sm tracking-wider">Initializing universe...</p>
-      </div>
-    </div>
-  ),
-});
+import HeroSection from "@/components/ui/hero-section";
+import WhoWeAre from "@/components/sections/who-we-are";
+import ScrollWordHero from "@/components/ui/scroll-word-hero";
+import ServicesSection from "@/components/sections/services-section";
 
 export default function Home() {
   return (
-    <main className="bg-black">
-      {/* Navbar - fixed on top */}
-      <SiteNavbar />
+    <main className="relative bg-[#0a0b09]">
+      {/* === Hero (Sticky - scrolls away after container) === */}
+      <div className="relative h-[200vh]">
+        <div className="sticky top-0 h-screen">
+          <HeroSection />
+        </div>
+      </div>
       
-      {/* CHAPTER 1: Genesis - The Big Bang */}
-      <GenesisHero />
+      {/* === Who We Are (Overlaps Hero, then scrolls normally) === */}
+      <div className="relative z-10">
+        <WhoWeAre />
+      </div>
       
-      {/* CHAPTER 2: The Mission Briefing */}
-      <MissionSection />
+      {/* === Sticky Word Cycle (Transition to Services) === */}
+      <div className="relative z-10">
+        <ScrollWordHero 
+          items={['create.', 'design.', 'develop.', 'optimize.', 'deliver.']}
+          hue={30}
+          startVh={50}
+          spaceVh={60}
+        />
+      </div>
       
-      {/* CHAPTER 3: Discover the Planets (Services) */}
-      <PlanetsSection />
-      
-      {/* CHAPTER 4: Space Station (Projects) */}
-      <section className="relative bg-[#030014]">
-        <ProjectsVideoSection />
-      </section>
-      
-      {/* CHAPTER 5: About - Meet the Crew */}
-        <AboutSection />
-      
-      {/* CHAPTER 6: Contact - Transmit Signal */}
-        <ContactSection />
-      
-      {/* Footer */}
-        <Footer />
+      {/* === Services (Overlaps the sticky words) === */}
+      <div className="relative z-20 services-overlap">
+        <ServicesSection />
+        </div>
       </main>
   );
 }
