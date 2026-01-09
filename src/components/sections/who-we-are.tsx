@@ -79,12 +79,13 @@ export function WhoWeAre() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-20 min-h-screen overflow-hidden"
+      className="relative z-20 min-h-[200vh]"
       style={{
         background: `linear-gradient(to bottom, 
           ${colors[900]} 0%, 
-          #0a0b09 50%,
-          #0a0b09 100%
+          #0a0b09 30%,
+          #0a0b09 70%,
+          ${colors[900]} 100%
         )`,
       }}
     >

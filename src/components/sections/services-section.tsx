@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import React from "react";
 
 const colors = {
   50: "#f8f7f5",
@@ -16,596 +15,261 @@ const colors = {
   900: "#1a1d18",
 };
 
-interface RevealProps {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}
+const serviceColors = {
+  "01": { accent: "#4a6670", gradient: "from-[#1a1d18] via-[#0a1015] to-[#1a2025]" },
+  "02": { accent: "#4a6a5a", gradient: "from-[#1a1d18] via-[#0a120f] to-[#1a2520]" },
+  "03": { accent: "#7a5a4a", gradient: "from-[#1a1d18] via-[#15100a] to-[#25201a]" },
+  "04": { accent: "#5a4a6a", gradient: "from-[#1a1d18] via-[#120a15] to-[#201a25]" },
+};
 
-function Reveal({ children, className = "", delay = 0 }: RevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-        }
-      },
-      { threshold: 0.2, rootMargin: "-100px" }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [delay]);
-
+function WebDevPattern() {
   return (
-    <div
-      ref={ref}
-      className={`transition-all duration-1000 ease-out ${className}`}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(60px)",
-        filter: isVisible ? "blur(0)" : "blur(10px)",
-      }}
-    >
-      {children}
-    </div>
+    <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
+      <circle cx="100" cy="80" r="4" fill={colors[200]} />
+      <circle cx="200" cy="120" r="6" fill={colors[200]} />
+      <circle cx="300" cy="60" r="3" fill={colors[200]} />
+      <circle cx="150" cy="200" r="5" fill={colors[200]} />
+      <circle cx="280" cy="180" r="4" fill={colors[200]} />
+      <circle cx="80" cy="280" r="3" fill={colors[200]} />
+      <circle cx="220" cy="300" r="5" fill={colors[200]} />
+      <circle cx="340" cy="260" r="4" fill={colors[200]} />
+      <line x1="100" y1="80" x2="200" y2="120" stroke={colors[200]} strokeWidth="1" />
+      <line x1="200" y1="120" x2="300" y2="60" stroke={colors[200]} strokeWidth="1" />
+      <line x1="200" y1="120" x2="150" y2="200" stroke={colors[200]} strokeWidth="1" />
+      <line x1="150" y1="200" x2="280" y2="180" stroke={colors[200]} strokeWidth="1" />
+      <line x1="150" y1="200" x2="80" y2="280" stroke={colors[200]} strokeWidth="1" />
+      <line x1="280" y1="180" x2="340" y2="260" stroke={colors[200]} strokeWidth="1" />
+      <path d="M50 150 L30 180 L50 210" stroke={colors[200]} strokeWidth="2" fill="none" />
+      <path d="M370 150 L390 180 L370 210" stroke={colors[200]} strokeWidth="2" fill="none" />
+    </svg>
   );
 }
 
-// Floating image component with reveal animation
-function FloatingImage({ 
-  src, 
-  alt, 
-  className = "", 
-  style = {},
-  delay = 0 
-}: { 
-  src: string; 
-  alt: string; 
-  className?: string; 
-  style?: React.CSSProperties;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-        }
-      },
-      { threshold: 0.1, rootMargin: "-50px" }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [delay]);
-
+function WebAppsPattern() {
   return (
-    <div
-      ref={ref}
-      className={`absolute transition-all duration-1000 ease-out ${className}`}
-      style={{
-        ...style,
-        opacity: isVisible ? (style.opacity as number || 1) : 0,
-        transform: isVisible 
-          ? (style.transform as string || 'none')
-          : `${style.transform || ''} translateY(40px) scale(0.95)`,
-      }}
+    <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
+      <rect x="180" y="40" width="120" height="80" rx="4" stroke={colors[200]} strokeWidth="1.5" fill="none" />
+      <rect x="200" y="60" width="120" height="80" rx="4" stroke={colors[200]} strokeWidth="1.5" fill="none" />
+      <rect x="220" y="80" width="120" height="80" rx="4" stroke={colors[200]} strokeWidth="1.5" fill={colors[200]} fillOpacity="0.1" />
+      <line x1="240" y1="100" x2="320" y2="100" stroke={colors[200]} strokeWidth="2" />
+      <line x1="240" y1="115" x2="300" y2="115" stroke={colors[200]} strokeWidth="2" />
+      <rect x="60" y="180" width="80" height="60" rx="4" stroke={colors[200]} strokeWidth="1" fill="none" />
+      <rect x="280" y="220" width="100" height="70" rx="4" stroke={colors[200]} strokeWidth="1" fill="none" />
+      <rect x="70" y="210" width="10" height="20" fill={colors[200]} fillOpacity="0.3" />
+      <rect x="85" y="200" width="10" height="30" fill={colors[200]} fillOpacity="0.3" />
+      <rect x="100" y="195" width="10" height="35" fill={colors[200]} fillOpacity="0.3" />
+    </svg>
+  );
+}
+
+function SocialMediaPattern() {
+  return (
+    <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
+      <circle cx="200" cy="150" r="60" stroke={colors[200]} strokeWidth="1.5" fill="none" />
+      <circle cx="250" cy="180" r="50" stroke={colors[200]} strokeWidth="1.5" fill="none" />
+      <circle cx="170" cy="200" r="45" stroke={colors[200]} strokeWidth="1.5" fill="none" />
+      <circle cx="220" cy="220" r="55" stroke={colors[200]} strokeWidth="1.5" fill={colors[200]} fillOpacity="0.05" />
+      <circle cx="80" cy="100" r="20" stroke={colors[200]} strokeWidth="1" fill="none" />
+      <circle cx="340" cy="120" r="25" stroke={colors[200]} strokeWidth="1" fill="none" />
+      <rect x="90" y="300" width="50" height="50" rx="2" stroke={colors[200]} strokeWidth="1" fill="none" />
+      <circle cx="150" cy="140" r="3" fill={colors[200]} />
+      <circle cx="260" cy="160" r="3" fill={colors[200]} />
+    </svg>
+  );
+}
+
+function AdvertisingPattern() {
+  return (
+    <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
+      <rect x="80" y="280" width="30" height="60" fill={colors[200]} fillOpacity="0.2" />
+      <rect x="120" y="240" width="30" height="100" fill={colors[200]} fillOpacity="0.25" />
+      <rect x="160" y="200" width="30" height="140" fill={colors[200]} fillOpacity="0.3" />
+      <rect x="200" y="150" width="30" height="190" fill={colors[200]} fillOpacity="0.35" />
+      <rect x="240" y="100" width="30" height="240" fill={colors[200]} fillOpacity="0.4" />
+      <path d="M80 280 Q150 220 200 180 T320 80" stroke={colors[200]} strokeWidth="2" fill="none" strokeDasharray="4 4" />
+      <path d="M320 80 L310 100 M320 80 L330 100" stroke={colors[200]} strokeWidth="2" />
+      <circle cx="80" cy="120" r="30" stroke={colors[200]} strokeWidth="1" fill="none" />
+      <circle cx="80" cy="120" r="20" stroke={colors[200]} strokeWidth="1" fill="none" />
+      <circle cx="80" cy="120" r="10" stroke={colors[200]} strokeWidth="1" fill="none" />
+      <circle cx="80" cy="120" r="3" fill={colors[200]} />
+    </svg>
+  );
+}
+
+const patternComponents = {
+  "01": WebDevPattern,
+  "02": WebAppsPattern,
+  "03": SocialMediaPattern,
+  "04": AdvertisingPattern,
+};
+
+interface ServiceCardProps {
+  number: "01" | "02" | "03" | "04";
+  title: string;
+  description: string;
+  features: string[];
+  zIndex: number;
+}
+
+function ServiceCard({ number, title, description, features, zIndex }: ServiceCardProps) {
+  const PatternComponent = patternComponents[number];
+  const colorScheme = serviceColors[number];
+  
+  return (
+    <div 
+      className="sticky top-0 min-h-screen w-full flex items-center justify-center overflow-hidden py-16 md:py-0"
+      style={{ zIndex }}
     >
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        className="object-cover"
-        sizes="(max-width: 768px) 50vw, 33vw"
+      <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.gradient}`} />
+      
+      <div 
+        className="absolute inset-0 opacity-20"
+        style={{ background: `radial-gradient(ellipse at 70% 50%, ${colorScheme.accent}30 0%, transparent 60%)` }}
       />
+      
+      <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id={`grid-service-${number}`} width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(200,180,160,0.05)" strokeWidth="0.5" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill={`url(#grid-service-${number})`} />
+      </svg>
+
+      <div className="hidden md:block">
+        <PatternComponent />
+      </div>
+
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40vw] md:text-[30vw] font-extralight leading-none pointer-events-none select-none"
+        style={{ color: colors[200], opacity: 0.02 }}
+      >
+        {number}
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-16">
+        <div className="grid grid-cols-12 gap-4 md:gap-8">
+          
+          <div className="col-span-12 md:col-span-5 lg:col-span-4">
+            <div 
+              className="text-xs md:text-sm font-mono uppercase tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4"
+              style={{ color: colorScheme.accent }}
+            >
+              Service {number}
+            </div>
+            <h2 
+              className="text-2xl md:text-4xl lg:text-5xl font-extralight leading-tight"
+              style={{ color: colors[50] }}
+            >
+              {title}
+            </h2>
+            <div 
+              className="w-8 md:w-12 h-px mt-4 md:mt-6 mb-4 md:mb-0"
+              style={{ background: `linear-gradient(to right, ${colorScheme.accent}, transparent)` }}
+            />
+          </div>
+
+          <div className="col-span-12 md:col-span-7 lg:col-span-6 lg:col-start-7">
+            <p 
+              className="text-base md:text-xl font-light leading-relaxed mb-5 md:mb-8"
+              style={{ color: colors[100] }}
+            >
+              {description}
+            </p>
+            
+            <div className="space-y-2.5 md:space-y-4">
+              {features.map((feature, index) => (
+                <div key={index} className="flex items-start gap-3 md:gap-4">
+                  <div 
+                    className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full mt-2 md:mt-2.5 flex-shrink-0"
+                    style={{ background: colorScheme.accent }}
+                  />
+                  <p className="text-sm md:text-lg font-light" style={{ color: colors[200] }}>
+                    {feature}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div className="absolute top-4 left-4 md:top-8 md:left-8 w-6 md:w-8 h-px" style={{ background: `linear-gradient(to right, ${colorScheme.accent}60, transparent)` }} />
+      <div className="absolute top-4 left-4 md:top-8 md:left-8 w-px h-6 md:h-8" style={{ background: `linear-gradient(to bottom, ${colorScheme.accent}60, transparent)` }} />
+      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-6 md:w-8 h-px" style={{ background: `linear-gradient(to left, ${colorScheme.accent}60, transparent)` }} />
+      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-px h-6 md:h-8" style={{ background: `linear-gradient(to top, ${colorScheme.accent}60, transparent)` }} />
+
+      {number === "01" && (
+        <div className="hidden md:flex absolute bottom-12 left-1/2 -translate-x-1/2 flex-col items-center gap-2">
+          <div className="text-xs font-mono uppercase tracking-widest" style={{ color: colors[400] }}>Scroll</div>
+          <div className="w-px h-8 scroll-indicator" style={{ background: `linear-gradient(to bottom, ${colors[400]}, transparent)` }} />
+        </div>
+      )}
     </div>
   );
 }
+
+const services: { number: "01" | "02" | "03" | "04"; title: string; description: string; features: string[] }[] = [
+  {
+    number: "01",
+    title: "Web Development",
+    description: "We build fast, scalable, and beautifully crafted websites that perform.",
+    features: [
+      "Search Engine Optimization (SEO)",
+      "Custom web design tailored to your brand",
+      "Responsive across all devices",
+      "Performance-first architecture",
+    ],
+  },
+  {
+    number: "02",
+    title: "Web Applications",
+    description: "Full-stack applications that solve real problems and scale with your business.",
+    features: [
+      "Custom dashboards and admin panels",
+      "SaaS product development",
+      "API integrations and automation",
+      "Real-time features and databases",
+    ],
+  },
+  {
+    number: "03",
+    title: "Social Media",
+    description: "Content that captures attention and builds community around your brand.",
+    features: [
+      "Instagram and Facebook visuals",
+      "Curated post strategies",
+      "Professional drone videography",
+      "Cohesive brand storytelling",
+    ],
+  },
+  {
+    number: "04",
+    title: "Digital Advertising",
+    description: "Strategic campaigns that reach the right people at the right time.",
+    features: [
+      "Paid social media campaigns",
+      "Google Ads management",
+      "Conversion tracking and analytics",
+      "A/B testing and optimization",
+    ],
+  },
+];
 
 export function ServicesSection() {
   return (
-    <section
-      className="relative overflow-hidden"
-      style={{
-        background: 'transparent',
-      }}
-    >
-      {/* Subtle grid continuation - matching Who We Are */}
-      <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="grid-services" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path
-              d="M 60 0 L 0 0 0 60"
-              fill="none"
-              stroke="rgba(200,180,160,0.04)"
-              strokeWidth="0.5"
-            />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid-services)" />
-      </svg>
-
-      {/* Section intro */}
-      <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 pt-32 md:pt-48">
-        <Reveal>
-          <div 
-            className="text-xs font-mono uppercase tracking-[0.4em] mb-4"
-            style={{ color: colors[500] }}
-          >
-            What We Do
-          </div>
-          <h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-tight max-w-3xl"
-            style={{ color: colors[50] }}
-          >
-            Five disciplines.
-          </h2>
-          <h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-tight mt-2"
-            style={{ color: colors[300] }}
-          >
-            One philosophy.
-          </h2>
-        </Reveal>
-      </div>
-
-      {/* ==================== SERVICE 1: Web Development ==================== */}
-      <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 py-32 md:py-48">
-        {/* Floating Images - Development */}
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
-          alt="Code on screen"
-          className="hidden lg:block w-64 h-80 rounded-lg overflow-hidden"
-          style={{ 
-            right: '5%', 
-            top: '10%', 
-            transform: 'rotate(6deg)',
-            opacity: 0.9,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
-          }}
-          delay={300}
+    <section className="relative">
+      {services.map((service, index) => (
+        <ServiceCard
+          key={service.number}
+          number={service.number}
+          title={service.title}
+          description={service.description}
+          features={service.features}
+          zIndex={index + 1}
         />
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80"
-          alt="Programming workspace"
-          className="hidden lg:block w-48 h-64 rounded-lg overflow-hidden"
-          style={{ 
-            right: '18%', 
-            bottom: '5%', 
-            transform: 'rotate(-4deg)',
-            opacity: 0.7,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)'
-          }}
-          delay={500}
-        />
-        
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 lg:col-span-7">
-            <Reveal>
-              <div 
-                className="font-mono text-xs tracking-[0.2em] uppercase mb-8"
-                style={{ color: colors[500] }}
-              >
-                01 / Development
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
-              <h3 
-                className="text-5xl md:text-6xl lg:text-7xl font-extralight leading-none tracking-tight"
-                style={{ color: colors[50] }}
-              >
-                Web
-              </h3>
-              <h3 
-                className="text-5xl md:text-6xl lg:text-7xl font-light leading-none tracking-tight"
-                style={{ color: colors[200] }}
-              >
-                Development
-              </h3>
-            </Reveal>
-            <Reveal delay={200}>
-              <div 
-                className="w-24 h-px mt-12 mb-8"
-                style={{ background: `linear-gradient(to right, ${colors[400]}, transparent)` }}
-              />
-              <p 
-                className="text-lg md:text-xl font-light leading-relaxed max-w-xl"
-                style={{ color: colors[100] }}
-              >
-                Code that performs. Systems that scale. Every line written with intent.
-              </p>
-              <p 
-                className="text-base md:text-lg font-light leading-relaxed mt-4 opacity-50 max-w-xl"
-                style={{ color: colors[200] }}
-              >
-                React, Next.js, TypeScript — modern stacks for modern problems.
-              </p>
-            </Reveal>
-          </div>
-          {/* Vertical accent line */}
-          <div className="hidden lg:flex col-span-1 justify-center">
-            <div 
-              className="w-px h-full opacity-20"
-              style={{ background: `linear-gradient(to bottom, transparent, ${colors[400]}, transparent)` }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* ==================== SERVICE 2: Web Design ==================== */}
-      <div className="relative z-10 py-32 md:py-48">
-        {/* Floating Images - Design */}
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
-          alt="Design tools"
-          className="hidden lg:block w-72 h-96 rounded-lg overflow-hidden"
-          style={{ 
-            left: '3%', 
-            top: '15%', 
-            transform: 'rotate(-8deg)',
-            opacity: 0.85,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
-          }}
-          delay={200}
-        />
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&q=80"
-          alt="UI Design mockup"
-          className="hidden lg:block w-56 h-72 rounded-lg overflow-hidden"
-          style={{ 
-            left: '12%', 
-            bottom: '10%', 
-            transform: 'rotate(5deg)',
-            opacity: 0.6,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)'
-          }}
-          delay={450}
-        />
-        
-        <div className="max-w-7xl mx-auto px-8 md:px-16">
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-12 lg:col-start-5 lg:col-span-8 text-right">
-              <Reveal>
-                <div 
-                  className="font-mono text-xs tracking-[0.2em] uppercase mb-8"
-                  style={{ color: colors[500] }}
-                >
-                  02 / Design
-                </div>
-              </Reveal>
-              <Reveal delay={100}>
-                <h3 
-                  className="text-5xl md:text-6xl lg:text-7xl font-thin leading-none tracking-tight italic"
-                  style={{ color: colors[100] }}
-                >
-                  Web
-                </h3>
-                <h3 
-                  className="text-5xl md:text-6xl lg:text-7xl font-extralight leading-none tracking-tight"
-                  style={{ color: colors[50] }}
-                >
-                  Design
-                </h3>
-              </Reveal>
-              <Reveal delay={200}>
-                <div 
-                  className="w-24 h-px mt-12 mb-8 ml-auto"
-                  style={{ background: `linear-gradient(to left, ${colors[400]}, transparent)` }}
-                />
-                <p 
-                  className="text-lg md:text-xl font-light leading-relaxed max-w-xl ml-auto"
-                  style={{ color: colors[100] }}
-                >
-                  Aesthetics with purpose. Interfaces that invite. Experiences that stay.
-                </p>
-                <p 
-                  className="text-base md:text-lg font-light leading-relaxed mt-4 opacity-50 max-w-xl ml-auto"
-                  style={{ color: colors[200] }}
-                >
-                  Where form follows function, and both follow feeling.
-                </p>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ==================== SERVICE 3: Social Media Management ==================== */}
-      <div className="relative z-10 py-40 md:py-56">
-        {/* Floating Images - Social */}
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80"
-          alt="Social media on phone"
-          className="hidden lg:block w-52 h-72 rounded-lg overflow-hidden"
-          style={{ 
-            left: '8%', 
-            top: '20%', 
-            transform: 'rotate(-12deg)',
-            opacity: 0.75,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
-          }}
-          delay={150}
-        />
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=800&q=80"
-          alt="Content creation"
-          className="hidden lg:block w-48 h-64 rounded-lg overflow-hidden"
-          style={{ 
-            right: '10%', 
-            top: '25%', 
-            transform: 'rotate(8deg)',
-            opacity: 0.7,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)'
-          }}
-          delay={350}
-        />
-        
-        <div className="max-w-7xl mx-auto px-8 md:px-16">
-          <div className="text-center">
-            <Reveal>
-              <div 
-                className="font-mono text-xs tracking-[0.2em] uppercase mb-12"
-                style={{ color: colors[500] }}
-              >
-                03 / Social
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
-              <h3 
-                className="text-4xl md:text-6xl lg:text-8xl font-extralight leading-none tracking-tight"
-                style={{ color: colors[50] }}
-              >
-                Social Media
-              </h3>
-              <h3 
-                className="text-3xl md:text-4xl lg:text-5xl font-light leading-none tracking-wide mt-4"
-                style={{ color: colors[300] }}
-              >
-                Management
-              </h3>
-            </Reveal>
-            <Reveal delay={200}>
-              <div className="flex justify-center mt-12 mb-8">
-                <div 
-                  className="w-2 h-2 rotate-45"
-                  style={{ background: colors[400], opacity: 0.6 }}
-                />
-              </div>
-              <p 
-                className="text-xl md:text-2xl font-light leading-relaxed max-w-2xl mx-auto"
-                style={{ color: colors[100] }}
-              >
-                Your voice, amplified. Your audience, engaged.
-              </p>
-              <p 
-                className="text-base md:text-lg font-light leading-relaxed mt-6 opacity-50 max-w-xl mx-auto"
-                style={{ color: colors[200] }}
-              >
-                Strategy meets storytelling. Content that converts followers into advocates.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </div>
-
-      {/* ==================== SERVICE 4: SEO ==================== */}
-      <div className="relative z-10 py-32 md:py-48">
-        {/* Floating Images - SEO */}
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-          alt="Analytics dashboard"
-          className="hidden lg:block w-80 h-56 rounded-lg overflow-hidden"
-          style={{ 
-            right: '5%', 
-            top: '50%', 
-            transform: 'translateY(-50%) rotate(3deg)',
-            opacity: 0.8,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
-          }}
-          delay={250}
-        />
-        
-        <div className="max-w-7xl mx-auto px-8 md:px-16">
-          <div className="grid grid-cols-12 gap-4 items-center">
-            <div className="col-span-12 md:col-span-4 lg:col-span-3">
-              <Reveal>
-                <div 
-                  className="font-mono text-xs tracking-[0.2em] uppercase mb-6"
-                  style={{ color: colors[500] }}
-                >
-                  04 / Search
-                </div>
-                <h3 
-                  className="text-7xl md:text-8xl lg:text-9xl font-thin leading-none"
-                  style={{ color: colors[50] }}
-                >
-                  SEO
-                </h3>
-              </Reveal>
-            </div>
-            <div className="col-span-12 md:col-start-6 md:col-span-7 lg:col-start-5 lg:col-span-5 mt-12 md:mt-0">
-              <Reveal delay={150}>
-                <div 
-                  className="w-full h-px mb-8"
-                  style={{ background: `linear-gradient(to right, transparent, ${colors[400]}40, transparent)` }}
-                />
-                <p 
-                  className="text-lg md:text-xl font-light leading-relaxed"
-                  style={{ color: colors[100] }}
-                >
-                  Visibility earned, not bought. Rankings built on relevance.
-                </p>
-                <p 
-                  className="text-base md:text-lg font-light leading-relaxed mt-4 opacity-50"
-                  style={{ color: colors[200] }}
-                >
-                  Technical precision. Content strategy. Sustainable growth.
-                </p>
-                <div 
-                  className="w-full h-px mt-8"
-                  style={{ background: `linear-gradient(to right, transparent, ${colors[400]}40, transparent)` }}
-                />
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ==================== SERVICE 5: Web Applications ==================== */}
-      <div className="relative z-10 py-40 md:py-64">
-        {/* Large background text */}
-        <div 
-          className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-          style={{ opacity: 0.02 }}
-        >
-          <span 
-            className="text-[25vw] font-extralight tracking-tighter"
-            style={{ color: colors[200] }}
-          >
-            APPS
-          </span>
-        </div>
-        
-        {/* Floating Images - Applications */}
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-          alt="Dashboard interface"
-          className="hidden lg:block w-72 h-48 rounded-lg overflow-hidden"
-          style={{ 
-            left: '5%', 
-            top: '30%', 
-            transform: 'rotate(-5deg)',
-            opacity: 0.75,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
-          }}
-          delay={200}
-        />
-        <FloatingImage
-          src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80"
-          alt="Mobile app"
-          className="hidden lg:block w-56 h-80 rounded-lg overflow-hidden"
-          style={{ 
-            right: '8%', 
-            top: '20%', 
-            transform: 'rotate(7deg)',
-            opacity: 0.7,
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)'
-          }}
-          delay={400}
-        />
-        
-        <div className="max-w-7xl mx-auto px-8 md:px-16 relative">
-          <Reveal>
-            <div 
-              className="font-mono text-xs tracking-[0.2em] uppercase mb-8 text-center"
-              style={{ color: colors[500] }}
-            >
-              05 / Applications
-            </div>
-          </Reveal>
-          <Reveal delay={100}>
-            <div className="text-center">
-              <h3 
-                className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-tight"
-                style={{ color: colors[50] }}
-              >
-                Web Applications
-              </h3>
-              <h3 
-                className="text-2xl md:text-3xl lg:text-4xl font-thin leading-tight mt-2"
-                style={{ color: colors[300] }}
-              >
-                that work as hard as you do
-              </h3>
-            </div>
-          </Reveal>
-          <Reveal delay={200}>
-            <div className="max-w-3xl mx-auto mt-16">
-              <div className="flex items-center justify-center gap-8 mb-12">
-                <div 
-                  className="flex-1 h-px"
-                  style={{ background: `linear-gradient(to right, transparent, ${colors[400]}30)` }}
-                />
-                <div 
-                  className="w-3 h-3 rotate-45 border"
-                  style={{ borderColor: colors[400], opacity: 0.4 }}
-                />
-                <div 
-                  className="flex-1 h-px"
-                  style={{ background: `linear-gradient(to left, transparent, ${colors[400]}30)` }}
-                />
-              </div>
-              <p 
-                className="text-lg md:text-xl font-light leading-relaxed text-center"
-                style={{ color: colors[100] }}
-              >
-                Complex problems deserve elegant solutions. We build tools that transform how you operate.
-              </p>
-              <p 
-                className="text-base md:text-lg font-light leading-relaxed mt-6 opacity-50 text-center"
-                style={{ color: colors[200] }}
-              >
-                Dashboards. Platforms. Internal tools. Custom software that fits your workflow.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-
-      {/* Section closing */}
-      <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 pb-32 md:pb-48">
-        <Reveal>
-          <div className="flex items-center justify-center gap-4">
-            <div 
-              className="flex-1 max-w-32 h-px"
-              style={{ background: `linear-gradient(to right, transparent, ${colors[500]}40)` }}
-            />
-            <p 
-              className="text-sm font-mono tracking-wider uppercase"
-              style={{ color: colors[500] }}
-            >
-              End of Capabilities
-            </p>
-            <div 
-              className="flex-1 max-w-32 h-px"
-              style={{ background: `linear-gradient(to left, transparent, ${colors[500]}40)` }}
-            />
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Floating accents */}
-      <div 
-        className="absolute top-[15%] right-[5%] w-1 h-1 rounded-full"
-        style={{ 
-          background: colors[400], 
-          opacity: 0.3,
-          boxShadow: `0 0 20px ${colors[400]}30`
-        }}
-      />
-      <div 
-        className="absolute top-[45%] left-[3%] w-1.5 h-1.5 rounded-full"
-        style={{ 
-          background: colors[300], 
-          opacity: 0.2,
-          boxShadow: `0 0 30px ${colors[300]}20`
-        }}
-      />
-      <div 
-        className="absolute top-[75%] right-[8%] w-1 h-1 rounded-full"
-        style={{ 
-          background: colors[400], 
-          opacity: 0.4,
-          boxShadow: `0 0 15px ${colors[400]}40`
-        }}
-      />
+      ))}
     </section>
   );
 }
