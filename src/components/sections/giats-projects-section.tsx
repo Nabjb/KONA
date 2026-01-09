@@ -75,6 +75,9 @@ export function GiatsProjectsSection() {
     const root = rootRef.current;
     if (!root) return;
 
+    // Card height based on device
+    const cardHeight = isMobile ? windowHeight * 0.5 : windowHeight;
+
     // Small delay to ensure DOM is ready
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
@@ -89,8 +92,8 @@ export function GiatsProjectsSection() {
           gsap.timeline({
             scrollTrigger: {
               trigger: root,
-              start: `top+=${windowHeight * index}`,
-              end: `+=${windowHeight * (projects.length - 1)}`,
+              start: `top+=${cardHeight * index}`,
+              end: `+=${cardHeight * (projects.length - 1)}`,
               scrub: true,
               invalidateOnRefresh: true,
             },
@@ -113,10 +116,12 @@ export function GiatsProjectsSection() {
   // Calculate projectsWrap height based on giats.me formula
   const getProjectsWrapHeight = (index: number): string => {
     if (isMobile) {
+      // Mobile: shorter heights
       return index === projects.length - 1
-        ? "100svh"
-        : `${200 + 100 * index}svh`;
+        ? "50svh"
+        : `${100 + 50 * index}svh`;
     }
+    // Desktop
     return index === projects.length - 1
       ? "200svh"
       : `${200 + 100 * index}svh`;
@@ -137,7 +142,7 @@ export function GiatsProjectsSection() {
         className="px-4 md:px-8 lg:px-16 py-12 md:py-20"
         style={{ backgroundColor: "#1a1d18" }}
       >
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-extralight">
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-extralight text-center md:text-left">
           <span style={{ color: "#f8f7f5" }}>Our</span>{" "}
           <span style={{ color: "#a89080" }}>Work</span>
         </h2>
@@ -155,10 +160,10 @@ export function GiatsProjectsSection() {
       >
         {/* Inner Container */}
         <div
-          className="relative w-full block"
+          className="relative w-full block mx-auto"
           style={{
-            borderRadius: "var(--layout-columns-gap)",
-            boxShadow: "0 0 0 calc(var(--layout-columns-gap) * 1) #1a1d18",
+            borderRadius: isMobile ? "0.75rem" : "1.5rem",
+            boxShadow: `0 0 0 ${isMobile ? "0.75rem" : "1.5rem"} #1a1d18`,
           }}
         >
           {projects.map((project, index) => (
@@ -173,6 +178,7 @@ export function GiatsProjectsSection() {
                 height: isMobile ? "50svh" : "100svh",
                 padding: 0,
                 contain: "paint", // CRUCIAL - clips the animated canvas
+                borderRadius: isMobile ? "0.75rem" : 0,
               }}
             >
               {/* Projects Wrap - Contains sticky content, z-index: 1 (in front) */}
@@ -187,65 +193,112 @@ export function GiatsProjectsSection() {
               >
                 {/* Sticky Container - stays fixed while scrolling */}
                 <div
-                  className="sticky top-0 w-full flex items-center"
+                  className="sticky top-0 w-full"
                   style={{
                     height: isMobile ? "50svh" : "100svh",
                     transform: "translateZ(0)", // Creates stacking context for sticky
+                    display: "flex",
+                    alignItems: "center",
                   }}
                 >
-                  {/* Content Grid */}
-                  <div className="w-full h-full px-4 md:px-8 lg:px-16 grid grid-cols-1 md:grid-cols-2 items-center">
-                    {/* Project Details - Left Side */}
-                    <div
-                      className="flex flex-col gap-2 md:gap-4 md:col-span-1 z-10"
-                      style={{
-                        position: isMobile ? "absolute" : "relative",
-                        bottom: isMobile ? "2rem" : "auto",
-                        left: isMobile ? "1rem" : "auto",
-                        width: isMobile ? "calc(100% - 2rem)" : "auto",
-                      }}
-                    >
-                      <h6
-                        className="text-xs md:text-sm font-medium tracking-widest uppercase transition-all duration-500"
-                        style={{ color: "#a89080" }}
-                      >
-                        {project.year}
-                      </h6>
-                      <h3
-                        className="text-2xl md:text-4xl lg:text-6xl font-light transition-all duration-500"
+                  {/* MOBILE Layout */}
+                  {isMobile ? (
+                    <div className="relative w-full h-full">
+                      {/* Centered Image Container (Mobile) */}
+                      <div
+                        className="absolute"
                         style={{
-                          color: "#f8f7f5",
-                          textShadow: "none",
+                          width: "83%",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                          aspectRatio: "16 / 9",
                         }}
                       >
-                        {project.title}
-                      </h3>
-                    </div>
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                          style={{
+                            borderRadius: "0.5rem",
+                            boxShadow: "0 4px 30px rgba(0,0,0,0.3)",
+                          }}
+                          sizes="83vw"
+                        />
+                      </div>
 
-                    {/* Project Image Preview - Right Side (Desktop) */}
-                    <div
-                      className="hidden md:block md:col-span-1 relative"
-                      style={{
-                        position: "absolute",
-                        right: "4rem",
-                        width: "50%",
-                        aspectRatio: "1920 / 900",
-                        borderRadius: "var(--layout-columns-gap)",
-                      }}
-                    >
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover rounded-lg"
+                      {/* Project Details - Bottom Center (Mobile) */}
+                      <div
+                        className="absolute w-full flex flex-col items-center justify-end pb-6"
                         style={{
-                          boxShadow: "0 0 0 0.01vw rgba(40, 40, 43, 0.3)",
-                          borderRadius: "calc(var(--layout-columns-gap) * 0.5)",
+                          height: "100%",
+                          gap: "0.5rem",
                         }}
-                        sizes="50vw"
-                      />
+                      >
+                        <h6
+                          className="text-xs font-medium tracking-widest uppercase"
+                          style={{ color: "#a89080" }}
+                        >
+                          {project.year}
+                        </h6>
+                        <h3
+                          className="text-xl font-light text-center px-4"
+                          style={{
+                            color: "#f8f7f5",
+                            textShadow: "0 2px 10px rgba(0,0,0,0.5)",
+                          }}
+                        >
+                          {project.title}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    /* DESKTOP Layout */
+                    <div className="w-full h-full px-8 lg:px-16 grid grid-cols-2 items-center">
+                      {/* Project Details - Left Side (Desktop) */}
+                      <div className="flex flex-col gap-4 z-10">
+                        <h6
+                          className="text-sm font-medium tracking-widest uppercase transition-all duration-500"
+                          style={{ color: "#a89080" }}
+                        >
+                          {project.year}
+                        </h6>
+                        <h3
+                          className="text-4xl lg:text-6xl font-light transition-all duration-500"
+                          style={{
+                            color: "#f8f7f5",
+                            textShadow: "none",
+                          }}
+                        >
+                          {project.title}
+                        </h3>
+                      </div>
+
+                      {/* Project Image Preview - Right Side (Desktop) */}
+                      <div
+                        className="relative"
+                        style={{
+                          position: "absolute",
+                          right: "4rem",
+                          width: "50%",
+                          aspectRatio: "1920 / 900",
+                        }}
+                      >
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                          style={{
+                            borderRadius: "0.75rem",
+                            boxShadow: "0 8px 40px rgba(0,0,0,0.3)",
+                          }}
+                          sizes="50vw"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -264,18 +317,24 @@ export function GiatsProjectsSection() {
                   src={project.image}
                   alt={project.title}
                   fill
-                  className={`object-cover ${
-                    index === 0
-                      ? "rounded-t-[1.5rem]"
-                      : index === projects.length - 1
-                      ? "rounded-b-[1.5rem]"
-                      : ""
-                  }`}
+                  className="object-cover"
                   style={{
-                    borderTopLeftRadius: index === 0 ? "var(--layout-columns-gap)" : 0,
-                    borderTopRightRadius: index === 0 ? "var(--layout-columns-gap)" : 0,
-                    borderBottomLeftRadius: index === projects.length - 1 ? "var(--layout-columns-gap)" : 0,
-                    borderBottomRightRadius: index === projects.length - 1 ? "var(--layout-columns-gap)" : 0,
+                    borderTopLeftRadius:
+                      index === 0 ? (isMobile ? "0.75rem" : "1.5rem") : 0,
+                    borderTopRightRadius:
+                      index === 0 ? (isMobile ? "0.75rem" : "1.5rem") : 0,
+                    borderBottomLeftRadius:
+                      index === projects.length - 1
+                        ? isMobile
+                          ? "0.75rem"
+                          : "1.5rem"
+                        : 0,
+                    borderBottomRightRadius:
+                      index === projects.length - 1
+                        ? isMobile
+                          ? "0.75rem"
+                          : "1.5rem"
+                        : 0,
                   }}
                   sizes="100vw"
                   priority={index < 2}
@@ -287,22 +346,22 @@ export function GiatsProjectsSection() {
 
         {/* All Projects Button */}
         <div
-          className="w-full flex justify-center py-16 md:py-24"
+          className="w-full flex justify-center py-12 md:py-24"
           style={{ backgroundColor: "#1a1d18" }}
         >
           <Link
             href="#contact"
-            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border transition-all duration-300 hover:gap-5 hover:bg-white/5"
+            className="group inline-flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 rounded-full border transition-all duration-300 hover:gap-5 hover:bg-white/5"
             style={{
               borderColor: "#6b5545",
               color: "#e6e1d7",
             }}
           >
-            <span className="text-sm md:text-base font-medium tracking-wider uppercase">
+            <span className="text-xs md:text-base font-medium tracking-wider uppercase">
               Start Your Project
             </span>
             <svg
-              className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+              className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
