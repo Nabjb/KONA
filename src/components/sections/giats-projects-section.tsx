@@ -116,9 +116,9 @@ export function GiatsProjectsSection() {
   // Calculate projectsWrap height based on giats.me formula
   const getProjectsWrapHeight = (index: number): string => {
     if (isMobile) {
-      // Mobile: shorter heights
+      // Mobile: last card needs more height for sticky content to stay visible
       return index === projects.length - 1
-        ? "50svh"
+        ? "100svh"
         : `${100 + 50 * index}svh`;
     }
     // Desktop
@@ -179,6 +179,7 @@ export function GiatsProjectsSection() {
                 padding: 0,
                 contain: "paint", // CRUCIAL - clips the animated canvas
                 borderRadius: isMobile ? "0.75rem" : 0,
+                marginBottom: isMobile && index !== projects.length - 1 ? "1rem" : 0,
               }}
             >
               {/* Projects Wrap - Contains sticky content, z-index: 1 (in front) */}
@@ -319,22 +320,13 @@ export function GiatsProjectsSection() {
                   fill
                   className="object-cover"
                   style={{
-                    borderTopLeftRadius:
-                      index === 0 ? (isMobile ? "0.75rem" : "1.5rem") : 0,
-                    borderTopRightRadius:
-                      index === 0 ? (isMobile ? "0.75rem" : "1.5rem") : 0,
-                    borderBottomLeftRadius:
-                      index === projects.length - 1
-                        ? isMobile
-                          ? "0.75rem"
-                          : "1.5rem"
-                        : 0,
-                    borderBottomRightRadius:
-                      index === projects.length - 1
-                        ? isMobile
-                          ? "0.75rem"
-                          : "1.5rem"
-                        : 0,
+                    // Mobile: all cards have full rounded corners (due to spacing)
+                    // Desktop: only first has top radius, last has bottom radius
+                    borderRadius: isMobile ? "0.75rem" : undefined,
+                    borderTopLeftRadius: !isMobile && index === 0 ? "1.5rem" : undefined,
+                    borderTopRightRadius: !isMobile && index === 0 ? "1.5rem" : undefined,
+                    borderBottomLeftRadius: !isMobile && index === projects.length - 1 ? "1.5rem" : undefined,
+                    borderBottomRightRadius: !isMobile && index === projects.length - 1 ? "1.5rem" : undefined,
                   }}
                   sizes="100vw"
                   priority={index < 2}
@@ -376,6 +368,15 @@ export function GiatsProjectsSection() {
           </Link>
         </div>
       </section>
+
+      {/* Empty spacer section to see the full scroll effect */}
+      <section
+        className="w-full"
+        style={{
+          height: isMobile ? "50vh" : "100vh",
+          backgroundColor: "#1a1d18",
+        }}
+      />
     </div>
   );
 }
