@@ -3,7 +3,7 @@
 import HeroSection from "@/components/ui/hero-section";
 import ServicesSection from "@/components/sections/services-section";
 import WhoWeAre from "@/components/sections/who-we-are";
-import ProjectsSection from "@/components/sections/projects-section";
+import GiatsProjectsSection from "@/components/sections/giats-projects-section";
 
 export default function Home() {
   return (
@@ -26,9 +26,9 @@ export default function Home() {
         <WhoWeAre />
       </div>
 
-      {/* Projects - after Who We Are */}
-      <div className="relative z-20">
-        <ProjectsSection />
+      {/* Projects - giats.me inspired horizontal scroll */}
+      <div className="relative z-30">
+        <GiatsProjectsSection />
       </div>
     </main>
   );
