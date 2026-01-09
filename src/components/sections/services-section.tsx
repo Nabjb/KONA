@@ -1,6 +1,28 @@
 "use client";
 
 import React from "react";
+import { 
+  SiReact, 
+  SiNextdotjs, 
+  SiTypescript, 
+  SiTailwindcss,
+  SiHtml5,
+  SiCss3,
+  SiJavascript,
+  SiNodedotjs,
+  SiPostgresql,
+  SiMongodb,
+  SiPrisma,
+  SiVercel,
+  SiInstagram,
+  SiFacebook,
+  SiTiktok,
+  SiYoutube,
+  SiGoogleads,
+  SiMeta,
+  SiGoogleanalytics,
+  SiMailchimp
+} from "react-icons/si";
 
 const colors = {
   50: "#f8f7f5",
@@ -22,6 +44,40 @@ const serviceColors = {
   "04": { accent: "#5a4a6a", gradient: "from-[#1a1d18] via-[#120a15] to-[#201a25]" },
 };
 
+// Icons for each service
+const serviceIcons = {
+  "01": [
+    { icon: SiReact, name: "React", color: "#61DAFB" },
+    { icon: SiNextdotjs, name: "Next.js", color: "#ffffff" },
+    { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+    { icon: SiJavascript, name: "JavaScript", color: "#F7DF1E" },
+    { icon: SiHtml5, name: "HTML5", color: "#E34F26" },
+    { icon: SiCss3, name: "CSS3", color: "#1572B6" },
+    { icon: SiTailwindcss, name: "Tailwind", color: "#06B6D4" },
+  ],
+  "02": [
+    { icon: SiReact, name: "React", color: "#61DAFB" },
+    { icon: SiNextdotjs, name: "Next.js", color: "#ffffff" },
+    { icon: SiNodedotjs, name: "Node.js", color: "#339933" },
+    { icon: SiPostgresql, name: "PostgreSQL", color: "#4169E1" },
+    { icon: SiMongodb, name: "MongoDB", color: "#47A248" },
+    { icon: SiPrisma, name: "Prisma", color: "#2D3748" },
+    { icon: SiVercel, name: "Vercel", color: "#ffffff" },
+  ],
+  "03": [
+    { icon: SiInstagram, name: "Instagram", color: "#E4405F" },
+    { icon: SiFacebook, name: "Facebook", color: "#1877F2" },
+    { icon: SiTiktok, name: "TikTok", color: "#ffffff" },
+    { icon: SiYoutube, name: "YouTube", color: "#FF0000" },
+  ],
+  "04": [
+    { icon: SiGoogleads, name: "Google Ads", color: "#4285F4" },
+    { icon: SiMeta, name: "Meta Ads", color: "#0081FB" },
+    { icon: SiGoogleanalytics, name: "Analytics", color: "#E37400" },
+    { icon: SiMailchimp, name: "Email", color: "#FFE01B" },
+  ],
+};
+
 function WebDevPattern() {
   return (
     <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
@@ -30,15 +86,10 @@ function WebDevPattern() {
       <circle cx="300" cy="60" r="3" fill={colors[200]} />
       <circle cx="150" cy="200" r="5" fill={colors[200]} />
       <circle cx="280" cy="180" r="4" fill={colors[200]} />
-      <circle cx="80" cy="280" r="3" fill={colors[200]} />
-      <circle cx="220" cy="300" r="5" fill={colors[200]} />
-      <circle cx="340" cy="260" r="4" fill={colors[200]} />
       <line x1="100" y1="80" x2="200" y2="120" stroke={colors[200]} strokeWidth="1" />
       <line x1="200" y1="120" x2="300" y2="60" stroke={colors[200]} strokeWidth="1" />
       <line x1="200" y1="120" x2="150" y2="200" stroke={colors[200]} strokeWidth="1" />
       <line x1="150" y1="200" x2="280" y2="180" stroke={colors[200]} strokeWidth="1" />
-      <line x1="150" y1="200" x2="80" y2="280" stroke={colors[200]} strokeWidth="1" />
-      <line x1="280" y1="180" x2="340" y2="260" stroke={colors[200]} strokeWidth="1" />
       <path d="M50 150 L30 180 L50 210" stroke={colors[200]} strokeWidth="2" fill="none" />
       <path d="M370 150 L390 180 L370 210" stroke={colors[200]} strokeWidth="2" fill="none" />
     </svg>
@@ -54,7 +105,6 @@ function WebAppsPattern() {
       <line x1="240" y1="100" x2="320" y2="100" stroke={colors[200]} strokeWidth="2" />
       <line x1="240" y1="115" x2="300" y2="115" stroke={colors[200]} strokeWidth="2" />
       <rect x="60" y="180" width="80" height="60" rx="4" stroke={colors[200]} strokeWidth="1" fill="none" />
-      <rect x="280" y="220" width="100" height="70" rx="4" stroke={colors[200]} strokeWidth="1" fill="none" />
       <rect x="70" y="210" width="10" height="20" fill={colors[200]} fillOpacity="0.3" />
       <rect x="85" y="200" width="10" height="30" fill={colors[200]} fillOpacity="0.3" />
       <rect x="100" y="195" width="10" height="35" fill={colors[200]} fillOpacity="0.3" />
@@ -72,8 +122,6 @@ function SocialMediaPattern() {
       <circle cx="80" cy="100" r="20" stroke={colors[200]} strokeWidth="1" fill="none" />
       <circle cx="340" cy="120" r="25" stroke={colors[200]} strokeWidth="1" fill="none" />
       <rect x="90" y="300" width="50" height="50" rx="2" stroke={colors[200]} strokeWidth="1" fill="none" />
-      <circle cx="150" cy="140" r="3" fill={colors[200]} />
-      <circle cx="260" cy="160" r="3" fill={colors[200]} />
     </svg>
   );
 }
@@ -87,7 +135,6 @@ function AdvertisingPattern() {
       <rect x="200" y="150" width="30" height="190" fill={colors[200]} fillOpacity="0.35" />
       <rect x="240" y="100" width="30" height="240" fill={colors[200]} fillOpacity="0.4" />
       <path d="M80 280 Q150 220 200 180 T320 80" stroke={colors[200]} strokeWidth="2" fill="none" strokeDasharray="4 4" />
-      <path d="M320 80 L310 100 M320 80 L330 100" stroke={colors[200]} strokeWidth="2" />
       <circle cx="80" cy="120" r="30" stroke={colors[200]} strokeWidth="1" fill="none" />
       <circle cx="80" cy="120" r="20" stroke={colors[200]} strokeWidth="1" fill="none" />
       <circle cx="80" cy="120" r="10" stroke={colors[200]} strokeWidth="1" fill="none" />
@@ -114,6 +161,7 @@ interface ServiceCardProps {
 function ServiceCard({ number, title, description, features, zIndex }: ServiceCardProps) {
   const PatternComponent = patternComponents[number];
   const colorScheme = serviceColors[number];
+  const icons = serviceIcons[number];
   
   return (
     <div 
@@ -167,6 +215,34 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
               className="w-8 md:w-12 h-px mt-4 md:mt-6 mb-4 md:mb-0"
               style={{ background: `linear-gradient(to right, ${colorScheme.accent}, transparent)` }}
             />
+            
+            {/* Tech/Platform Icons */}
+            <div className="flex flex-wrap gap-3 mt-6">
+              {icons.map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <div 
+                    key={index}
+                    className="group relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-lg transition-all duration-300 hover:scale-110"
+                    style={{ 
+                      background: `${colorScheme.accent}15`,
+                      border: `1px solid ${colorScheme.accent}30`
+                    }}
+                  >
+                    <IconComponent 
+                      className="w-5 h-5 md:w-6 md:h-6 transition-colors duration-300"
+                      style={{ color: item.color }}
+                    />
+                    {/* Tooltip */}
+                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+                      style={{ background: colors[800], color: colors[100] }}
+                    >
+                      {item.name}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <div className="col-span-12 md:col-span-7 lg:col-span-6 lg:col-start-7">

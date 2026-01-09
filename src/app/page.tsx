@@ -3,6 +3,7 @@
 import HeroSection from "@/components/ui/hero-section";
 import ServicesSection from "@/components/sections/services-section";
 import WhoWeAre from "@/components/sections/who-we-are";
+import ProjectsSection from "@/components/sections/projects-section";
 
 export default function Home() {
   return (
@@ -23,6 +24,11 @@ export default function Home() {
       {/* Who We Are - scrolls over services */}
       <div className="relative z-20">
         <WhoWeAre />
+      </div>
+
+      {/* Projects - after Who We Are */}
+      <div className="relative z-20">
+        <ProjectsSection />
       </div>
     </main>
   );
