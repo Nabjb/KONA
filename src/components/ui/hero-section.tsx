@@ -168,7 +168,7 @@ export function HeroSection() {
       <div className="floating-element" style={{ top: "40%", left: "10%", animationDelay: "6s" }}></div>
       <div className="floating-element" style={{ top: "75%", left: "90%", animationDelay: "6.5s" }}></div>
 
-      <div className="relative z-10 h-full flex flex-col justify-between items-center px-8 py-12 md:px-16 md:py-20">
+      <div className="relative z-10 h-full flex flex-col justify-between items-center px-8 pt-32 pb-12 md:px-16 md:pt-40 md:pb-20">
         {/* Top tagline */}
         <div className="text-center">
           <h2
