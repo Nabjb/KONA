@@ -22,18 +22,18 @@ interface MobileMenuProps {
 const navItems = [
     {
         label: "Solutions",
-        href: "#solutions",
+        href: "/solutions",
         subItems: [
-            { label: "Web Development", href: "#web-development" },
-            { label: "Web Applications", href: "#web-applications" },
-            { label: "Digital Advertising", href: "#digital-advertising" },
-            { label: "Social Media", href: "#social-media" },
+            { label: "Web Development", href: "/solutions/web-development" },
+            { label: "Web Applications", href: "/solutions/web-applications" },
+            { label: "Digital Advertising", href: "/solutions/digital-advertising" },
+            { label: "Social Media", href: "/solutions/social-media" },
         ],
     },
-    { label: "About", href: "#about" },
-    { label: "Case Studies", href: "#case-studies" },
-    { label: "Contact", href: "#contact" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "About", href: "/about" },
+    { label: "Case Studies", href: "/case-studies" },
+    { label: "Contact", href: "/contact" },
+    { label: "Pricing", href: "/pricing" },
 ];
 
 /**
@@ -246,7 +246,7 @@ export function MobileMenu({ isOpen, onClose, originX, originY }: MobileMenuProp
                                 transition={{ delay: 0.5, duration: 0.3 }}
                             >
                                 <Link
-                                    href="#contact"
+                                    href="/contact"
                                     onClick={onClose}
                                     className="inline-flex items-center gap-2 text-base font-normal transition-colors duration-200"
                                     style={{

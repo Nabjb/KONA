@@ -3,6 +3,31 @@
 import React, { useRef, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import {
+  SiMailchimp,
+  SiFigma,
+  SiAdobecreativecloud,
+  SiLighthouse,
+  SiGooglechrome,
+  SiPagespeedinsights,
+  SiGooglesearchconsole,
+  SiSemrush,
+  SiTestinglibrary,
+  SiGooglecloud,
+  SiAmazon,
+  SiDocker,
+  SiKubernetes,
+  SiGraphql,
+  SiSocketdotio,
+  SiCanva,
+  SiAdobephotoshop,
+  SiAdobeillustrator,
+  SiAdobelightroom,
+  SiMeta,
+  SiGoogleads,
+  SiGoogleanalytics,
+  SiHubspot,
+  SiSalesforce,
+  SiHotjar,
   SiReact,
   SiNextdotjs,
   SiTypescript,
@@ -18,12 +43,40 @@ import {
   SiInstagram,
   SiFacebook,
   SiTiktok,
-  SiYoutube,
-  SiGoogleads,
-  SiMeta,
-  SiGoogleanalytics,
-  SiMailchimp
+  SiYoutube
 } from "react-icons/si";
+import { TbDeviceMobile, TbDeviceTablet, TbDeviceDesktop } from "react-icons/tb";
+
+// --- ScrambleText Component ---
+const ScrambleText = ({ text }: { text: string }) => {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+  const [displayText, setDisplayText] = useState(text);
+
+  React.useEffect(() => {
+    let frame = 0;
+    const duration = 15; // frames
+    const interval = setInterval(() => {
+      if (frame >= duration) {
+        setDisplayText(text);
+        clearInterval(interval);
+        return;
+      }
+
+      setDisplayText(prev => {
+        return text.split('').map((char, i) => {
+          if (char === ' ') return ' ';
+          if (i < (frame / duration) * text.length) return text[i];
+          return characters[Math.floor(Math.random() * characters.length)];
+        }).join('');
+      });
+      frame++;
+    }, 40);
+
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return <>{displayText}</>;
+};
 
 const colors = {
   50: "#f8f7f5",
@@ -38,76 +91,400 @@ const colors = {
   900: "#1a1d18",
 };
 
-const serviceColors = {
-  "01": { accent: "#4a6670", gradient: "from-[#1a1d18] via-[#0a1015] to-[#1a2025]" },
-  "02": { accent: "#4a6a5a", gradient: "from-[#1a1d18] via-[#0a120f] to-[#1a2520]" },
-  "03": { accent: "#7a5a4a", gradient: "from-[#1a1d18] via-[#15100a] to-[#25201a]" },
-  "04": { accent: "#5a4a6a", gradient: "from-[#1a1d18] via-[#120a15] to-[#201a25]" },
+const serviceData = {
+  "01": {
+    accent: "#4a6670",
+    gradient: "radial-gradient(circle at 70% 30%, rgba(74, 102, 112, 0.15) 0%, transparent 60%)",
+    cards: [
+      {
+        shortTitle: "Web Development",
+        fullTitle: "Web Development",
+        description: "We build fast, scalable, and beautifully crafted websites that perform across all dimensions of the modern web.",
+        icons: [
+          { icon: SiReact, name: "React", color: "#61DAFB" },
+          { icon: SiNextdotjs, name: "Next.js", color: "#ffffff" },
+          { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+          { icon: SiTailwindcss, name: "Tailwind", color: "#06B6D4" },
+        ]
+      },
+      {
+        shortTitle: "SEO",
+        fullTitle: "Search Engine Optimization",
+        description: "Strategic positioning to dominate search results and drive high-intent organic traffic to your platform.",
+        icons: [
+          { icon: SiGooglesearchconsole, name: "Console", color: "#4285F4" },
+          { icon: SiSemrush, name: "Semrush", color: "#FF6203" },
+          { icon: SiGoogleanalytics, name: "Analytics", color: "#E37400" },
+        ]
+      },
+      {
+        shortTitle: "Custom Design",
+        fullTitle: "Architectural UI/UX Design",
+        description: "Bespoke digital experiences tailored to your brand's unique DNA, merging aesthetics with conversion-led strategy.",
+        icons: [
+          { icon: SiFigma, name: "Figma", color: "#F24E1E" },
+          { icon: SiAdobecreativecloud, name: "Creative Cloud", color: "#DA1F26" },
+          { icon: SiAdobephotoshop, name: "Photoshop", color: "#31A8FF" },
+          { icon: SiAdobeillustrator, name: "Illustrator", color: "#FF9A00" },
+        ]
+      },
+      {
+        shortTitle: "Responsiveness",
+        fullTitle: "Cross-Device Fluidity",
+        description: "Seamless transitions between mobile, tablet, and desktop viewports, ensuring a premium experience on every screen.",
+        icons: [
+          { icon: TbDeviceMobile, name: "Mobile", color: "#ffffff" },
+          { icon: TbDeviceTablet, name: "Tablet", color: "#ffffff" },
+          { icon: TbDeviceDesktop, name: "Desktop", color: "#ffffff" },
+        ]
+      },
+      {
+        shortTitle: "Performance",
+        fullTitle: "Precision Engineering",
+        description: "Optimization for maximum speed, hitting the core web vitals and ensuring lightning-fast load times.",
+        icons: [
+          { icon: SiLighthouse, name: "Lighthouse", color: "#F44B21" },
+          { icon: SiPagespeedinsights, name: "Insights", color: "#4285F4" },
+          { icon: SiGooglechrome, name: "Chrome", color: "#4285F4" },
+          { icon: SiTestinglibrary, name: "Testing", color: "#E33332" },
+        ]
+      }
+    ]
+  },
+  "02": {
+    accent: "#4a6a5a",
+    gradient: "radial-gradient(circle at 30% 70%, rgba(74, 106, 90, 0.15) 0%, transparent 60%)",
+    cards: [
+      {
+        shortTitle: "Web Applications",
+        fullTitle: "Web Applications",
+        description: "Complex, data-driven platforms engineered for reliability, security, and effortless user scaling.",
+        icons: [
+          { icon: SiNextdotjs, name: "Next.js", color: "#ffffff" },
+          { icon: SiNodedotjs, name: "Node.js", color: "#339933" },
+          { icon: SiPostgresql, name: "PostgreSQL", color: "#4169E1" },
+          { icon: SiPrisma, name: "Prisma", color: "#ffffff" },
+        ]
+      },
+      {
+        shortTitle: "Dashboards",
+        fullTitle: "Intuitive Admin Hubs",
+        description: "Visualizing complex data through clean, actionable dashboards that empower decision-making.",
+        icons: [
+          { icon: SiGraphql, name: "GraphQL", color: "#E10098" },
+          { icon: SiSocketdotio, name: "Socket.io", color: "#ffffff" },
+          { icon: SiGoogleanalytics, name: "Analytics", color: "#E37400" },
+          { icon: SiHotjar, name: "Hotjar", color: "#FF2C00" },
+        ]
+      },
+      {
+        shortTitle: "SaaS Products",
+        fullTitle: "Scalable SaaS Architecture",
+        description: "From MVP to enterprise-grade solutions, we build the engine that drives your recurring revenue.",
+        icons: [
+          { icon: SiVercel, name: "Vercel", color: "#ffffff" },
+          { icon: SiDocker, name: "Docker", color: "#2496ED" },
+          { icon: SiKubernetes, name: "Kubernetes", color: "#326CE5" },
+          { icon: SiGooglecloud, name: "Google Cloud", color: "#4285F4" },
+        ]
+      },
+      {
+        shortTitle: "Automations",
+        fullTitle: "Workflow Orchestration",
+        description: "Reducing manual overhead through intelligent API integrations and background processing.",
+        icons: [
+          { icon: SiGooglecloud, name: "Cloud", color: "#0078D4" },
+          { icon: SiAmazon, name: "AWS", color: "#FF9900" },
+          { icon: SiSocketdotio, name: "Realtime", color: "#ffffff" },
+        ]
+      },
+      {
+        shortTitle: "Databases",
+        fullTitle: "Robust Data Sovereignty",
+        description: "Secure, high-performance database management ensuring data integrity and rapid access.",
+        icons: [
+          { icon: SiPostgresql, name: "PostgreSQL", color: "#4169E1" },
+          { icon: SiMongodb, name: "MongoDB", color: "#47A248" },
+          { icon: SiPrisma, name: "Prisma", color: "#ffffff" },
+        ]
+      }
+    ]
+  },
+  "03": {
+    accent: "#7a5a4a",
+    gradient: "radial-gradient(circle at 70% 70%, rgba(122, 90, 74, 0.15) 0%, transparent 60%)",
+    cards: [
+      {
+        shortTitle: "Social Media",
+        fullTitle: "Social Media",
+        description: "Cultivating digital communities and capturing market attention through cohesive brand narrative.",
+        icons: [
+          { icon: SiInstagram, name: "Instagram", color: "#E4405F" },
+          { icon: SiFacebook, name: "Facebook", color: "#1877F2" },
+          { icon: SiTiktok, name: "TikTok", color: "#ffffff" },
+          { icon: SiYoutube, name: "YouTube", color: "#FF0000" },
+        ]
+      },
+      {
+        shortTitle: "Visual Content",
+        fullTitle: "High-Immersive Visuals",
+        description: "Stunning photography and design that stops the scroll and initiates brand connection.",
+        icons: [
+          { icon: SiCanva, name: "Canva", color: "#00C4CC" },
+          { icon: SiAdobephotoshop, name: "Photoshop", color: "#31A8FF" },
+          { icon: SiAdobelightroom, name: "Lightroom", color: "#31A8FF" },
+        ]
+      },
+      {
+        shortTitle: "Post Strategy",
+        fullTitle: "Strategic Content Planning",
+        description: "Algorithmic-led strategy to maximize reach and foster authentic audience engagement.",
+        icons: [
+          { icon: SiMeta, name: "Meta", color: "#0081FB" },
+          { icon: SiGoogleanalytics, name: "Analytics", color: "#E37400" },
+          { icon: SiMailchimp, name: "Mailchimp", color: "#FFE01B" },
+        ]
+      },
+      {
+        shortTitle: "Videography",
+        fullTitle: "Professional Videography",
+        description: "Cinematic drone shots and professional editing that bring your business story to life.",
+        icons: [
+          { icon: SiAdobecreativecloud, name: "Creative Cloud", color: "#ffffff" },
+          { icon: SiYoutube, name: "YouTube", color: "#FF0000" },
+          { icon: SiAdobephotoshop, name: "Photoshop", color: "#31A8FF" },
+        ]
+      },
+      {
+        shortTitle: "Storytelling",
+        fullTitle: "Cohesive Brand Narrative",
+        description: "Defining your voice across all channels to build a legacy brand that resonates deeply.",
+        icons: [
+          { icon: SiInstagram, name: "Instagram", color: "#E4405F" },
+          { icon: SiFacebook, name: "Facebook", color: "#1877F2" },
+        ]
+      }
+    ]
+  },
+  "04": {
+    accent: "#5a4a6a",
+    gradient: "radial-gradient(circle at 30% 30%, rgba(90, 74, 106, 0.15) 0%, transparent 60%)",
+    cards: [
+      {
+        shortTitle: "Digital Advertising",
+        fullTitle: "Digital Advertising",
+        description: "Precision-targeted campaigns that convert casual interest into sustainable business growth.",
+        icons: [
+          { icon: SiGoogleads, name: "Google Ads", color: "#4285F4" },
+          { icon: SiMeta, name: "Meta Ads", color: "#0081FB" },
+          { icon: SiGoogleanalytics, name: "Analytics", color: "#E37400" },
+          { icon: SiMailchimp, name: "Email", color: "#FFE01B" },
+        ]
+      },
+      {
+        shortTitle: "Paid Social",
+        fullTitle: "Paid Social Activation",
+        description: "Aggressive market reach through strategically managed ad spends on major social platforms.",
+        icons: [
+          { icon: SiMeta, name: "Meta", color: "#0081FB" },
+          { icon: SiTiktok, name: "TikTok", color: "#ffffff" },
+          { icon: SiInstagram, name: "Instagram", color: "#E4405F" },
+        ]
+      },
+      {
+        shortTitle: "Google Ads",
+        fullTitle: "Search Engine Advertising",
+        description: "Capturing search intent at the exact moment your customers are looking for you.",
+        icons: [
+          { icon: SiGoogleads, name: "Google Ads", color: "#4285F4" },
+          { icon: SiGooglesearchconsole, name: "Console", color: "#4285F4" },
+        ]
+      },
+      {
+        shortTitle: "Analytics",
+        fullTitle: "Conversion intelligence",
+        description: "Deep-dive data analysis to track the customer journey and optimize for ROI.",
+        icons: [
+          { icon: SiGoogleanalytics, name: "Analytics", color: "#E37400" },
+          { icon: SiHotjar, name: "Hotjar", color: "#FF2C00" },
+          { icon: SiHubspot, name: "Hubspot", color: "#FF7A59" },
+        ]
+      },
+      {
+        shortTitle: "Optimization",
+        fullTitle: "A/B Growth Testing",
+        description: "Continuous performance iteration to squeeze maximum value from every advertising dollar.",
+        icons: [
+          { icon: SiSalesforce, name: "Salesforce", color: "#00A1E0" },
+          { icon: SiTestinglibrary, name: "A/B Testing", color: "#E33332" },
+          { icon: SiHubspot, name: "Marketing", color: "#FF7A59" },
+        ]
+      }
+    ]
+  }
 };
 
-// Icons for each service
-const serviceIcons = {
+const serviceImages = {
   "01": [
-    { icon: SiReact, name: "React", color: "#61DAFB" },
-    { icon: SiNextdotjs, name: "Next.js", color: "#ffffff" },
-    { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
-    { icon: SiJavascript, name: "JavaScript", color: "#F7DF1E" },
-    { icon: SiHtml5, name: "HTML5", color: "#E34F26" },
-    { icon: SiCss3, name: "CSS3", color: "#1572B6" },
-    { icon: SiTailwindcss, name: "Tailwind", color: "#06B6D4" },
+    "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=800&q=80",
+    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
   ],
   "02": [
-    { icon: SiReact, name: "React", color: "#61DAFB" },
-    { icon: SiNextdotjs, name: "Next.js", color: "#ffffff" },
-    { icon: SiNodedotjs, name: "Node.js", color: "#339933" },
-    { icon: SiPostgresql, name: "PostgreSQL", color: "#4169E1" },
-    { icon: SiMongodb, name: "MongoDB", color: "#47A248" },
-    { icon: SiPrisma, name: "Prisma", color: "#2D3748" },
-    { icon: SiVercel, name: "Vercel", color: "#ffffff" },
+    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    "https://images.unsplash.com/photo-1504868584819-f8e90526354a?w=800&q=80",
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
   ],
   "03": [
-    { icon: SiInstagram, name: "Instagram", color: "#E4405F" },
-    { icon: SiFacebook, name: "Facebook", color: "#1877F2" },
-    { icon: SiTiktok, name: "TikTok", color: "#ffffff" },
-    { icon: SiYoutube, name: "YouTube", color: "#FF0000" },
+    "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=800&q=80",
+    "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80",
+    "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=800&q=80",
+    "https://images.unsplash.com/photo-1557838923-2985c318be48?w=800&q=80",
+    "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&q=80",
   ],
   "04": [
-    { icon: SiGoogleads, name: "Google Ads", color: "#4285F4" },
-    { icon: SiMeta, name: "Meta Ads", color: "#0081FB" },
-    { icon: SiGoogleanalytics, name: "Analytics", color: "#E37400" },
-    { icon: SiMailchimp, name: "Email", color: "#FFE01B" },
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=800&q=80",
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    "https://images.unsplash.com/photo-1533750516457-a7f992034fce?w=800&q=80",
   ],
 };
 
-const serviceGradients = {
-  "01": "radial-gradient(circle at 70% 30%, rgba(74, 102, 112, 0.15) 0%, transparent 60%)",
-  "02": "radial-gradient(circle at 30% 70%, rgba(74, 106, 90, 0.15) 0%, transparent 60%)",
-  "03": "radial-gradient(circle at 70% 70%, rgba(122, 90, 74, 0.15) 0%, transparent 60%)",
-  "04": "radial-gradient(circle at 30% 30%, rgba(90, 74, 106, 0.15) 0%, transparent 60%)",
+// --- Accordion Item Internal Component ---
+const AccordionItem = ({ title, imageUrl, isActive, onMouseEnter, accentColor }: {
+  title: string;
+  imageUrl: string;
+  isActive: boolean;
+  onMouseEnter: () => void;
+  accentColor: string;
+}) => {
+  return (
+    <div
+      className={`
+        relative h-[300px] md:h-[450px] rounded-xl overflow-hidden cursor-pointer
+        transition-all duration-700 ease-in-out border border-white/5
+        ${isActive ? 'w-[200px] md:w-[350px]' : 'w-[50px] md:w-[70px]'}
+      `}
+      onMouseEnter={onMouseEnter}
+    >
+      <img
+        src={imageUrl}
+        alt={title}
+        className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isActive ? 'scale-110 opacity-100 grayscale-0' : 'opacity-40 grayscale'}`}
+      />
+      <div className={`absolute inset-0 bg-black/50 transition-opacity duration-700 ${isActive ? 'opacity-30' : 'opacity-70'}`}></div>
+
+      {/* Bottom Gradient for Text Legibility */}
+      <div className={`absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 to-transparent transition-opacity duration-700 ${isActive ? 'opacity-100' : 'opacity-0'}`} />
+
+      {/* Accent Glow on Hover */}
+      <div
+        className={`absolute inset-0 opacity-0 transition-opacity duration-700 pointer-events-none`}
+        style={{
+          background: isActive ? `radial-gradient(circle at center, ${accentColor}10 0%, transparent 70%)` : '',
+          opacity: isActive ? 1 : 0
+        }}
+      />
+
+      <span
+        className={`
+          absolute text-white text-xs md:text-sm font-medium uppercase tracking-[0.2em]
+          transition-all duration-500 ease-in-out px-6 text-center
+          ${isActive
+            ? 'bottom-8 left-0 right-0 rotate-0 whitespace-normal opacity-100'
+            : 'bottom-32 left-1/2 -translate-x-1/2 -rotate-90 whitespace-nowrap opacity-70'
+          }
+        `}
+        style={{
+          textShadow: '0 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.4)'
+        }}
+      >
+        {title}
+      </span>
+    </div>
+  );
 };
 
-const defaultGalleryImages = [
-  { src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80", alt: "Project 1" },
-  { src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80", alt: "Project 2" },
-  { src: "https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=800&q=80", alt: "Project 3" },
-  { src: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80", alt: "Project 4" },
-  { src: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80", alt: "Project 5" },
-];
+// --- Mobile Feature Accordion ---
+const MobileFeatureAccordion = ({
+  cards,
+  accent,
+  activeIndex,
+  onSelect
+}: {
+  cards: any[];
+  accent: string;
+  activeIndex: number;
+  onSelect: (index: number) => void;
+}) => {
+  return (
+    <div className="flex flex-col gap-1.5 w-full mt-2">
+      {cards.map((card, index) => {
+        const isActive = activeIndex === index;
+        return (
+          <div
+            key={index}
+            className={`
+              border rounded-lg overflow-hidden transition-all duration-500
+              ${isActive ? 'border-white/20 bg-white/5' : 'border-white/5 bg-transparent'}
+            `}
+            onClick={() => onSelect(index)}
+          >
+            {/* Tab Header */}
+            <div className="px-3 py-2 flex items-center justify-between cursor-pointer">
+              <span className={`text-[10px] font-mono uppercase tracking-widest ${isActive ? 'text-white' : 'text-white/40'}`}>
+                {index === 0 ? "Entry" : `0${index}`}
+              </span>
+              <span className={`text-xs font-medium uppercase tracking-[0.1em] ${isActive ? 'opacity-100' : 'opacity-60'}`}>
+                {isActive ? <ScrambleText text={card.shortTitle} /> : card.shortTitle}
+              </span>
+            </div>
 
-interface ServiceCardProps {
-  number: "01" | "02" | "03" | "04";
-  title: string;
-  description: string;
-  features: string[];
-  zIndex: number;
-}
+            {/* Expanded Content */}
+            <motion.div
+              initial={false}
+              animate={{ height: isActive ? 'auto' : 0, opacity: isActive ? 1 : 0 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="px-3 pb-3 space-y-2">
+                <p className="text-white/50 text-[10px] leading-relaxed">
+                  {card.description}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {card.icons.map((item: any, i: number) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <div
+                        key={i}
+                        className="flex items-center gap-1.5 px-1.5 py-1 rounded bg-white/5 border border-white/10"
+                      >
+                        <IconComponent className="w-3 h-3" style={{ color: item.color }} />
+                        <span className="text-[9px] font-mono text-white/40">{item.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
-function ServiceCard({ number, title, description, features, zIndex }: ServiceCardProps) {
-  const colorScheme = serviceColors[number];
-  const icons = serviceIcons[number];
-  const gradient = serviceGradients[number];
+function ServiceCard({ number, zIndex }: { number: "01" | "02" | "03" | "04"; zIndex: number }) {
+  const service = serviceData[number];
   const cardRef = useRef(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
+
+  const activeCard = service.cards[activeAccordionIndex];
 
   const { scrollYProgress } = useScroll({
     target: cardRef,
@@ -132,7 +509,7 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
         <motion.div
           className="absolute inset-[-20%] opacity-50"
           style={{
-            background: gradient,
+            background: service.gradient,
             y: backgroundY
           }}
         />
@@ -168,147 +545,106 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
         {number}
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-16 w-full py-20">
-        <div className="grid grid-cols-12 gap-4 md:gap-8 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-16 w-full pt-16 pb-8 md:py-20">
+        <div className="grid grid-cols-12 gap-4 md:gap-16 items-start md:items-center">
 
-          <div className="col-span-12 md:col-span-5 lg:col-span-4">
+          <div className="col-span-12 lg:col-span-4 mt-4 md:mt-0">
             <div
-              className="text-xs md:text-sm font-mono uppercase tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4"
-              style={{ color: colorScheme.accent }}
+              className="text-[10px] md:text-sm font-mono uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1 md:mb-4"
+              style={{ color: service.accent }}
             >
-              Service {number}
+              <ScrambleText text={activeAccordionIndex === 0 ? `Service ${number}` : "INCLUDES"} />
             </div>
+
+            {/* Dynamic Scrambled Title */}
             <h2
-              className="text-2xl md:text-4xl lg:text-5xl font-extralight leading-tight drop-shadow-2xl"
+              className="text-2xl md:text-4xl lg:text-5xl font-extralight leading-tight drop-shadow-2xl mb-2 md:mb-6 min-h-[1.5em] md:min-h-[2.5em] lg:min-h-[2em]"
               style={{ color: colors[50] }}
             >
-              {title}
+              <ScrambleText text={activeCard.fullTitle} />
             </h2>
+
             <div
-              className="w-8 md:w-12 h-px mt-4 md:mt-6 mb-4 md:mb-0"
-              style={{ background: `linear-gradient(to right, ${colorScheme.accent}, transparent)` }}
+              className="w-10 md:w-20 h-px mb-3 md:mb-8"
+              style={{ background: `linear-gradient(to right, ${service.accent}, transparent)` }}
             />
 
-            {/* Tech/Platform Icons */}
-            <div className="flex flex-wrap gap-3 mt-6">
-              {icons.map((item, index) => {
+            {/* Dynamic Sub-Description */}
+            <motion.p
+              key={activeAccordionIndex}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-white/60 text-[11px] md:text-base mb-4 md:mb-8 w-[85vw] md:max-w-sm font-light leading-relaxed"
+            >
+              {activeCard.description}
+            </motion.p>
+
+            {/* Mobile Tech Accordion (Visible on SM/MD) */}
+            <div className="lg:hidden w-full">
+              <MobileFeatureAccordion
+                cards={service.cards}
+                accent={service.accent}
+                activeIndex={activeAccordionIndex}
+                onSelect={setActiveAccordionIndex}
+              />
+            </div>
+
+            {/* Dynamic Tech/Platform Icons (Desktop Only) */}
+            <div className="hidden lg:flex flex-wrap gap-3">
+              {activeCard.icons.map((item: any, index: number) => {
                 const IconComponent = item.icon;
                 return (
-                  <div
-                    key={index}
+                  <motion.div
+                    key={`${activeAccordionIndex}-${index}`}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.05 }}
                     className="group relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-lg transition-all duration-300 hover:scale-110 backdrop-blur-sm"
                     style={{
-                      background: `${colorScheme.accent}20`,
-                      border: `1px solid ${colorScheme.accent}40`
+                      background: `${service.accent}20`,
+                      border: `1px solid ${service.accent}40`
                     }}
                   >
                     <IconComponent
                       className="w-5 h-5 md:w-6 md:h-6 transition-colors duration-300 drop-shadow-lg"
                       style={{ color: item.color }}
                     />
-                    {/* Tooltip */}
                     <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
                       style={{ background: colors[800], color: colors[100] }}
                     >
                       {item.name}
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
           </div>
 
-          <div className="col-span-12 md:col-span-7 lg:col-span-6 lg:col-start-7">
-            <p
-              className="text-base md:text-xl font-light leading-relaxed mb-5 md:mb-8 drop-shadow-lg"
-              style={{ color: colors[100] }}
+          {/* Right Side: Interactive Image Accordion (Desktop Only) */}
+          <div className="hidden lg:flex col-span-12 lg:col-span-8 justify-center lg:justify-end">
+            <div
+              className="flex flex-row items-center gap-2 md:gap-4 p-2 overflow-hidden"
+              onMouseLeave={() => setActiveAccordionIndex(0)}
             >
-              {description}
-            </p>
-
-            <div className="space-y-2.5 md:space-y-4">
-              {features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-3 md:gap-4">
-                  <div
-                    className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full mt-2 md:mt-2.5 flex-shrink-0 shadow-[0_0_10px_currentColor]"
-                    style={{ background: colorScheme.accent, color: colorScheme.accent }}
-                  />
-                  <p className="text-sm md:text-lg font-light drop-shadow-md" style={{ color: colors[200] }}>
-                    {feature}
-                  </p>
-                </div>
+              {service.cards.map((card, index: number) => (
+                <AccordionItem
+                  key={index}
+                  title={card.shortTitle}
+                  imageUrl={serviceImages[number][index] || serviceImages["01"][0]}
+                  isActive={index === activeAccordionIndex}
+                  onMouseEnter={() => setActiveAccordionIndex(index)}
+                  accentColor={service.accent}
+                />
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* 3D Archive Deck - Absolutely Positioned & Clipped at Bottom */}
-      <div className="hidden md:block absolute bottom-0 left-0 right-0 h-[260px] overflow-hidden pointer-events-none">
-        <div className="flex -space-x-48 lg:-space-x-64 items-end justify-center pointer-events-auto h-full translate-y-[60%]">
-          {defaultGalleryImages.map((image, index) => {
-            const totalImages = defaultGalleryImages.length;
-            const middle = Math.floor(totalImages / 2);
-            const distanceFromMiddle = Math.abs(index - middle);
-            const maxHeight = 80;
-            const staggerOffset = maxHeight - distanceFromMiddle * 20;
-            const zIndex = totalImages - index;
-
-            const isHovered = hoveredIndex === index;
-            const isOtherHovered = hoveredIndex !== null && hoveredIndex !== index;
-
-            // Hover logic: jumps up into view significance
-            const yOffset = isHovered ? -160 : isOtherHovered ? 0 : -staggerOffset;
-
-            return (
-              <motion.div
-                key={index}
-                className="group cursor-pointer flex-shrink-0"
-                style={{ zIndex }}
-                initial={{
-                  transform: `perspective(2000px) rotateY(-35deg) translateY(200px)`,
-                  opacity: 0,
-                }}
-                animate={{
-                  transform: `perspective(2000px) rotateY(-35deg) translateY(${yOffset}px)`,
-                  opacity: 1,
-                }}
-                transition={{
-                  duration: 0.4,
-                  delay: index * 0.05,
-                  ease: [0.23, 1, 0.32, 1],
-                }}
-                onHoverStart={() => setHoveredIndex(index)}
-                onHoverEnd={() => setHoveredIndex(null)}
-              >
-                <div
-                  className="relative aspect-[4/3] w-64 lg:w-72 rounded-lg overflow-hidden transition-transform duration-500 group-hover:scale-105 border border-white/10"
-                  style={{
-                    boxShadow: isHovered
-                      ? `0 20px 50px rgba(0,0,0,0.5), 0 0 20px ${colorScheme.accent}30`
-                      : `rgba(0, 0, 0, 0.3) 15px 0px 30px 0px`,
-                  }}
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700"
-                  />
-                  <div
-                    className="absolute top-0 right-0 w-px h-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{ backgroundColor: colorScheme.accent }}
-                  />
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="absolute top-4 left-4 md:top-8 md:left-8 w-6 md:w-8 h-px" style={{ background: `linear-gradient(to right, ${colorScheme.accent}60, transparent)` }} />
-      <div className="absolute top-4 left-4 md:top-8 md:left-8 w-px h-6 md:h-8" style={{ background: `linear-gradient(to bottom, ${colorScheme.accent}60, transparent)` }} />
-      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-6 md:w-8 h-px" style={{ background: `linear-gradient(to left, ${colorScheme.accent}60, transparent)` }} />
-      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-px h-6 md:h-8" style={{ background: `linear-gradient(to top, ${colorScheme.accent}60, transparent)` }} />
+      <div className="absolute top-4 left-4 md:top-8 md:left-8 w-6 md:w-8 h-px" style={{ background: `linear-gradient(to right, ${service.accent}60, transparent)` }} />
+      <div className="absolute top-4 left-4 md:top-8 md:left-8 w-px h-6 md:h-8" style={{ background: `linear-gradient(to bottom, ${service.accent}60, transparent)` }} />
+      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-6 md:w-8 h-px" style={{ background: `linear-gradient(to left, ${service.accent}60, transparent)` }} />
+      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-px h-6 md:h-8" style={{ background: `linear-gradient(to top, ${service.accent}60, transparent)` }} />
 
       {
         number === "01" && (
@@ -322,63 +658,15 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
   );
 }
 
-const services: { number: "01" | "02" | "03" | "04"; title: string; description: string; features: string[] }[] = [
-  {
-    number: "01",
-    title: "Web Development",
-    description: "We build fast, scalable, and beautifully crafted websites that perform.",
-    features: [
-      "Search Engine Optimization (SEO)",
-      "Custom web design tailored to your brand",
-      "Responsive across all devices",
-      "Performance-first architecture",
-    ],
-  },
-  {
-    number: "02",
-    title: "Web Applications",
-    description: "Full-stack applications that solve real problems and scale with your business.",
-    features: [
-      "Custom dashboards and admin panels",
-      "SaaS product development",
-      "API integrations and automation",
-      "Real-time features and databases",
-    ],
-  },
-  {
-    number: "03",
-    title: "Social Media",
-    description: "Content that captures attention and builds community around your brand.",
-    features: [
-      "Instagram and Facebook visuals",
-      "Curated post strategies",
-      "Professional drone videography",
-      "Cohesive brand storytelling",
-    ],
-  },
-  {
-    number: "04",
-    title: "Digital Advertising",
-    description: "Strategic campaigns that reach the right people at the right time.",
-    features: [
-      "Paid social media campaigns",
-      "Google Ads management",
-      "Conversion tracking and analytics",
-      "A/B testing and optimization",
-    ],
-  },
-];
+const services: ("01" | "02" | "03" | "04")[] = ["01", "02", "03", "04"];
 
 export function ServicesSection() {
   return (
     <section className="relative">
-      {services.map((service, index) => (
+      {services.map((number, index) => (
         <ServiceCard
-          key={service.number}
-          number={service.number}
-          title={service.title}
-          description={service.description}
-          features={service.features}
+          key={number}
+          number={number}
           zIndex={index + 1}
         />
       ))}

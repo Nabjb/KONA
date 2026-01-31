@@ -19,17 +19,17 @@ const colors = {
 };
 
 const solutionsItems = [
-    { label: "Web Development", href: "#web-development" },
-    { label: "Web Applications", href: "#web-applications" },
-    { label: "Digital Advertising", href: "#digital-advertising" },
-    { label: "Social Media", href: "#social-media" },
+    { label: "Web Development", href: "/solutions/web-development" },
+    { label: "Web Applications", href: "/solutions/web-applications" },
+    { label: "Digital Advertising", href: "/solutions/digital-advertising" },
+    { label: "Social Media", href: "/solutions/social-media" },
 ];
 
 const navItems = [
-    { label: "ABOUT", href: "#about" },
-    { label: "CASE STUDIES", href: "#case-studies" },
-    { label: "CONTACT", href: "#contact" },
-    { label: "PRICING", href: "#pricing" },
+    { label: "ABOUT", href: "/about" },
+    { label: "CASE STUDIES", href: "/case-studies" },
+    { label: "CONTACT", href: "/contact" },
+    { label: "PRICING", href: "/pricing" },
 ];
 
 /**
@@ -199,7 +199,7 @@ export function GlobalNav() {
                                         </span>
                                     }
                                     items={solutionsItems}
-                                    footerLink={{ label: "Explore all solutions", href: "#solutions" }}
+                                    footerLink={{ label: "Explore all solutions", href: "/solutions" }}
                                 />
                             </motion.div>
 
@@ -268,7 +268,7 @@ export function GlobalNav() {
                             transition={{ delay: 0.3, duration: 0.3 }}
                         >
                             <Button
-                                href="#contact"
+                                href="/contact"
                                 size="sm"
                             >
                                 Get a Quote
