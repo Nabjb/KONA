@@ -1,7 +1,7 @@
 "use client";
 
 import HeroSection from "@/components/ui/hero-section";
-import ServicesSection from "@/components/sections/services-section";
+import ServicesSectionV2 from "@/components/sections/services-section-v2";
 import WhoWeAre from "@/components/sections/who-we-are";
 import GiatsProjectsSection from "@/components/sections/giats-projects-section";
 import AsymmetricDecisionSection from "@/components/sections/asymmetric-decision-section";
@@ -21,7 +21,7 @@ export default function Home() {
 
       {/* Services - scrolls over the hero, internal stacking */}
       <div className="relative z-10">
-        <ServicesSection />
+        <ServicesSectionV2 />
       </div>
 
       {/* Who We Are - scrolls over services */}

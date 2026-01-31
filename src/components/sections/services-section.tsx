@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import {
   SiReact,
@@ -79,12 +79,20 @@ const serviceIcons = {
   ],
 };
 
-const serviceImages = {
-  "01": "/images/bg-iso-webdev.png",
-  "02": "/images/bg-iso-webapp.png",
-  "03": "/images/bg-iso-social.png",
-  "04": "/images/bg-iso-ads.png",
+const serviceGradients = {
+  "01": "radial-gradient(circle at 70% 30%, rgba(74, 102, 112, 0.15) 0%, transparent 60%)",
+  "02": "radial-gradient(circle at 30% 70%, rgba(74, 106, 90, 0.15) 0%, transparent 60%)",
+  "03": "radial-gradient(circle at 70% 70%, rgba(122, 90, 74, 0.15) 0%, transparent 60%)",
+  "04": "radial-gradient(circle at 30% 30%, rgba(90, 74, 106, 0.15) 0%, transparent 60%)",
 };
+
+const defaultGalleryImages = [
+  { src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80", alt: "Project 1" },
+  { src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80", alt: "Project 2" },
+  { src: "https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=800&q=80", alt: "Project 3" },
+  { src: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80", alt: "Project 4" },
+  { src: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80", alt: "Project 5" },
+];
 
 interface ServiceCardProps {
   number: "01" | "02" | "03" | "04";
@@ -97,15 +105,16 @@ interface ServiceCardProps {
 function ServiceCard({ number, title, description, features, zIndex }: ServiceCardProps) {
   const colorScheme = serviceColors[number];
   const icons = serviceIcons[number];
-  const imageSrc = serviceImages[number];
+  const gradient = serviceGradients[number];
   const cardRef = useRef(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: cardRef,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
     <div
@@ -119,33 +128,32 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
     >
       {/* Technical Background Layer */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Isometric Image with Dark Blueprint Treatment */}
+        {/* Dynamic Gradient Background */}
         <motion.div
-          className="absolute inset-[-10%] w-[120%] h-[120%]"
-          style={{ y }}
-        >
-          <img
-            src={imageSrc}
-            alt=""
-            className="w-full h-full object-cover"
-            style={{
-              filter: "invert(1) grayscale(100%) contrast(150%) brightness(0.6) opacity(0.15)",
-              mixBlendMode: "screen"
-            }}
-          />
-        </motion.div>
+          className="absolute inset-[-20%] opacity-50"
+          style={{
+            background: gradient,
+            y: backgroundY
+          }}
+        />
 
         {/* Architectural Grid Overlay (Light Lines) */}
         <div
-          className="absolute inset-0 opacity-[0.02] pointer-events-none"
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{
             backgroundImage: `
               linear-gradient(to right, ${colors[100]} 1px, transparent 1px),
               linear-gradient(to bottom, ${colors[100]} 1px, transparent 1px)
             `,
-            backgroundSize: '40px 40px'
+            backgroundSize: '60px 60px'
           }}
         />
+
+        {/* Central Vertical Line Decoration */}
+        <div className="absolute left-1/2 top-0 w-px h-full opacity-[0.05]" style={{ backgroundColor: colors[100] }} />
+
+        {/* Horizontal Crosshair Line */}
+        <div className="absolute left-0 top-[20%] w-full h-px opacity-[0.05]" style={{ backgroundColor: colors[100] }} />
 
       </div>
 
@@ -160,8 +168,8 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
         {number}
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-16 w-full">
-        <div className="grid grid-cols-12 gap-4 md:gap-8">
+      <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-16 w-full py-20">
+        <div className="grid grid-cols-12 gap-4 md:gap-8 items-center">
 
           <div className="col-span-12 md:col-span-5 lg:col-span-4">
             <div
@@ -232,7 +240,68 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
               ))}
             </div>
           </div>
+        </div>
+      </div>
 
+      {/* 3D Archive Deck - Absolutely Positioned & Clipped at Bottom */}
+      <div className="hidden md:block absolute bottom-0 left-0 right-0 h-[260px] overflow-hidden pointer-events-none">
+        <div className="flex -space-x-48 lg:-space-x-64 items-end justify-center pointer-events-auto h-full translate-y-[60%]">
+          {defaultGalleryImages.map((image, index) => {
+            const totalImages = defaultGalleryImages.length;
+            const middle = Math.floor(totalImages / 2);
+            const distanceFromMiddle = Math.abs(index - middle);
+            const maxHeight = 80;
+            const staggerOffset = maxHeight - distanceFromMiddle * 20;
+            const zIndex = totalImages - index;
+
+            const isHovered = hoveredIndex === index;
+            const isOtherHovered = hoveredIndex !== null && hoveredIndex !== index;
+
+            // Hover logic: jumps up into view significance
+            const yOffset = isHovered ? -160 : isOtherHovered ? 0 : -staggerOffset;
+
+            return (
+              <motion.div
+                key={index}
+                className="group cursor-pointer flex-shrink-0"
+                style={{ zIndex }}
+                initial={{
+                  transform: `perspective(2000px) rotateY(-35deg) translateY(200px)`,
+                  opacity: 0,
+                }}
+                animate={{
+                  transform: `perspective(2000px) rotateY(-35deg) translateY(${yOffset}px)`,
+                  opacity: 1,
+                }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.05,
+                  ease: [0.23, 1, 0.32, 1],
+                }}
+                onHoverStart={() => setHoveredIndex(index)}
+                onHoverEnd={() => setHoveredIndex(null)}
+              >
+                <div
+                  className="relative aspect-[4/3] w-64 lg:w-72 rounded-lg overflow-hidden transition-transform duration-500 group-hover:scale-105 border border-white/10"
+                  style={{
+                    boxShadow: isHovered
+                      ? `0 20px 50px rgba(0,0,0,0.5), 0 0 20px ${colorScheme.accent}30`
+                      : `rgba(0, 0, 0, 0.3) 15px 0px 30px 0px`,
+                  }}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700"
+                  />
+                  <div
+                    className="absolute top-0 right-0 w-px h-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ backgroundColor: colorScheme.accent }}
+                  />
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
@@ -241,13 +310,15 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
       <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-6 md:w-8 h-px" style={{ background: `linear-gradient(to left, ${colorScheme.accent}60, transparent)` }} />
       <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-px h-6 md:h-8" style={{ background: `linear-gradient(to top, ${colorScheme.accent}60, transparent)` }} />
 
-      {number === "01" && (
-        <div className="hidden md:flex absolute bottom-12 left-1/2 -translate-x-1/2 flex-col items-center gap-2">
-          <div className="text-xs font-mono uppercase tracking-widest" style={{ color: colors[400] }}>Scroll</div>
-          <div className="w-px h-8 scroll-indicator" style={{ background: `linear-gradient(to bottom, ${colors[400]}, transparent)` }} />
-        </div>
-      )}
-    </div>
+      {
+        number === "01" && (
+          <div className="hidden md:flex absolute bottom-12 left-1/2 -translate-x-1/2 flex-col items-center gap-2">
+            <div className="text-xs font-mono uppercase tracking-widest" style={{ color: colors[400] }}>Scroll</div>
+            <div className="w-px h-8 scroll-indicator" style={{ background: `linear-gradient(to bottom, ${colors[400]}, transparent)` }} />
+          </div>
+        )
+      }
+    </div >
   );
 }
 
