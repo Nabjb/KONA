@@ -86,7 +86,10 @@ export default function Footer() {
                             height={80}
                             className="h-14 md:h-20 w-auto brightness-200"
                         />
-                        <p className="text-[10px] font-mono tracking-[0.4em] uppercase opacity-30 mt-4" style={{ color: colors.sand }}>
+                        <div className="font-sans font-bold text-2xl tracking-tighter mt-4" style={{ color: colors.parchment }}>
+                            KONAVERSE
+                        </div>
+                        <p className="text-[10px] font-mono tracking-[0.4em] uppercase opacity-30 mt-2" style={{ color: colors.sand }}>
                             Architectural Excellence
                         </p>
                     </div>
