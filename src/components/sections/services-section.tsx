@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
-import { 
-  SiReact, 
-  SiNextdotjs, 
-  SiTypescript, 
+import React, { useRef } from "react";
+import { useScroll, useTransform, motion } from "framer-motion";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
   SiTailwindcss,
   SiHtml5,
   SiCss3,
@@ -78,76 +79,11 @@ const serviceIcons = {
   ],
 };
 
-function WebDevPattern() {
-  return (
-    <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
-      <circle cx="100" cy="80" r="4" fill={colors[200]} />
-      <circle cx="200" cy="120" r="6" fill={colors[200]} />
-      <circle cx="300" cy="60" r="3" fill={colors[200]} />
-      <circle cx="150" cy="200" r="5" fill={colors[200]} />
-      <circle cx="280" cy="180" r="4" fill={colors[200]} />
-      <line x1="100" y1="80" x2="200" y2="120" stroke={colors[200]} strokeWidth="1" />
-      <line x1="200" y1="120" x2="300" y2="60" stroke={colors[200]} strokeWidth="1" />
-      <line x1="200" y1="120" x2="150" y2="200" stroke={colors[200]} strokeWidth="1" />
-      <line x1="150" y1="200" x2="280" y2="180" stroke={colors[200]} strokeWidth="1" />
-      <path d="M50 150 L30 180 L50 210" stroke={colors[200]} strokeWidth="2" fill="none" />
-      <path d="M370 150 L390 180 L370 210" stroke={colors[200]} strokeWidth="2" fill="none" />
-    </svg>
-  );
-}
-
-function WebAppsPattern() {
-  return (
-    <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
-      <rect x="180" y="40" width="120" height="80" rx="4" stroke={colors[200]} strokeWidth="1.5" fill="none" />
-      <rect x="200" y="60" width="120" height="80" rx="4" stroke={colors[200]} strokeWidth="1.5" fill="none" />
-      <rect x="220" y="80" width="120" height="80" rx="4" stroke={colors[200]} strokeWidth="1.5" fill={colors[200]} fillOpacity="0.1" />
-      <line x1="240" y1="100" x2="320" y2="100" stroke={colors[200]} strokeWidth="2" />
-      <line x1="240" y1="115" x2="300" y2="115" stroke={colors[200]} strokeWidth="2" />
-      <rect x="60" y="180" width="80" height="60" rx="4" stroke={colors[200]} strokeWidth="1" fill="none" />
-      <rect x="70" y="210" width="10" height="20" fill={colors[200]} fillOpacity="0.3" />
-      <rect x="85" y="200" width="10" height="30" fill={colors[200]} fillOpacity="0.3" />
-      <rect x="100" y="195" width="10" height="35" fill={colors[200]} fillOpacity="0.3" />
-    </svg>
-  );
-}
-
-function SocialMediaPattern() {
-  return (
-    <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
-      <circle cx="200" cy="150" r="60" stroke={colors[200]} strokeWidth="1.5" fill="none" />
-      <circle cx="250" cy="180" r="50" stroke={colors[200]} strokeWidth="1.5" fill="none" />
-      <circle cx="170" cy="200" r="45" stroke={colors[200]} strokeWidth="1.5" fill="none" />
-      <circle cx="220" cy="220" r="55" stroke={colors[200]} strokeWidth="1.5" fill={colors[200]} fillOpacity="0.05" />
-      <circle cx="80" cy="100" r="20" stroke={colors[200]} strokeWidth="1" fill="none" />
-      <circle cx="340" cy="120" r="25" stroke={colors[200]} strokeWidth="1" fill="none" />
-      <rect x="90" y="300" width="50" height="50" rx="2" stroke={colors[200]} strokeWidth="1" fill="none" />
-    </svg>
-  );
-}
-
-function AdvertisingPattern() {
-  return (
-    <svg className="absolute top-0 right-0 w-[60%] h-full opacity-[0.04] pointer-events-none" viewBox="0 0 400 400" fill="none">
-      <rect x="80" y="280" width="30" height="60" fill={colors[200]} fillOpacity="0.2" />
-      <rect x="120" y="240" width="30" height="100" fill={colors[200]} fillOpacity="0.25" />
-      <rect x="160" y="200" width="30" height="140" fill={colors[200]} fillOpacity="0.3" />
-      <rect x="200" y="150" width="30" height="190" fill={colors[200]} fillOpacity="0.35" />
-      <rect x="240" y="100" width="30" height="240" fill={colors[200]} fillOpacity="0.4" />
-      <path d="M80 280 Q150 220 200 180 T320 80" stroke={colors[200]} strokeWidth="2" fill="none" strokeDasharray="4 4" />
-      <circle cx="80" cy="120" r="30" stroke={colors[200]} strokeWidth="1" fill="none" />
-      <circle cx="80" cy="120" r="20" stroke={colors[200]} strokeWidth="1" fill="none" />
-      <circle cx="80" cy="120" r="10" stroke={colors[200]} strokeWidth="1" fill="none" />
-      <circle cx="80" cy="120" r="3" fill={colors[200]} />
-    </svg>
-  );
-}
-
-const patternComponents = {
-  "01": WebDevPattern,
-  "02": WebAppsPattern,
-  "03": SocialMediaPattern,
-  "04": AdvertisingPattern,
+const serviceImages = {
+  "01": "/images/bg-iso-webdev.png",
+  "02": "/images/bg-iso-webapp.png",
+  "03": "/images/bg-iso-social.png",
+  "04": "/images/bg-iso-ads.png",
 };
 
 interface ServiceCardProps {
@@ -159,78 +95,107 @@ interface ServiceCardProps {
 }
 
 function ServiceCard({ number, title, description, features, zIndex }: ServiceCardProps) {
-  const PatternComponent = patternComponents[number];
   const colorScheme = serviceColors[number];
   const icons = serviceIcons[number];
-  
-  return (
-    <div 
-      className="sticky top-0 min-h-screen w-full flex items-center justify-center overflow-hidden py-16 md:py-0"
-      style={{ zIndex }}
-    >
-      <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.gradient}`} />
-      
-      <div 
-        className="absolute inset-0 opacity-20"
-        style={{ background: `radial-gradient(ellipse at 70% 50%, ${colorScheme.accent}30 0%, transparent 60%)` }}
-      />
-      
-      <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id={`grid-service-${number}`} width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(200,180,160,0.05)" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill={`url(#grid-service-${number})`} />
-      </svg>
+  const imageSrc = serviceImages[number];
+  const cardRef = useRef(null);
 
-      <div className="hidden md:block">
-        <PatternComponent />
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
+  return (
+    <div
+      ref={cardRef}
+      className="sticky top-0 min-h-screen w-full flex items-center justify-center overflow-hidden py-16 md:py-0 isolation-isolate bg-[#1a1d18]"
+      style={{
+        zIndex,
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden"
+      }}
+    >
+      {/* Technical Background Layer */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Isometric Image with Dark Blueprint Treatment */}
+        <motion.div
+          className="absolute inset-[-10%] w-[120%] h-[120%]"
+          style={{ y }}
+        >
+          <img
+            src={imageSrc}
+            alt=""
+            className="w-full h-full object-cover"
+            style={{
+              filter: "invert(1) grayscale(100%) contrast(150%) brightness(0.6) opacity(0.15)",
+              mixBlendMode: "screen"
+            }}
+          />
+        </motion.div>
+
+        {/* Architectural Grid Overlay (Light Lines) */}
+        <div
+          className="absolute inset-0 opacity-[0.02] pointer-events-none"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, ${colors[100]} 1px, transparent 1px),
+              linear-gradient(to bottom, ${colors[100]} 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px'
+          }}
+        />
+
       </div>
 
-      <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40vw] md:text-[30vw] font-extralight leading-none pointer-events-none select-none"
-        style={{ color: colors[200], opacity: 0.02 }}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40vw] md:text-[30vw] font-bold leading-none pointer-events-none select-none"
+        style={{
+          color: colors[200],
+          opacity: 0.03,
+          fontFamily: 'monospace'
+        }}
       >
         {number}
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-16">
+      <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-16 w-full">
         <div className="grid grid-cols-12 gap-4 md:gap-8">
-          
+
           <div className="col-span-12 md:col-span-5 lg:col-span-4">
-            <div 
+            <div
               className="text-xs md:text-sm font-mono uppercase tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4"
               style={{ color: colorScheme.accent }}
             >
               Service {number}
             </div>
-            <h2 
-              className="text-2xl md:text-4xl lg:text-5xl font-extralight leading-tight"
+            <h2
+              className="text-2xl md:text-4xl lg:text-5xl font-extralight leading-tight drop-shadow-2xl"
               style={{ color: colors[50] }}
             >
               {title}
             </h2>
-            <div 
+            <div
               className="w-8 md:w-12 h-px mt-4 md:mt-6 mb-4 md:mb-0"
               style={{ background: `linear-gradient(to right, ${colorScheme.accent}, transparent)` }}
             />
-            
+
             {/* Tech/Platform Icons */}
             <div className="flex flex-wrap gap-3 mt-6">
               {icons.map((item, index) => {
                 const IconComponent = item.icon;
                 return (
-                  <div 
+                  <div
                     key={index}
-                    className="group relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-lg transition-all duration-300 hover:scale-110"
-                    style={{ 
-                      background: `${colorScheme.accent}15`,
-                      border: `1px solid ${colorScheme.accent}30`
+                    className="group relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-lg transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+                    style={{
+                      background: `${colorScheme.accent}20`,
+                      border: `1px solid ${colorScheme.accent}40`
                     }}
                   >
-                    <IconComponent 
-                      className="w-5 h-5 md:w-6 md:h-6 transition-colors duration-300"
+                    <IconComponent
+                      className="w-5 h-5 md:w-6 md:h-6 transition-colors duration-300 drop-shadow-lg"
                       style={{ color: item.color }}
                     />
                     {/* Tooltip */}
@@ -246,21 +211,21 @@ function ServiceCard({ number, title, description, features, zIndex }: ServiceCa
           </div>
 
           <div className="col-span-12 md:col-span-7 lg:col-span-6 lg:col-start-7">
-            <p 
-              className="text-base md:text-xl font-light leading-relaxed mb-5 md:mb-8"
+            <p
+              className="text-base md:text-xl font-light leading-relaxed mb-5 md:mb-8 drop-shadow-lg"
               style={{ color: colors[100] }}
             >
               {description}
             </p>
-            
+
             <div className="space-y-2.5 md:space-y-4">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-3 md:gap-4">
-                  <div 
-                    className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full mt-2 md:mt-2.5 flex-shrink-0"
-                    style={{ background: colorScheme.accent }}
+                  <div
+                    className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full mt-2 md:mt-2.5 flex-shrink-0 shadow-[0_0_10px_currentColor]"
+                    style={{ background: colorScheme.accent, color: colorScheme.accent }}
                   />
-                  <p className="text-sm md:text-lg font-light" style={{ color: colors[200] }}>
+                  <p className="text-sm md:text-lg font-light drop-shadow-md" style={{ color: colors[200] }}>
                     {feature}
                   </p>
                 </div>

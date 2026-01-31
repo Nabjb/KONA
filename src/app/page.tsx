@@ -4,6 +4,8 @@ import HeroSection from "@/components/ui/hero-section";
 import ServicesSection from "@/components/sections/services-section";
 import WhoWeAre from "@/components/sections/who-we-are";
 import GiatsProjectsSection from "@/components/sections/giats-projects-section";
+import AsymmetricDecisionSection from "@/components/sections/asymmetric-decision-section";
+import TestimonialsSection from "@/components/sections/testimonials-section";
 
 export default function Home() {
   return (
@@ -12,15 +14,15 @@ export default function Home() {
       <div className="fixed inset-0 z-0">
         <HeroSection />
       </div>
-      
+
       {/* Spacer - creates scroll room before content appears */}
       <div className="h-screen" />
-      
+
       {/* Services - scrolls over the hero, internal stacking */}
       <div className="relative z-10">
         <ServicesSection />
       </div>
-      
+
       {/* Who We Are - scrolls over services */}
       <div className="relative z-20">
         <WhoWeAre />
@@ -29,6 +31,16 @@ export default function Home() {
       {/* Projects - giats.me inspired horizontal scroll */}
       <div className="relative z-30">
         <GiatsProjectsSection />
+      </div>
+
+      {/* Decision Section - Filtering reader attention through cognitive friction */}
+      <div className="relative z-40">
+        <AsymmetricDecisionSection />
+      </div>
+
+      {/* Testimonials - Architectural Index */}
+      <div className="relative z-50">
+        <TestimonialsSection />
       </div>
     </main>
   );

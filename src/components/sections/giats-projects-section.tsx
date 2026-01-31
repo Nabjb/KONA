@@ -338,7 +338,7 @@ export function GiatsProjectsSection() {
 
         {/* All Projects Button */}
         <div
-          className="w-full flex justify-center py-12 md:py-24"
+          className="w-full flex justify-center py-12 md:py-16"
           style={{ backgroundColor: "#1a1d18" }}
         >
           <Link
@@ -368,15 +368,6 @@ export function GiatsProjectsSection() {
           </Link>
         </div>
       </section>
-
-      {/* Empty spacer section to see the full scroll effect */}
-      <section
-        className="w-full"
-        style={{
-          height: isMobile ? "50vh" : "100vh",
-          backgroundColor: "#1a1d18",
-        }}
-      />
     </div>
   );
 }
