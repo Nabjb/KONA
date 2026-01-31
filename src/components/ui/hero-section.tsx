@@ -21,10 +21,13 @@ export function HeroSection() {
   useEffect(() => {
     // Animate words
     const words = document.querySelectorAll<HTMLElement>(".word");
+    const delayScale = 0.31;
+    const wordDurationMs = 600;
     words.forEach((word) => {
-      const delay = parseInt(word.getAttribute("data-delay") || "0", 10);
+      const baseDelay = parseInt(word.getAttribute("data-delay") || "0", 10);
+      const delay = Math.round(baseDelay * delayScale);
       setTimeout(() => {
-        word.style.animation = "word-appear 0.8s ease-out forwards";
+        word.style.animation = `word-appear ${wordDurationMs}ms ease-out forwards`;
       }, delay);
     });
 

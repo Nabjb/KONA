@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Instagram, Linkedin, Twitter, Github } from "lucide-react";
 
@@ -77,11 +78,15 @@ export default function Footer() {
                         </motion.h2>
                     </div>
 
-                    <div className="col-span-12 lg:col-span-4 lg:text-right">
-                        <div className="font-sans font-bold text-2xl tracking-tighter" style={{ color: colors.parchment }}>
-                            Konaverse<span style={{ color: colors.oak }}>.</span>
-                        </div>
-                        <p className="text-[10px] font-mono tracking-[0.4em] uppercase opacity-30 mt-2" style={{ color: colors.sand }}>
+                    <div className="col-span-12 lg:col-span-4 lg:text-right flex flex-col items-start lg:items-end">
+                        <Image
+                            src="/KonaLogoNoBg.png"
+                            alt="Konaverse Logo"
+                            width={240}
+                            height={80}
+                            className="h-14 md:h-20 w-auto brightness-200"
+                        />
+                        <p className="text-[10px] font-mono tracking-[0.4em] uppercase opacity-30 mt-4" style={{ color: colors.sand }}>
                             Architectural Excellence
                         </p>
                     </div>

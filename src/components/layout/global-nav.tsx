@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { NavDropdown } from "./nav-dropdown";
 import { NavHamburger } from "./nav-hamburger";
 import { MobileMenu } from "./mobile-menu";
@@ -154,20 +155,18 @@ export function GlobalNav() {
                     >
                         <Link
                             href="/"
-                            className="flex items-center"
-                            style={{ color: colors.parchment }}
+                            className="flex flex-col items-center"
                         >
-                            <span
-                                className="text-base font-normal"
-                                style={{ letterSpacing: "0.15em" }}
-                            >
-                                Konaverse
-                            </span>
-                            <span
-                                className="text-base font-normal"
-                                style={{ color: colors.oak }}
-                            >
-                                ·
+                            <Image
+                                src="/KonaLogoNoBg.png"
+                                alt="Konaverse Logo"
+                                width={180}
+                                height={60}
+                                className="h-12 w-auto brightness-200"
+                                priority
+                            />
+                            <span className="text-[10px] font-mono tracking-[0.3em] uppercase mt-1 opacity-80" style={{ color: colors.parchment }}>
+                                KONAVERSE
                             </span>
                         </Link>
                     </motion.div>
@@ -327,4 +326,3 @@ export function GlobalNav() {
 }
 
 export default GlobalNav;
-
