@@ -84,7 +84,7 @@ function ElegantShape({
 }
 
 function HeroGeometric({
-    badge = "KONA SOCIALS",
+    badge = "Konaverse SOCIALS",
     title1 = "We Build Websites",
     title2 = "That Print Money",
     subtitle = "Premium web design & social media management for brands that refuse to blend in.",
@@ -293,4 +293,5 @@ function HeroGeometric({
 }
 
 export { HeroGeometric, ElegantShape };
+
 

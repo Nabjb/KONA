@@ -318,7 +318,7 @@ export function WhoWeAre() {
                 className="text-center text-base md:text-lg font-light tracking-wide"
                 style={{ color: colors[300] }}
               >
-                We&apos;re KONA. We build what matters.
+                We&apos;re Konaverse. We build what matters.
               </p>
             </RevealBlock>
           </div>
@@ -356,4 +356,5 @@ export function WhoWeAre() {
 }
 
 export default WhoWeAre;
+
 

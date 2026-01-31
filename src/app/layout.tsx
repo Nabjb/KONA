@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ConditionalNav } from "@/components/layout/conditional-nav";
+import Footer from "@/components/layout/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KONA SOCIALS | Premium Web Design & Social Media Agency",
+  title: "Konaverse SOCIALS | Premium Web Design & Social Media Agency",
   description: "We build websites that print money. Premium web design and social media management for brands that refuse to blend in.",
 };
 
@@ -26,13 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1a1d18]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1a1d18] flex flex-col min-h-screen`}
       >
         <ConditionalNav />
-        <main id="main-content">
+        <main id="main-content" className="flex-grow">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
 }
+

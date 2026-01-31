@@ -92,8 +92,8 @@ export function ParallaxComponent() {
 
           {/* Layer 3a: "That Print Money" - BEHIND astronaut */}
           <div className="parallax-layer parallax-layer--text-back" data-parallax-layer="3">
-            {/* KONAVERSE badge at top */}
-            <p className="parallax-badge-top">KONAVERSE</p>
+            {/* Konaverseverse badge at top */}
+            <p className="parallax-badge-top">Konaverseverse</p>
           </div>
 
           {/* Layer 4: Astronaut - MIDDLE */}
@@ -148,3 +148,4 @@ export function ParallaxComponent() {
     </div>
   );
 }
+

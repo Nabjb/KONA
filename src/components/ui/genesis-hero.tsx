@@ -208,7 +208,7 @@ export default function GenesisHero() {
   
   // Text overlays
   const introTextOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
-  const konaverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
+  const KonaverseverseOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
   
   // Tech stack HUD visibility - appears as holographic display in visor
   const techHudOpacity = useTransform(scrollYProgress, [0.08, 0.15, 0.25, 0.3], [0, 1, 1, 0]);
@@ -400,16 +400,16 @@ export default function GenesisHero() {
           </div>
         )}
 
-        {/* KONAVERSE reveal */}
+        {/* Konaverseverse reveal */}
         <motion.div 
           className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none"
-          style={{ opacity: konaverseOpacity }}
+          style={{ opacity: KonaverseverseOpacity }}
         >
           <h1 
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-[0.1em] bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"
             style={{ textShadow: "0 0 80px rgba(139, 92, 246, 0.6)" }}
           >
-            KONAVERSE
+            Konaverseverse
           </h1>
           <p className="text-white/50 text-sm md:text-base tracking-[0.2em] mt-4 uppercase">
             A universe created from within
@@ -439,3 +439,4 @@ export default function GenesisHero() {
     </div>
   );
 }
+

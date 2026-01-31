@@ -13,7 +13,7 @@ const projects = [
     description: "Modern construction company website with project galleries and client testimonials.",
     technologies: ["React", "Next.js", "TypeScript"],
     achievement: "3x increase in lead generation",
-    image: "/kona websites screenshots/apt_macbook.png",
+    image: "/Konaverse websites screenshots/apt_macbook.png",
     coordinates: "47.6062° N, 122.3321° W",
     signal: "98%",
   },
@@ -25,7 +25,7 @@ const projects = [
     description: "Elegant outdoor design portfolio showcasing luxury landscape projects.",
     technologies: ["React", "Next.js", "Tailwind"],
     achievement: "98% client satisfaction rate",
-    image: "/kona websites screenshots/sivory_macbook.png",
+    image: "/Konaverse websites screenshots/sivory_macbook.png",
     coordinates: "34.0522° N, 118.2437° W",
     signal: "95%",
   },
@@ -37,7 +37,7 @@ const projects = [
     description: "Full-stack development solution for design and construction services.",
     technologies: ["React", "Next.js", "TypeScript"],
     achievement: "50% faster page load time",
-    image: "/kona websites screenshots/tdk_macbook.png",
+    image: "/Konaverse websites screenshots/tdk_macbook.png",
     coordinates: "40.7128° N, 74.0060° W",
     signal: "99%",
   },
@@ -49,7 +49,7 @@ const projects = [
     description: "Stylish barbershop booking system with online scheduling and gallery.",
     technologies: ["React", "Next.js", "Tailwind"],
     achievement: "2x online bookings increase",
-    image: "/kona websites screenshots/lossantosbarbers.png",
+    image: "/Konaverse websites screenshots/lossantosbarbers.png",
     coordinates: "33.9425° N, 118.4081° W",
     signal: "97%",
   },
@@ -368,7 +368,7 @@ export default function ProjectsVideoSection() {
         >
           <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-white/30">
             <div className="flex items-center gap-6">
-              <span>STATION: KONA-01</span>
+              <span>STATION: Konaverse-01</span>
               <span>SECTOR: DIGITAL</span>
               <span>STATUS: OPERATIONAL</span>
             </div>
@@ -393,3 +393,4 @@ export default function ProjectsVideoSection() {
     </section>
   );
 }
+

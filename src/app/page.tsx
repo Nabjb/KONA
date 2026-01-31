@@ -6,6 +6,7 @@ import WhoWeAre from "@/components/sections/who-we-are";
 import GiatsProjectsSection from "@/components/sections/giats-projects-section";
 import AsymmetricDecisionSection from "@/components/sections/asymmetric-decision-section";
 import TestimonialsSection from "@/components/sections/testimonials-section";
+import CTASection from "@/components/sections/cta-section";
 
 export default function Home() {
   return (
@@ -41,6 +42,11 @@ export default function Home() {
       {/* Testimonials - Architectural Index */}
       <div className="relative z-50">
         <TestimonialsSection />
+      </div>
+
+      {/* Primary CTA - Commitment Moment */}
+      <div className="relative z-60">
+        <CTASection />
       </div>
     </main>
   );

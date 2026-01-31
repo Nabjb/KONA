@@ -206,7 +206,7 @@ export default function ParallaxHeroWrapper() {
             <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
                 {/* MOBILE HERO - Full-width bold takeover */}
                 <div className="md:hidden relative z-10 w-full min-h-screen flex flex-col justify-center px-5 py-20">
-                    {/* KONA VERSE header */}
+                    {/* Konaverse VERSE header */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -214,7 +214,7 @@ export default function ParallaxHeroWrapper() {
                         className="mb-8"
                     >
                         <span className="text-2xl font-bold tracking-[0.3em] uppercase bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-                            KONAVERSE
+                            Konaverseverse
                         </span>
                     </motion.div>
 
@@ -331,7 +331,7 @@ export default function ParallaxHeroWrapper() {
                         >
                             <Circle className="h-2 w-2 fill-blue-400 text-blue-400" />
                             <span className="text-sm text-white/60 tracking-widest uppercase font-medium">
-                                KONA SOCIALS
+                                Konaverse SOCIALS
                             </span>
                         </motion.div>
 
@@ -513,4 +513,5 @@ export default function ParallaxHeroWrapper() {
         </div>
     );
 }
+
 

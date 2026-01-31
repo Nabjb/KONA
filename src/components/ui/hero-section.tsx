@@ -182,7 +182,7 @@ export function HeroSection() {
               to
             </span>
             <span className="word" data-delay="400">
-              <b>KONA</b>
+              <b>Konaverse</b>
             </span>
             <span className="word" data-delay="600">
               —
@@ -355,4 +355,5 @@ export function HeroSection() {
 }
 
 export default HeroSection;
+
 

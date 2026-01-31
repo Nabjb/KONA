@@ -104,7 +104,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <Terminal className="w-5 h-5 text-cyan-400" />
               <h3 className="text-2xl md:text-3xl font-bold">
-                <span className="text-white">KONA</span>
+                <span className="text-white">Konaverse</span>
                 <span className="text-cyan-400">_</span>
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
                   COMMAND
@@ -127,12 +127,12 @@ export default function Footer() {
               <div className="p-6 rounded-lg border border-cyan-500/20 bg-black/40 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-4">
                 <img
-                  src="/kona websites screenshots/KONALOGO.png"
-                    alt="KONA"
+                  src="/Konaverse websites screenshots/KonaverseLOGO.png"
+                    alt="Konaverse"
                     className="w-10 h-10 rounded-lg"
                 />
                   <div>
-                    <div className="text-white font-bold font-mono">KONA_SOCIALS</div>
+                    <div className="text-white font-bold font-mono">Konaverse_SOCIALS</div>
                     <div className="text-cyan-400/60 text-xs font-mono">DIGITAL_SYSTEMS</div>
                   </div>
               </div>
@@ -143,11 +143,11 @@ export default function Footer() {
 
                 <div className="space-y-2">
                   <a 
-                    href="mailto:hello@konasocials.com" 
+                    href="mailto:hello@Konaversesocials.com" 
                     className="flex items-center gap-2 text-cyan-400/70 hover:text-cyan-400 transition-colors group"
                   >
                   <Mail className="w-4 h-4" />
-                    <span className="text-xs font-mono">hello@konasocials.com</span>
+                    <span className="text-xs font-mono">hello@Konaversesocials.com</span>
                 </a>
                   <div className="flex items-center gap-2 text-cyan-400/70">
                   <MapPin className="w-4 h-4" />
@@ -243,7 +243,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex items-center gap-2 text-white/30 text-xs font-mono">
                 <span className="text-cyan-400/50">{'>'}</span>
-                <span>© {currentYear} KONA_SOCIALS</span>
+                <span>© {currentYear} Konaverse_SOCIALS</span>
                 <span className="text-cyan-400/30">|</span>
                 <span>ALL_SYSTEMS_GO</span>
               </div>
@@ -272,3 +272,4 @@ export default function Footer() {
     </footer>
   );
 }
+

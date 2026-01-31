@@ -261,7 +261,7 @@ export const Lid = ({
           className="absolute inset-0 flex items-center justify-center rounded-lg bg-[#010101]"
         >
           <span className="text-white">
-            <KonaLogo />
+            <KonaverseLogo />
           </span>
         </div>
       </div>
@@ -278,8 +278,8 @@ export const Lid = ({
       >
         <div className="absolute inset-0 rounded-lg bg-[#272729]" />
         <img
-          src="/kona websites screenshots/kona_cover.jpg"
-          alt="KONA SOCIALS Portfolio"
+          src="/Konaverse websites screenshots/Konaverse_cover.jpg"
+          alt="Konaverse SOCIALS Portfolio"
           className="absolute inset-0 h-full w-full rounded-lg object-cover object-left-top"
         />
       </motion.div>
@@ -745,10 +745,11 @@ export const OptionKey = ({ className }: { className: string }) => {
   );
 };
 
-const KonaLogo = () => {
+const KonaverseLogo = () => {
   return (
     <span className="text-xs font-bold tracking-widest text-white/80">
-      KONA
+      Konaverse
     </span>
   );
 };
+

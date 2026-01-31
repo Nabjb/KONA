@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Button } from "../ui/button";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
@@ -338,34 +339,15 @@ export function GiatsProjectsSection() {
 
         {/* All Projects Button */}
         <div
-          className="w-full flex justify-center py-12 md:py-16"
+          className="w-full flex justify-center py-12 md:py-24"
           style={{ backgroundColor: "#1a1d18" }}
         >
-          <Link
+          <Button
             href="#contact"
-            className="group inline-flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 rounded-full border transition-all duration-300 hover:gap-5 hover:bg-white/5"
-            style={{
-              borderColor: "#6b5545",
-              color: "#e6e1d7",
-            }}
+            className="px-16 md:px-24"
           >
-            <span className="text-xs md:text-base font-medium tracking-wider uppercase">
-              Start Your Project
-            </span>
-            <svg
-              className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </Link>
+            Start Your Project
+          </Button>
         </div>
       </section>
     </div>

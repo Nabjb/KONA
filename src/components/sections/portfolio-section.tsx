@@ -19,27 +19,27 @@ interface Project {
   link?: string;
 }
 
-// Real KONA SOCIALS projects (for MacBook on desktop)
+// Real Konaverse SOCIALS projects (for MacBook on desktop)
 const desktopProjects: Project[] = [
   {
     id: 1,
     title: "APT Metal Construction",
     description: "Metal construction company in Cyprus",
-    src: "/kona websites screenshots/apt_macbook.png",
+    src: "/Konaverse websites screenshots/apt_macbook.png",
     link: "https://www.aptmetalconstruction.com",
   },
   {
     id: 2,
     title: "Sivory Design",
     description: "Premium pergolas & outdoor design",
-    src: "/kona websites screenshots/sivory_macbook.png",
+    src: "/Konaverse websites screenshots/sivory_macbook.png",
     link: "https://sivory.vercel.app",
   },
   {
     id: 3,
     title: "TDK Design & Build",
     description: "Residential development in Nicosia",
-    src: "/kona websites screenshots/tdk_macbook.png",
+    src: "/Konaverse websites screenshots/tdk_macbook.png",
     link: "https://tdkdb.com",
   },
 ];
@@ -104,3 +104,4 @@ export default function PortfolioSection() {
     </section>
   );
 }
+

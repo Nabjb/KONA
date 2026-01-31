@@ -30,7 +30,7 @@ const steps: DecisionStep[] = [
     {
         idxLabel: "IDX_01",
         leftTitle: "THE FILTER",
-        leftBody: "We do not accept projects where the solution is already decided. If the destination is fixed, we are merely a delivery service. KONA operates in the tension between what is requested and what is actually required.",
+        leftBody: "We do not accept projects where the solution is already decided. If the destination is fixed, we are merely a delivery service. Konaverse operates in the tension between what is requested and what is actually required.",
         rightLabel: "Condition",
         rightBody: "IF_SOLUTION_FIXED: ENGAGE ELSEWHERE",
     },
@@ -247,3 +247,4 @@ export default function AsymmetricDecisionSection() {
         </section>
     );
 }
+

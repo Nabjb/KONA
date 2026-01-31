@@ -24,7 +24,7 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
     {
         id: 1,
-        quote: "KONA doesn't just build websites; they architect digital ecosystems. The level of intentionality in their decision-making filtered out the noise and left us with a platform that actually moves the needle.",
+        quote: "Konaverse doesn't just build websites; they architect digital ecosystems. The level of intentionality in their decision-making filtered out the noise and left us with a platform that actually moves the needle.",
         industry: "Renewable Energy",
         service: "Product Strategy & Web Dev",
         client: "Solaris Group",
@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
     },
     {
         id: 2,
-        quote: "The contrast between KONA and traditional agencies is stark. They operate with a quiet power that prioritizes longevity over launch-day vanity. Three years in, and the architectural foundation they laid is still rock solid.",
+        quote: "The contrast between Konaverse and traditional agencies is stark. They operate with a quiet power that prioritizes longevity over launch-day vanity. Three years in, and the architectural foundation they laid is still rock solid.",
         industry: "High-End Architecture",
         service: "Digital Brand Identity",
         client: "Studio V",
@@ -219,3 +219,4 @@ export default function TestimonialsSection() {
         </section>
     );
 }
+

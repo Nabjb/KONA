@@ -236,8 +236,8 @@ export const NavbarLogo = () => {
       className="relative z-20 mr-4 flex items-center px-2 py-1"
     >
       <img 
-        src="/kona websites screenshots/KONALOGO.png" 
-        alt="KONA SOCIALS" 
+        src="/Konaverse websites screenshots/KonaverseLOGO.png" 
+        alt="Konaverse SOCIALS" 
         className="h-8 w-auto"
       />
     </a>
@@ -289,4 +289,5 @@ export const NavbarButton = ({
     </button>
   );
 };
+
 

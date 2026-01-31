@@ -225,7 +225,7 @@ export default function AboutSection() {
           <div className="flex items-center gap-3">
             <div className="text-cyan-400 font-mono text-sm">{'>'}</div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-              <GlitchText className="text-white">KONA</GlitchText>
+              <GlitchText className="text-white">Konaverse</GlitchText>
               <span className="text-cyan-400">_</span>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
                 SYSTEMS
@@ -395,7 +395,7 @@ export default function AboutSection() {
               K
             </div>
                 <div>
-                  <div className="text-white font-mono text-sm">KONA_COMMAND</div>
+                  <div className="text-white font-mono text-sm">Konaverse_COMMAND</div>
                   <div className="text-white/40 text-xs font-mono">AUTHORITY: LEVEL_MAX</div>
                 </div>
               </div>
@@ -406,3 +406,4 @@ export default function AboutSection() {
     </section>
   );
 }
+

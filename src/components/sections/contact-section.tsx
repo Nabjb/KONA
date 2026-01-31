@@ -126,7 +126,7 @@ export default function ContactSection() {
             <span className="text-cyan-400">Signal</span>
           </h2>
           <p className="text-white/50 text-lg max-w-xl mx-auto">
-            Open a communication channel to KONA Base. We&apos;re standing by to receive your transmission.
+            Open a communication channel to Konaverse Base. We&apos;re standing by to receive your transmission.
           </p>
         </motion.div>
 
@@ -152,7 +152,7 @@ export default function ContactSection() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/40">Station ID:</span>
-                  <span className="text-white">KONA-BASE-01</span>
+                  <span className="text-white">Konaverse-BASE-01</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/40">Signal Strength:</span>
@@ -200,8 +200,8 @@ export default function ContactSection() {
               </div>
               <div>
                 <p className="text-white/40 text-xs font-mono">DIRECT_FREQUENCY</p>
-                <a href="mailto:hello@kona.com" className="text-cyan-400 hover:text-cyan-300 transition-colors">
-                  hello@konasocials.com
+                <a href="mailto:hello@Konaverse.com" className="text-cyan-400 hover:text-cyan-300 transition-colors">
+                  hello@Konaversesocials.com
                 </a>
               </div>
             </div>
@@ -254,7 +254,7 @@ export default function ContactSection() {
                     </motion.div>
                         <h3 className="text-xl font-bold text-green-400 mb-2 font-mono">TRANSMISSION SUCCESSFUL</h3>
                         <p className="text-white/50 text-center text-sm">
-                          Signal received at KONA Base.<br />
+                          Signal received at Konaverse Base.<br />
                           Expect response within 24 hours.
                         </p>
                   </motion.div>
@@ -384,7 +384,7 @@ export default function ContactSection() {
                   {/* Terminal footer */}
                   <div className="mt-4 pt-4 border-t border-cyan-500/10 text-center">
                     <p className="text-cyan-500/30 text-xs font-mono">
-                      &gt; Secure transmission via KONA_PROTOCOL_v2.0
+                      &gt; Secure transmission via Konaverse_PROTOCOL_v2.0
                   </p>
                 </div>
               </form>
@@ -396,3 +396,4 @@ export default function ContactSection() {
     </section>
   );
 }
+

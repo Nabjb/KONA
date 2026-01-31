@@ -4,48 +4,48 @@ import React, { useEffect, useState } from 'react';
 import { CircularGallery, GalleryItem } from '@/components/ui/circular-gallery';
 import { motion } from 'framer-motion';
 
-// KONA SOCIALS projects
+// Konaverse SOCIALS projects
 const projects: GalleryItem[] = [
   {
     id: 1,
     title: "APT Metal Construction",
     description: "Metal construction company in Cyprus",
-    src: "/kona websites screenshots/apt_macbook.png",
+    src: "/Konaverse websites screenshots/apt_macbook.png",
     link: "https://www.aptmetalconstruction.com",
   },
   {
     id: 2,
     title: "Sivory Design",
     description: "Premium pergolas & outdoor design",
-    src: "/kona websites screenshots/sivory_macbook.png",
+    src: "/Konaverse websites screenshots/sivory_macbook.png",
     link: "https://sivory.vercel.app",
   },
   {
     id: 3,
     title: "TDK Design & Build",
     description: "Residential development in Nicosia",
-    src: "/kona websites screenshots/tdk_macbook.png",
+    src: "/Konaverse websites screenshots/tdk_macbook.png",
     link: "https://tdkdb.com",
   },
   {
     id: 4,
     title: "Corn Revolution",
     description: "Interactive brand experience by Pioneer",
-    src: "/kona websites screenshots/cornrevolution.png",
+    src: "/Konaverse websites screenshots/cornrevolution.png",
     link: "https://cornrevolution.resn.global",
   },
   {
     id: 5,
     title: "E-Cars Cyprus",
     description: "Luxury car dealership - Bentley & Maserati",
-    src: "/kona websites screenshots/ecars.png",
+    src: "/Konaverse websites screenshots/ecars.png",
     link: "https://www.e-carscyprus.com",
   },
   {
     id: 6,
     title: "Inter-M Traders",
     description: "Strategic consulting & investment firm",
-    src: "/kona websites screenshots/interM.png",
+    src: "/Konaverse websites screenshots/interM.png",
     link: "https://www.intermtraders.com",
   },
 ];
@@ -105,4 +105,5 @@ const ProjectsGallery = () => {
 };
 
 export default ProjectsGallery;
+
 

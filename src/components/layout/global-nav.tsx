@@ -7,6 +7,7 @@ import { NavDropdown } from "./nav-dropdown";
 import { NavHamburger } from "./nav-hamburger";
 import { MobileMenu } from "./mobile-menu";
 import { useNavCollapse } from "@/lib/hooks/use-nav-collapse";
+import { Button } from "../ui/button";
 
 const colors = {
     deepForest: "#1a1d18",
@@ -160,7 +161,7 @@ export function GlobalNav() {
                                 className="text-base font-normal"
                                 style={{ letterSpacing: "0.15em" }}
                             >
-                                KONA
+                                Konaverse
                             </span>
                             <span
                                 className="text-base font-normal"
@@ -267,30 +268,12 @@ export function GlobalNav() {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3, duration: 0.3 }}
                         >
-                            <Link
+                            <Button
                                 href="#contact"
-                                className="inline-block px-4 py-2 transition-all duration-200"
-                                style={{
-                                    backgroundColor: colors.sand,
-                                    color: colors.deepForest,
-                                    borderRadius: 2,
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.backgroundColor = colors.parchment;
-                                    e.currentTarget.style.transform = "translateY(-2px)";
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.backgroundColor = colors.sand;
-                                    e.currentTarget.style.transform = "translateY(0)";
-                                }}
+                                size="sm"
                             >
-                                <span
-                                    className="text-xs font-mono font-normal"
-                                    style={{ letterSpacing: "0.15em" }}
-                                >
-                                    Get a Quote
-                                </span>
-                            </Link>
+                                Get a Quote
+                            </Button>
 
                             {/* Corner anchor - bottom right of CTA */}
                             <motion.div
@@ -344,3 +327,4 @@ export function GlobalNav() {
 }
 
 export default GlobalNav;
+
