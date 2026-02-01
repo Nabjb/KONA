@@ -117,9 +117,9 @@ export function GiatsProjectsSection() {
   // Calculate projectsWrap height based on giats.me formula
   const getProjectsWrapHeight = (index: number): string => {
     if (isMobile) {
-      // Mobile: last card needs more height for sticky content to stay visible
+      // Mobile: last card (continuous) needs more height to stay visible longer and centered
       return index === projects.length - 1
-        ? "100svh"
+        ? "150svh" // Increased height so it starts earlier and stays centered longer
         : `${100 + 50 * index}svh`;
     }
     // Desktop
@@ -131,6 +131,10 @@ export function GiatsProjectsSection() {
   // Calculate projectsWrap top position
   const getProjectsWrapTop = (index: number): string => {
     if (isMobile) {
+      // Last project (continuous) starts earlier to stay centered
+      if (index === projects.length - 1) {
+        return "-25svh"; // Start earlier so it stays in middle
+      }
       return index === 0 ? "0px" : "-50svh";
     }
     return index === 0 ? "0px" : "-100svh";
@@ -195,7 +199,7 @@ export function GiatsProjectsSection() {
               >
                 {/* Sticky Container - stays fixed while scrolling */}
                 <div
-                  className="sticky top-0 w-full"
+                  className={`sticky w-full ${isMobile ? "top-[25vh]" : "top-0"}`}
                   style={{
                     height: isMobile ? "50svh" : "100svh",
                     transform: "translateZ(0)", // Creates stacking context for sticky
