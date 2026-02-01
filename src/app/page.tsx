@@ -4,7 +4,7 @@ import HeroSection from "@/components/ui/hero-section";
 import ServicesSection from "@/components/sections/services-section";
 import WhoWeAre from "@/components/sections/who-we-are";
 import GiatsProjectsSection from "@/components/sections/giats-projects-section";
-import AsymmetricDecisionSection from "@/components/sections/asymmetric-decision-section";
+import QuoteSection from "@/components/sections/quote-section";
 import TestimonialsSection from "@/components/sections/testimonials-section";
 import CTASection from "@/components/sections/cta-section";
 
@@ -34,9 +34,9 @@ export default function Home() {
         <GiatsProjectsSection />
       </div>
 
-      {/* Decision Section - Filtering reader attention through cognitive friction */}
+      {/* Quote Section */}
       <div className="relative z-40">
-        <AsymmetricDecisionSection />
+        <QuoteSection />
       </div>
 
       {/* Testimonials - Architectural Index */}
