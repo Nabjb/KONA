@@ -343,12 +343,12 @@ export function GiatsProjectsSection() {
 
         {/* All Projects Button */}
         <div
-          className="w-full flex justify-center py-12 md:py-24"
+          className="w-full flex justify-center py-12 md:py-24 px-4"
           style={{ backgroundColor: "#1a1d18" }}
         >
           <Button
             href="#contact"
-            className="px-16 md:px-24"
+            className="w-full sm:w-auto px-8 sm:px-16 md:px-24"
           >
             Start Your Project
           </Button>
