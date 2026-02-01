@@ -31,7 +31,7 @@ const footerLinks = {
     ],
     nav: [
         { label: "About", href: "/#about" },
-        { label: "Case Studies", href: "/#case-studies" },
+        { label: "Projects", href: "/projects" },
         { label: "Contact", href: "/#contact" },
         { label: "Pricing", href: "/#pricing" },
     ],

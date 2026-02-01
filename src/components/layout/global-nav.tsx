@@ -25,9 +25,14 @@ const solutionsItems = [
     { label: "Social Media", href: "/solutions/social-media" },
 ];
 
+const projectsItems = [
+    { label: "Website Projects", href: "/projects/websites" },
+    { label: "Web App Projects", href: "/projects/web-apps" },
+    { label: "Social Media Projects", href: "/projects/social-media" },
+];
+
 const navItems = [
     { label: "ABOUT", href: "/about" },
-    { label: "CASE STUDIES", href: "/case-studies" },
     { label: "CONTACT", href: "/contact" },
     { label: "PRICING", href: "/pricing" },
 ];
@@ -200,6 +205,33 @@ export function GlobalNav() {
                                     }
                                     items={solutionsItems}
                                     footerLink={{ label: "Explore all solutions", href: "/solutions" }}
+                                />
+                            </motion.div>
+
+                            {/* Projects dropdown */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.15, duration: 0.3 }}
+                            >
+                                <NavDropdown
+                                    trigger={
+                                        <span
+                                            className="text-[13px] font-light uppercase transition-colors duration-200"
+                                            style={{
+                                                color: hoveredItem === "projects" ? colors.parchment : colors.sand,
+                                                letterSpacing: "0.08em",
+                                            }}
+                                            data-nav-item="true"
+                                            onMouseEnter={() => setHoveredItem("projects")}
+                                            onMouseLeave={() => setHoveredItem(null)}
+                                        >
+                                            PROJECTS
+                                        </span>
+                                    }
+                                    items={projectsItems}
+                                    footerLink={{ label: "View all projects", href: "/projects" }}
+                                    title="Projects"
                                 />
                             </motion.div>
 

@@ -30,8 +30,16 @@ const navItems = [
             { label: "Social Media", href: "/solutions/social-media" },
         ],
     },
+    {
+        label: "Projects",
+        href: "/projects",
+        subItems: [
+            { label: "Website Projects", href: "/projects/websites" },
+            { label: "Web App Projects", href: "/projects/web-apps" },
+            { label: "Social Media Projects", href: "/projects/social-media" },
+        ],
+    },
     { label: "About", href: "/about" },
-    { label: "Case Studies", href: "/case-studies" },
     { label: "Contact", href: "/contact" },
     { label: "Pricing", href: "/pricing" },
 ];
@@ -140,14 +148,31 @@ export function MobileMenu({ isOpen, onClose, originX, originY }: MobileMenuProp
                                         <div className="mb-6">
                                             <button
                                                 onClick={() => toggleSection(item.label)}
-                                                className="text-right w-full focus:outline-none"
+                                                className="text-right w-full focus:outline-none flex items-center justify-end gap-2 mb-2"
                                             >
                                                 <span
-                                                    className="block text-[10px] font-mono font-normal uppercase mb-2"
+                                                    className="text-[10px] font-mono font-normal uppercase"
                                                     style={{ color: colors.oak, letterSpacing: "0.25em" }}
                                                 >
                                                     {item.label}
                                                 </span>
+                                                {/* Dropdown indicator */}
+                                                <motion.svg
+                                                    width="12"
+                                                    height="8"
+                                                    viewBox="0 0 12 8"
+                                                    fill="none"
+                                                    animate={{ rotate: expandedSection === item.label ? 180 : 0 }}
+                                                    transition={{ duration: 0.2 }}
+                                                >
+                                                    <path
+                                                        d="M1 1L6 6L11 1"
+                                                        stroke={expandedSection === item.label ? colors.parchment : colors.oak}
+                                                        strokeWidth="1.5"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </motion.svg>
                                             </button>
 
                                             {/* Expandable underline */}

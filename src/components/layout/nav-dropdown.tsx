@@ -16,12 +16,13 @@ interface NavDropdownProps {
     trigger: React.ReactNode;
     items: { label: string; href: string }[];
     footerLink?: { label: string; href: string };
+    title?: string;
 }
 
 /**
  * Solutions dropdown - a spatial overlay with construction line reveal.
  */
-export function NavDropdown({ trigger, items, footerLink }: NavDropdownProps) {
+export function NavDropdown({ trigger, items, footerLink, title = "Solutions" }: NavDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -147,7 +148,7 @@ export function NavDropdown({ trigger, items, footerLink }: NavDropdownProps) {
                                         className="text-[11px] font-mono font-light uppercase"
                                         style={{ color: colors.oak, letterSpacing: "0.2em" }}
                                     >
-                                        Solutions
+                                        {title}
                                     </span>
                                 </div>
                             </div>
