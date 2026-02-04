@@ -17,15 +17,15 @@ const projects = [
   {
     id: "apt",
     year: "2024",
-    title: "APT Cleaning",
-    href: "https://aptcleaningservices.com",
+    title: "APT Metal Construction",
+    href: "https://www.aptmetalconstruction.com/",
     image: "/kona websites screenshots/apt_macbook.png",
   },
   {
     id: "tdk",
     year: "2024",
-    title: "TDK Performance",
-    href: "https://tdkperformance.com",
+    title: "TDK Design & Build",
+    href: "https://tdkdb.com/",
     image: "/kona websites screenshots/tdk_macbook.png",
   },
   {
@@ -39,7 +39,7 @@ const projects = [
     id: "sivory",
     year: "2024",
     title: "Sivory Design",
-    href: "https://sivory.vercel.app",
+    href: "https://sivorydesigns.com/",
     image: "/kona websites screenshots/sivory_macbook.png",
   },
 ];
@@ -156,7 +156,7 @@ export function GiatsProjectsSection() {
       {/* Projects Root Container */}
       <section
         ref={rootRef}
-        className="relative w-full block"
+        className="relative w-full block px-4 md:px-8 lg:px-16"
         style={{
           paddingTop: 0,
           paddingBottom: 0,

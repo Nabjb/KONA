@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { TextOpacity } from "@/components/ui/text-opacity";
 
 const colors = {
   50: "#f8f7f5",
@@ -56,6 +57,7 @@ function RevealBlock({ children, className = "", delay = 0 }: RevealBlockProps) 
 
 export function WhoWeAre() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const quoteBlockRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
@@ -227,20 +229,20 @@ export function WhoWeAre() {
           </div>
 
           {/* Block 3 - Center, larger */}
-          <div className="grid grid-cols-12 gap-4 py-16 md:py-24">
-            <div className="col-span-12 md:col-start-3 md:col-span-8 lg:col-start-4 lg:col-span-6 text-center">
-              <RevealBlock delay={0}>
+          <div ref={quoteBlockRef} className="grid grid-cols-12 gap-4 py-16 md:py-24">
+            <div className="col-span-12 md:col-start-2 md:col-span-10 lg:col-start-2 lg:col-span-10 text-center">
+              <TextOpacity trigger={quoteBlockRef.current}>
                 <p
-                  className="text-2xl md:text-4xl lg:text-5xl font-extralight leading-relaxed"
+                  className="text-xl md:text-2xl lg:text-3xl font-extralight leading-relaxed max-w-5xl mx-auto"
                   style={{ color: colors[50] }}
                 >
-                  &ldquo;The best design feels inevitable.&rdquo;
+                  We&apos;re not here to execute your ideas. We&apos;re here to elevate them. Through deep collaboration, strategic insight, and uncompromising craftsmanship, we turn concepts into competitive advantages.
                 </p>
-                <div
-                  className="w-12 h-px mx-auto mt-8"
-                  style={{ background: `linear-gradient(to right, transparent, ${colors[300]}, transparent)` }}
-                />
-              </RevealBlock>
+              </TextOpacity>
+              <div
+                className="w-12 h-px mx-auto mt-8"
+                style={{ background: `linear-gradient(to right, transparent, ${colors[300]}, transparent)` }}
+              />
             </div>
           </div>
 
