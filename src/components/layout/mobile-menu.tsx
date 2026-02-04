@@ -34,7 +34,7 @@ const navItems = [
         label: "Projects",
         href: "/projects",
         subItems: [
-            { label: "Website Projects", href: "/projects/websites" },
+            { label: "Website Projects", href: "/projects/website-projects" },
             { label: "Web App Projects", href: "/projects/web-apps" },
             { label: "Social Media Projects", href: "/projects/social-media" },
         ],

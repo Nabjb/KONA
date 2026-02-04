@@ -496,42 +496,62 @@ function ServiceCard({ number, zIndex }: { number: "01" | "02" | "03" | "04"; zI
   return (
     <div
       ref={cardRef}
-      className="sticky top-0 min-h-screen w-full flex items-center justify-center overflow-hidden py-16 md:py-0 isolation-isolate bg-[#1a1d18]"
+      className="sticky top-0 min-h-screen w-full flex items-center justify-center overflow-hidden py-16 md:py-0 isolation-isolate"
       style={{
         zIndex,
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden"
       }}
     >
-      {/* Technical Background Layer */}
+      {/* Background Layer - Who We Are Style */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Dynamic Gradient Background */}
+        {/* Base Gradient - Dark to darker */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to bottom, 
+              ${colors[900]} 0%, 
+              #0a0b09 30%,
+              #0a0b09 70%,
+              ${colors[900]} 100%
+            )`
+          }}
+        />
+
+        {/* Dynamic Service Accent Gradient */}
         <motion.div
-          className="absolute inset-[-20%] opacity-50"
+          className="absolute inset-[-20%] opacity-30"
           style={{
             background: service.gradient,
             y: backgroundY
           }}
         />
 
-        {/* Architectural Grid Overlay (Light Lines) */}
+        {/* Floating accent elements */}
         <div
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          className="absolute top-1/4 left-[5%] w-1 h-1 rounded-full"
           style={{
-            backgroundImage: `
-              linear-gradient(to right, ${colors[100]} 1px, transparent 1px),
-              linear-gradient(to bottom, ${colors[100]} 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px'
+            background: service.accent,
+            opacity: 0.4,
+            boxShadow: `0 0 20px ${service.accent}40`
           }}
         />
-
-        {/* Central Vertical Line Decoration */}
-        <div className="absolute left-1/2 top-0 w-px h-full opacity-[0.05]" style={{ backgroundColor: colors[100] }} />
-
-        {/* Horizontal Crosshair Line */}
-        <div className="absolute left-0 top-[20%] w-full h-px opacity-[0.05]" style={{ backgroundColor: colors[100] }} />
-
+        <div
+          className="absolute top-1/2 right-[8%] w-1.5 h-1.5 rounded-full"
+          style={{
+            background: colors[300],
+            opacity: 0.3,
+            boxShadow: `0 0 30px ${colors[300]}30`
+          }}
+        />
+        <div
+          className="absolute top-3/4 left-[12%] w-1 h-1 rounded-full"
+          style={{
+            background: service.accent,
+            opacity: 0.5,
+            boxShadow: `0 0 15px ${service.accent}50`
+          }}
+        />
       </div>
 
       <div

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ConditionalNav } from "@/components/layout/conditional-nav";
 import Footer from "@/components/layout/footer";
+import FluidWrapper from "@/components/fluid/fluid-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,11 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        {/* Fluid cursor effect - follows mouse with artistic fluid simulation */}
+        <FluidWrapper 
+          fluidColor="#a89080"
+          enabled={true}
+        />
       </body>
     </html>
   );

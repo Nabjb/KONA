@@ -15,11 +15,11 @@ if (typeof window !== "undefined") {
 // Project data
 const projects = [
   {
-    id: "apt",
+    id: "glmetalworks",
     year: "2024",
-    title: "APT Metal Construction",
-    href: "https://www.aptmetalconstruction.com/",
-    image: "/kona websites screenshots/apt_macbook.png",
+    title: "GL Metal Works",
+    href: "https://glmetalworks.com",
+    image: "/kona websites screenshots/glmetalworks.png",
   },
   {
     id: "tdk",
@@ -263,7 +263,7 @@ export function GiatsProjectsSection() {
                     /* DESKTOP Layout */
                     <div className="w-full h-full px-8 lg:px-16 grid grid-cols-2 items-center">
                       {/* Project Details - Left Side (Desktop) */}
-                      <div className="flex flex-col gap-4 z-10">
+                      <div className={`flex flex-col gap-4 z-10 ${index === 0 ? "pr-8 lg:pr-12" : ""}`}>
                         <h6
                           className="text-sm font-medium tracking-widest uppercase transition-all duration-500"
                           style={{ color: "#a89080" }}
@@ -271,7 +271,11 @@ export function GiatsProjectsSection() {
                           {project.year}
                         </h6>
                         <h3
-                          className="text-4xl lg:text-6xl font-light transition-all duration-500"
+                          className={`font-light transition-all duration-500 ${
+                            index === 0 
+                              ? "text-3xl lg:text-5xl" 
+                              : "text-4xl lg:text-6xl"
+                          }`}
                           style={{
                             color: "#f8f7f5",
                             textShadow: "none",
