@@ -54,6 +54,14 @@ export function SolutionHero({ title, subtitle, description, videoSrc }: Solutio
             videoRef.current.play().catch((error) => {
                 console.log("Video autoplay prevented:", error);
             });
+            
+            // Log video loading events for debugging
+            videoRef.current.addEventListener('loadeddata', () => {
+                console.log('Video loaded successfully');
+            });
+            videoRef.current.addEventListener('error', (e) => {
+                console.error('Video loading error:', e);
+            });
         }
     }, [videoSrc]);
 
@@ -68,8 +76,10 @@ export function SolutionHero({ title, subtitle, description, videoSrc }: Solutio
                     loop
                     muted
                     playsInline
+                    preload="auto"
                 >
                     <source src={videoSrc} type="video/mp4" />
+                    Your browser does not support the video tag.
                 </video>
             )}
             

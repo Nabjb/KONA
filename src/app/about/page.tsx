@@ -7,7 +7,7 @@ export default function AboutPage() {
                 title="Who We Are"
                 subtitle="The Agency"
                 description="A collective of digital architects and strategic thinkers dedicated to pushing the boundaries of what's possible online."
-                videoSrc="/comp 1.mp4"
+                videoSrc="/Comp 1.mp4"
             />
             {/* About content sections will be added here */}
         </div>
