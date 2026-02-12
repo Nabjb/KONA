@@ -19,10 +19,12 @@ interface SolutionHeroProps {
     title: string;
     subtitle?: string;
     description?: string;
+    videoSrc?: string;
 }
 
-export function SolutionHero({ title, subtitle, description }: SolutionHeroProps) {
+export function SolutionHero({ title, subtitle, description, videoSrc }: SolutionHeroProps) {
     const gradientRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
         // Mouse gradient
@@ -46,9 +48,37 @@ export function SolutionHero({ title, subtitle, description }: SolutionHeroProps
         };
     }, []);
 
+    useEffect(() => {
+        // Auto-play video if provided
+        if (videoRef.current && videoSrc) {
+            videoRef.current.play().catch((error) => {
+                console.log("Video autoplay prevented:", error);
+            });
+        }
+    }, [videoSrc]);
+
     return (
         <div className="h-[70vh] min-h-[500px] bg-gradient-to-br from-[#1a1d18] via-black to-[#2a2e26] text-[#e6e1d7] overflow-hidden relative w-full flex items-center justify-center">
-            <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            {/* Video Background */}
+            {videoSrc && (
+                <video
+                    ref={videoRef}
+                    className="absolute inset-0 w-full h-full object-cover z-0"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                >
+                    <source src={videoSrc} type="video/mp4" />
+                </video>
+            )}
+            
+            {/* Dark overlay for better text readability */}
+            {videoSrc && (
+                <div className="absolute inset-0 bg-black/40 z-[1]"></div>
+            )}
+            
+            <svg className={`absolute inset-0 w-full h-full ${videoSrc ? 'z-[2]' : 'z-0'}`} xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <pattern id="grid-solution" width="60" height="60" patternUnits="userSpaceOnUse">
                         <path
@@ -66,7 +96,7 @@ export function SolutionHero({ title, subtitle, description }: SolutionHeroProps
                 <line x1="80%" y1="0" x2="80%" y2="100%" style={{ stroke: "rgba(200,180,160,0.05)", strokeWidth: 0.5 }} />
             </svg>
 
-            <div className="relative z-10 text-center px-6 max-w-4xl">
+            <div className={`relative ${videoSrc ? 'z-[3]' : 'z-10'} text-center px-6 max-w-4xl`}>
                 {subtitle && (
                     <h2 className="text-xs md:text-sm font-mono font-light uppercase tracking-[0.3em] mb-4" style={{ color: colors[200] }}>
                         {subtitle}

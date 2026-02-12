@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 
 const colors = {
   50: "#f8f7f5",
@@ -171,9 +172,9 @@ export function HeroSection() {
       <div className="floating-element" style={{ top: "40%", left: "10%", animationDelay: "6s" }}></div>
       <div className="floating-element" style={{ top: "75%", left: "90%", animationDelay: "6.5s" }}></div>
 
-      <div className="relative z-10 h-full flex flex-col justify-between items-center px-8 pt-32 pb-12 md:px-16 md:pt-40 md:pb-20">
+      <div className="relative z-10 h-full flex flex-col justify-between items-center px-8 pt-20 pb-12 md:px-16 md:pt-24 md:pb-20">
         {/* Top tagline */}
-        <div className="text-center">
+        <div className="text-center mt-8 md:mt-12">
           <h2
             className="text-xs md:text-sm font-mono font-light uppercase tracking-[0.2em] opacity-80"
             style={{ color: colors[200] }}
@@ -215,7 +216,7 @@ export function HeroSection() {
         </div>
 
         {/* Main headline */}
-        <div className="text-center max-w-5xl mx-auto">
+        <div className="text-center max-w-5xl mx-auto -mt-24 md:-mt-40">
           <h1
             className="text-3xl md:text-5xl lg:text-6xl font-extralight leading-tight tracking-tight"
             style={{ color: colors[50] }}
@@ -342,6 +343,27 @@ export function HeroSection() {
               style={{ background: colors[200] }}
             ></div>
           </div>
+        </div>
+      </div>
+
+      {/* Character Image - positioned at bottom */}
+      <div className="absolute bottom-0 left-1/2 md:left-auto md:right-40 lg:right-80 z-0 pointer-events-none character-container">
+        <div 
+          className="relative w-[500px] h-[625px] md:w-[700px] md:h-[875px] lg:w-[850px] lg:h-[1050px]"
+          style={{
+            animation: "character-appear 2s ease-in-out forwards",
+            animationDelay: "1.5s",
+            opacity: 0,
+          }}
+        >
+          <Image
+            src="/images/Character.png"
+            alt="Digital Character"
+            fill
+            className="object-contain"
+            style={{ objectPosition: "bottom" }}
+            priority
+          />
         </div>
       </div>
 

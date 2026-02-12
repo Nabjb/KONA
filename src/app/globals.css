@@ -830,3 +830,27 @@
 .scroll-indicator {
   animation: scroll-hint 2s ease-in-out infinite;
 }
+
+/* Character appear animation */
+@keyframes character-appear {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Character positioning */
+.character-container {
+  transform: translate(-50%, 35px);
+}
+
+@media (min-width: 768px) {
+  .character-container {
+    transform: translateY(35px);
+  }
+}
