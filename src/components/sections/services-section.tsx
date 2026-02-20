@@ -32,9 +32,6 @@ import {
   SiNextdotjs,
   SiTypescript,
   SiTailwindcss,
-  SiHtml5,
-  SiCss3,
-  SiJavascript,
   SiNodedotjs,
   SiPostgresql,
   SiMongodb,
@@ -62,7 +59,7 @@ const ScrambleText = ({ text }: { text: string }) => {
         return;
       }
 
-      setDisplayText(prev => {
+      setDisplayText(() => {
         return text.split('').map((char, i) => {
           if (char === ' ') return ' ';
           if (i < (frame / duration) * text.length) return text[i];
@@ -411,14 +408,18 @@ const AccordionItem = ({ title, imageUrl, isActive, onMouseEnter, accentColor }:
 };
 
 // --- Mobile Feature Accordion ---
+interface ServiceCardItem {
+  shortTitle: string;
+  description: string;
+  icons: Array<{ icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; name: string; color: string }>;
+}
+
 const MobileFeatureAccordion = ({
   cards,
-  accent,
   activeIndex,
   onSelect
 }: {
-  cards: any[];
-  accent: string;
+  cards: ServiceCardItem[];
   activeIndex: number;
   onSelect: (index: number) => void;
 }) => {
@@ -457,7 +458,7 @@ const MobileFeatureAccordion = ({
                   {card.description}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {card.icons.map((item: any, i: number) => {
+                  {card.icons.map((item, i: number) => {
                     const IconComponent = item.icon;
                     return (
                       <div
@@ -603,7 +604,6 @@ function ServiceCard({ number, zIndex }: { number: "01" | "02" | "03" | "04"; zI
             <div className="lg:hidden w-full">
               <MobileFeatureAccordion
                 cards={service.cards}
-                accent={service.accent}
                 activeIndex={activeAccordionIndex}
                 onSelect={setActiveAccordionIndex}
               />
@@ -611,7 +611,7 @@ function ServiceCard({ number, zIndex }: { number: "01" | "02" | "03" | "04"; zI
 
             {/* Dynamic Tech/Platform Icons (Desktop Only) */}
             <div className="hidden lg:flex flex-wrap gap-3">
-              {activeCard.icons.map((item: any, index: number) => {
+              {activeCard.icons.map((item, index: number) => {
                 const IconComponent = item.icon;
                 return (
                   <motion.div

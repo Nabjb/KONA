@@ -11,7 +11,7 @@ const AnimatedShaderBackground = ({ className }: ShaderBackgroundProps) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
+    queueMicrotask(() => setIsMobile(window.innerWidth < 768));
   }, []);
 
   useEffect(() => {

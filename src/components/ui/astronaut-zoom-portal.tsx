@@ -1,7 +1,7 @@
 'use client';
 
 import { useScroll, useTransform, motion } from 'framer-motion';
-import { useRef, useMemo } from 'react';
+import { useRef } from 'react';
 
 // Generate stars for the background (fixed seed for consistent positions)
 function generateStars(count: number) {

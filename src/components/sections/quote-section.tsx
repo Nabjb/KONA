@@ -29,7 +29,7 @@ export function QuoteSection() {
             </p>
             <div className="text-2xl tracking-tighter md:text-5xl lg:text-7xl xl:text-8xl" style={{ color: colors[50] }}>
               <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4">
-                <h1 className="font-semibold">"Design should be</h1>
+                <h1 className="font-semibold">&quot;Design should be</h1>
                 <p className="font-thin">easy to</p>
               </div>
               <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4">
@@ -41,7 +41,7 @@ export function QuoteSection() {
                 <p className="font-thin">ideas</p>
                 <h1 className="font-semibold">are quicker to</h1>
               </div>
-              <h1 className="font-semibold">grasp..."</h1>
+              <h1 className="font-semibold">grasp...&quot;</h1>
             </div>
           </div>
         </div>

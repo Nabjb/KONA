@@ -337,7 +337,7 @@ export default function ProjectsVideoSection() {
             </button>
               
             <div className="flex items-center gap-2">
-              {projects.map((project, i) => (
+              {projects.map((project) => (
                 <button
                   key={project.id}
                   onClick={() => setActiveProject(project.id)}

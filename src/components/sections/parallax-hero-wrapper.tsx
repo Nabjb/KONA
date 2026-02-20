@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Circle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRef, useState, useEffect } from "react";
@@ -27,8 +27,8 @@ function ElegantShape({
     rotate?: number;
     gradient?: string;
     parallaxSpeed?: number;
-    scrollYProgress?: any;
-    shapeOpacity?: any;
+    scrollYProgress?: MotionValue<number>;
+    shapeOpacity?: MotionValue<number>;
 }) {
     const y = useTransform(
         scrollYProgress || { get: () => 0, getVelocity: () => 0 },
@@ -94,7 +94,7 @@ export default function ParallaxHeroWrapper() {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        setIsMobile(window.innerWidth < 768);
+        queueMicrotask(() => setIsMobile(window.innerWidth < 768));
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);

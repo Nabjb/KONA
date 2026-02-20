@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Instagram, Linkedin, Twitter, Mail, MapPin, ArrowUpRight, Terminal } from "lucide-react";
 
@@ -126,9 +127,11 @@ export default function Footer() {
             >
               <div className="p-6 rounded-lg border border-cyan-500/20 bg-black/40 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-4">
-                <img
+                <Image
                   src="/Konaverse websites screenshots/KonaverseLOGO.png"
                     alt="Konaverse"
+                    width={40}
+                    height={40}
                     className="w-10 h-10 rounded-lg"
                 />
                   <div>

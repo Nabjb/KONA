@@ -55,11 +55,10 @@ function UniverseStars({ progress }: { progress: number }) {
   const particleCount = 2000;
   const circleTexture = useCircleTexture("#ffffff", false);
   
-  const { positions, starPositions, colors, sizes } = useMemo(() => {
+  const { positions, starPositions, colors } = useMemo(() => {
     const pos = new Float32Array(particleCount * 3);
     const stars = new Float32Array(particleCount * 3);
     const cols = new Float32Array(particleCount * 3);
-    const szs = new Float32Array(particleCount);
     
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
@@ -88,12 +87,9 @@ function UniverseStars({ progress }: { progress: number }) {
       } else { 
         cols[i3] = 1; cols[i3+1] = 0.9; cols[i3+2] = 0.7; // Warm white
       }
-      
-      // Varied sizes - most small, some larger
-      szs[i] = Math.random() < 0.9 ? 0.02 + Math.random() * 0.04 : 0.06 + Math.random() * 0.08;
     }
     
-    return { positions: pos, starPositions: stars, colors: cols, sizes: szs };
+    return { positions: pos, starPositions: stars, colors: cols };
   }, []);
 
   useFrame((state) => {

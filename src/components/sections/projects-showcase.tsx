@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { MonitorMockup } from "@/components/ui/monitor-mockup";
-import { ExternalLink, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 const projects = [
   {

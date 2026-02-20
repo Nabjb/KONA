@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
@@ -29,7 +29,51 @@ const projects = [
     services: ["Content Creation", "Social Strategy", "Brand Voice"],
     platforms: ["Instagram", "Facebook", "LinkedIn"],
   },
-  // More projects can be added here when images are provided
+  {
+    id: "leanthia",
+    year: "2024",
+    title: "Leanthia Bakery",
+    href: "https://leanthiabakery.com",
+    images: [
+      "/LeanthiaSocialMedia/1.png",
+      "/LeanthiaSocialMedia/2.png",
+      "/LeanthiaSocialMedia/3.png",
+      "/LeanthiaSocialMedia/4.png",
+    ],
+    description: "Curated social media presence for an artisanal bakery. Warm, appetite-driven content that translates the craft of traditional baking into a compelling digital narrative.",
+    services: ["Content Creation", "Visual Identity", "Community Management"],
+    platforms: ["Instagram", "Facebook"],
+  },
+  {
+    id: "tdkdb",
+    year: "2024",
+    title: "TDK Design & Build",
+    href: "https://tdkdb.com/",
+    images: [
+      "/TdkDBSocialMedia/1.png",
+      "/TdkDBSocialMedia/2.png",
+      "/TdkDBSocialMedia/3.png",
+      "/TdkDBSocialMedia/4.png",
+    ],
+    description: "Premium social media strategy for a residential development company. Elevated visual content that positions their luxury properties and reinforces the brand's design-forward identity.",
+    services: ["Content Creation", "Social Strategy", "Brand Voice"],
+    platforms: ["Instagram", "Facebook", "LinkedIn"],
+  },
+  {
+    id: "velricon",
+    year: "2024",
+    title: "Velricon",
+    href: "https://velricon.com",
+    images: [
+      "/VelriconSocialMedia/1.png",
+      "/VelriconSocialMedia/2.png",
+      "/VelriconSocialMedia/3.png",
+      "/VelriconSocialMedia/4.png",
+    ],
+    description: "Authoritative social media presence for a modern digital services brand. Precise, technically confident content that communicates innovation without sacrificing clarity.",
+    services: ["Content Creation", "Digital Marketing", "Social Strategy"],
+    platforms: ["Instagram", "LinkedIn"],
+  },
 ];
 
 const colors = {
@@ -53,6 +97,16 @@ export function SocialMediaProjectsSection() {
   const mobileProjectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  // Close lightbox on Escape
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedImage(null);
+    };
+    if (selectedImage) document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [selectedImage]);
 
   // Check for mobile
   useEffect(() => {
@@ -142,10 +196,10 @@ export function SocialMediaProjectsSection() {
         } else {
           // Desktop animations - Fade transitions between grids
           
-          // Set all grids to opacity 0 except the first
+          // Set all grids to autoAlpha 0 except the first
           gridRefs.current.forEach((grid, i) => {
             if (grid) {
-              gsap.set(grid, { opacity: i === 0 ? 1 : 0 });
+              gsap.set(grid, { autoAlpha: i === 0 ? 1 : 0 });
             }
           });
 
@@ -166,12 +220,12 @@ export function SocialMediaProjectsSection() {
               end: "bottom 40%",
               onEnter: () => {
                 setActiveIndex(index);
-                
+
                 // Fade out previous grid, fade in current
                 gridRefs.current.forEach((grid, i) => {
                   if (grid) {
                     gsap.to(grid, {
-                      opacity: i === index ? 1 : 0,
+                      autoAlpha: i === index ? 1 : 0,
                       duration: 0.6,
                       ease: "power2.inOut",
                     });
@@ -192,12 +246,12 @@ export function SocialMediaProjectsSection() {
               },
               onEnterBack: () => {
                 setActiveIndex(index);
-                
+
                 // Fade out next grid, fade in current
                 gridRefs.current.forEach((grid, i) => {
                   if (grid) {
                     gsap.to(grid, {
-                      opacity: i === index ? 1 : 0,
+                      autoAlpha: i === index ? 1 : 0,
                       duration: 0.6,
                       ease: "power2.inOut",
                     });
@@ -369,7 +423,7 @@ export function SocialMediaProjectsSection() {
 
             {/* Right Side - Sticky Grid Container */}
             <div className="w-[55%] relative">
-              <div className="sticky top-0 h-screen flex items-center justify-center pr-12 lg:pr-24">
+              <div className="sticky top-0 h-screen flex items-start pt-16 lg:pt-20 justify-center pr-12 lg:pr-24">
                 <div className="relative w-full max-w-[600px]">
                   {projects.map((project, index) => (
                     <div
@@ -380,6 +434,7 @@ export function SocialMediaProjectsSection() {
                       className="absolute inset-0"
                       style={{
                         opacity: index === 0 ? 1 : 0,
+                        visibility: index === 0 ? "visible" : "hidden",
                       }}
                     >
                       {/* 2x2 Grid of Images */}
@@ -387,10 +442,19 @@ export function SocialMediaProjectsSection() {
                         {project.images.map((image, imgIndex) => (
                           <div
                             key={imgIndex}
-                            className="relative aspect-square rounded-xl overflow-hidden group"
+                            className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
                             style={{
                               boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+                              transformOrigin: "center",
+                              transition: "transform 500ms cubic-bezier(0.16, 1, 0.3, 1)",
                             }}
+                            onMouseEnter={(e) => {
+                              (e.currentTarget as HTMLDivElement).style.transform = "rotate(2deg)";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.currentTarget as HTMLDivElement).style.transform = "rotate(0deg)";
+                            }}
+                            onClick={() => setSelectedImage(image)}
                           >
                             <Image
                               src={image}
@@ -401,15 +465,15 @@ export function SocialMediaProjectsSection() {
                               priority={index < 1}
                             />
                             {/* Hover Overlay */}
-                            <div 
-                              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center"
-                              style={{ backgroundColor: `${colors[900]}60` }}
+                            <div
+                              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                              style={{ backgroundColor: `${colors[900]}70` }}
                             >
-                              <span 
-                                className="text-xs font-medium uppercase tracking-wider"
-                                style={{ color: colors[50] }}
+                              <span
+                                className="text-[10px] font-mono uppercase tracking-[0.2em]"
+                                style={{ color: colors[200] }}
                               >
-                                {imgIndex + 1}
+                                Inspect Me
                               </span>
                             </div>
                           </div>
@@ -443,10 +507,11 @@ export function SocialMediaProjectsSection() {
                 {project.images.map((image, imgIndex) => (
                   <div
                     key={imgIndex}
-                    className="relative aspect-square rounded-lg overflow-hidden"
+                    className="relative aspect-square rounded-lg overflow-hidden cursor-pointer"
                     style={{
                       boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
                     }}
+                    onClick={() => setSelectedImage(image)}
                   >
                     <Image
                       src={image}
@@ -572,6 +637,71 @@ export function SocialMediaProjectsSection() {
             </div>
           ))}
         </div>
+      )}
+      {/* Lightbox */}
+      {selectedImage && (
+        <>
+          <style>{`
+            @keyframes kona-lb-bg {
+              from { opacity: 0 }
+              to   { opacity: 1 }
+            }
+            @keyframes kona-lb-img {
+              from { opacity: 0; transform: scale(0.96) }
+              to   { opacity: 1; transform: scale(1) }
+            }
+          `}</style>
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center"
+            style={{
+              backgroundColor: "rgba(17,17,17,0.92)",
+              backdropFilter: "blur(8px)",
+              animation: "kona-lb-bg 300ms ease forwards",
+            }}
+            onClick={() => setSelectedImage(null)}
+          >
+            {/* Close button */}
+            <button
+              className="absolute top-6 right-6 flex items-center justify-center w-10 h-10 border transition-colors duration-300"
+              style={{ borderColor: `${colors[300]}50`, color: colors[300] }}
+              onMouseEnter={(e) =>
+                ((e.currentTarget as HTMLButtonElement).style.borderColor = colors[300])
+              }
+              onMouseLeave={(e) =>
+                ((e.currentTarget as HTMLButtonElement).style.borderColor = `${colors[300]}50`)
+              }
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImage(null);
+              }}
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Full image */}
+            <div
+              style={{
+                animation: "kona-lb-img 400ms cubic-bezier(0.16, 1, 0.3, 1) 0.08s both",
+                maxWidth: "90vw",
+                maxHeight: "90vh",
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={selectedImage}
+                alt="Full view"
+                style={{
+                  maxWidth: "90vw",
+                  maxHeight: "90vh",
+                  objectFit: "contain",
+                  display: "block",
+                  borderRadius: "6px",
+                }}
+              />
+            </div>
+          </div>
+        </>
       )}
     </section>
   );

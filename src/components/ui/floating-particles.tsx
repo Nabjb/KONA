@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface Particle {
@@ -53,22 +53,15 @@ export function FloatingParticles({
         layer,
       });
     }
-    setParticles(newParticles);
+    queueMicrotask(() => setParticles(newParticles));
   }, [particleCount]);
-
-  const getLayerY = (layer: number) => {
-    if (!enableParallax) return 0;
-    if (layer === 1) return y1;
-    if (layer === 2) return y2;
-    return y3;
-  };
 
   // Group particles by layer
   const layer1 = particles.filter(p => p.layer === 1);
   const layer2 = particles.filter(p => p.layer === 2);
   const layer3 = particles.filter(p => p.layer === 3);
 
-  const renderParticles = (layerParticles: Particle[], layerY: any) => (
+  const renderParticles = (layerParticles: Particle[], layerY: MotionValue<number>) => (
     <motion.div 
       className="absolute inset-0"
       style={{ y: enableParallax ? layerY : 0 }}

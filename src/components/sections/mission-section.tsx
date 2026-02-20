@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { Target, Zap, TrendingUp, Shield } from "lucide-react";
 
 const missionObjectives = [
@@ -33,7 +33,15 @@ const missionObjectives = [
 
 export default function MissionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  
+  const stars = useMemo(() => Array.from({ length: 100 }, (_, i) => ({
+    key: i,
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    opacity: Math.random() * 0.5 + 0.2,
+    animationDelay: `${Math.random() * 3}s`,
+    animationDuration: `${Math.random() * 2 + 2}s`,
+  })), []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -49,16 +57,16 @@ export default function MissionSection() {
     >
       {/* Starfield background */}
       <div className="absolute inset-0">
-        {Array.from({ length: 100 }).map((_, i) => (
+        {stars.map((star) => (
           <div
-            key={i}
+            key={star.key}
             className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.5 + 0.2,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${Math.random() * 2 + 2}s`,
+              left: star.left,
+              top: star.top,
+              opacity: star.opacity,
+              animationDelay: star.animationDelay,
+              animationDuration: star.animationDuration,
             }}
           />
         ))}
@@ -125,7 +133,7 @@ export default function MissionSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed"
           >
-            We don't just build websites. We create digital worlds that turn 
+            We don&apos;t just build websites. We create digital worlds that turn 
             visitors into customers and brands into legends.
           </motion.p>
         </div>

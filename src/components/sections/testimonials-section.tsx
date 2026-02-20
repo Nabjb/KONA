@@ -50,7 +50,7 @@ const testimonials: Testimonial[] = [
 
 export default function TestimonialsSection() {
     const [index, setIndex] = useState(0);
-    const shouldReduceMotion = useReducedMotion();
+    useReducedMotion(); // Respect user preference (could be used for animation variants)
 
     const next = useCallback(() => {
         setIndex((prev) => (prev + 1) % testimonials.length);

@@ -221,6 +221,8 @@ export function FluidSimulation({
     (material: keyof typeof materials, uniform: string, value: unknown) => {
       const mat = materials[material];
       if (mat && mat.uniforms[uniform]) {
+        // Three.js shader uniforms require direct mutation for render loop
+        // eslint-disable-next-line react-hooks/immutability -- WebGL uniform update pattern
         mat.uniforms[uniform].value = value;
       }
     },

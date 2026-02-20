@@ -88,9 +88,12 @@ export function GlobalNav() {
         return () => window.removeEventListener("resize", updateHamburgerPosition);
     }, [shouldCollapse]);
 
-    // Get current route for active state
+    // Get current route for active state (defer to avoid sync setState in effect)
     useEffect(() => {
-        setActiveRoute(window.location.hash || "");
+        const update = () => setActiveRoute(window.location.hash || "");
+        queueMicrotask(update);
+        window.addEventListener("hashchange", update);
+        return () => window.removeEventListener("hashchange", update);
     }, []);
 
     const isActiveRoute = (href: string) => activeRoute === href;

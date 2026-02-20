@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import React from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "../ui/button";
@@ -22,23 +21,7 @@ const colors = {
 };
 
 export default function CTASection() {
-    // Robust check for reduced motion hook
-    const framerReducedMotion = typeof useReducedMotion === 'function' ? useReducedMotion() : null;
-    const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
-
-    useEffect(() => {
-        if (framerReducedMotion !== null) {
-            setShouldReduceMotion(framerReducedMotion);
-        } else {
-            // Fallback to manual check if hook is missing or failing
-            const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-            setShouldReduceMotion(mediaQuery.matches);
-
-            const handler = (e: MediaQueryListEvent) => setShouldReduceMotion(e.matches);
-            mediaQuery.addEventListener("change", handler);
-            return () => mediaQuery.removeEventListener("change", handler);
-        }
-    }, [framerReducedMotion]);
+    const shouldReduceMotion = useReducedMotion() ?? false;
 
     return (
         <section className="relative w-full bg-[#1a1d18] py-32 md:py-64 overflow-hidden border-t border-white/5">

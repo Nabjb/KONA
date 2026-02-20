@@ -55,9 +55,11 @@ export const MacbookScroll = ({
   const [activeProject, setActiveProject] = useState(0);
 
   useEffect(() => {
-    if (window && window.innerWidth < 768) {
-      setIsMobile(true);
-    }
+    queueMicrotask(() => {
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        setIsMobile(true);
+      }
+    });
   }, []);
 
   const scaleX = useTransform(
@@ -234,8 +236,7 @@ export const Lid = ({
   scaleY,
   rotate,
   translate,
-  projects,
-  activeProject,
+  ..._rest
 }: {
   scaleX: MotionValue<number>;
   scaleY: MotionValue<number>;

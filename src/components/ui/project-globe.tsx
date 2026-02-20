@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useMemo, Suspense, useEffect, useCallback } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
@@ -33,6 +33,7 @@ function ProjectCard3D({
 
   // Load project thumbnail texture
   const texture = useTexture(project.image);
+  // eslint-disable-next-line react-hooks/immutability -- Three.js texture config required for correct color
   texture.colorSpace = THREE.SRGBColorSpace;
 
   useFrame((state) => {
@@ -293,16 +294,6 @@ function Scene({
   );
 }
 
-// Loading placeholder for textures
-function TextureLoader() {
-  return (
-    <mesh>
-      <planeGeometry args={[2.5, 1.2]} />
-      <meshBasicMaterial color="#1a1a2e" />
-    </mesh>
-  );
-}
-
 // Loader
 function Loader() {
   return (
@@ -385,13 +376,13 @@ export default function ProjectGlobe({ projects, className = "" }: ProjectGlobeP
     return () => cancelAnimationFrame(id);
   }, [velocity, rotationOffset, anglePerProject, projects.length, goToIndex]);
 
-  // Update active index based on rotation
+  // Update active index based on rotation (defer setState to avoid sync update in effect)
   useEffect(() => {
     if (isDragging.current || Math.abs(velocity) > 0.001) return;
     
     const normalizedRotation = ((-rotationOffset % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
     const newIndex = Math.round((normalizedRotation / (Math.PI * 2)) * projects.length) % projects.length;
-    setActiveIndex(newIndex);
+    queueMicrotask(() => setActiveIndex(newIndex));
   }, [rotationOffset, projects.length, velocity]);
 
   // Touch/Mouse handlers

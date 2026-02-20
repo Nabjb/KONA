@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Circle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRef } from "react";
@@ -22,7 +22,7 @@ function ElegantShape({
     rotate?: number;
     gradient?: string;
     parallaxSpeed?: number;
-    scrollYProgress?: any;
+    scrollYProgress?: MotionValue<number>;
 }) {
     // Create parallax transform based on scroll
     const y = useTransform(

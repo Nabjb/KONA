@@ -139,7 +139,7 @@ export default function WhyUsSection() {
           variants={containerVariants}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
         >
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <motion.div
               key={feature.title}
               variants={itemVariants}

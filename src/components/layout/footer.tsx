@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Instagram, Linkedin, Twitter, Github } from "lucide-react";
+import { Instagram, Linkedin, Twitter } from "lucide-react";
 
 /**
  * Konaverse Footer - Concept: The Blueprint Legend

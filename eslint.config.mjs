@@ -5,6 +5,14 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    rules: {
+      // Intentional: Math.random in useMemo for stable decorative values is acceptable
+      "react-hooks/purity": "off",
+      // Intentional: Three.js/WebGL and canvas APIs require mutating refs and uniforms
+      "react-hooks/immutability": "warn",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

@@ -96,19 +96,25 @@ function RadarPing() {
   );
 }
 
-// Audio wave visualizer
+// Audio wave visualizer - uses stable random values from useMemo
 function AudioWave() {
+  const bars = React.useMemo(() => [...Array(12)].map((_, i) => ({
+    key: i,
+    peak: 20 + Math.random() * 12,
+    duration: 0.5 + Math.random() * 0.5,
+    delay: i * 0.05,
+  })), []);
   return (
     <div className="flex items-end gap-1 h-8">
-      {[...Array(12)].map((_, i) => (
+      {bars.map(({ key, peak, duration, delay }) => (
         <motion.div
-          key={i}
+          key={key}
           className="w-1 bg-gradient-to-t from-cyan-500 to-purple-500 rounded-full"
-          animate={{ height: [8, 20 + Math.random() * 12, 8] }}
+          animate={{ height: [8, peak, 8] }}
           transition={{
-            duration: 0.5 + Math.random() * 0.5,
+            duration,
             repeat: Infinity,
-            delay: i * 0.05,
+            delay,
           }}
         />
       ))}
@@ -268,7 +274,7 @@ export default function AboutSection() {
                 </div>
 
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-                  We Don't Just Build<br />
+                  We Don&apos;t Just Build<br />
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
                     Digital Experiences.
                   </span>
@@ -383,12 +389,12 @@ export default function AboutSection() {
             <div className="text-cyan-400 font-mono text-2xl">{'//'}</div>
             <div>
               <p className="text-2xl md:text-3xl text-white/80 font-light leading-relaxed mb-4">
-                "Your website is your{" "}
+                &quot;Your website is your{" "}
                 <span className="text-cyan-400 font-medium">24/7 revenue engine</span>. 
-                We make sure it's{" "}
+                We make sure it&apos;s{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 font-bold">
                   unstoppable
-                </span>."
+                </span>.&quot;
             </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm">

@@ -36,7 +36,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
 
     // Check if mobile
     useEffect(() => {
-      setIsMobile(window.innerWidth < 768);
+      queueMicrotask(() => setIsMobile(window.innerWidth < 768));
       const handleResize = () => setIsMobile(window.innerWidth < 768);
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
