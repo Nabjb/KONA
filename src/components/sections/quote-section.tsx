@@ -27,22 +27,22 @@ export function QuoteSection() {
             <p className="md:text-md text-xs lg:text-lg xl:text-2xl" style={{ color: colors[500] }}>
               I believe
             </p>
-            <div className="text-2xl tracking-tighter md:text-5xl lg:text-7xl xl:text-8xl" style={{ color: colors[50] }}>
+            <blockquote className="text-2xl tracking-tighter md:text-5xl lg:text-7xl xl:text-8xl" style={{ color: colors[50] }}>
               <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4">
-                <h1 className="font-semibold">&quot;Design should be</h1>
-                <p className="font-thin">easy to</p>
+                <span className="font-semibold">&quot;Design should be</span>
+                <span className="font-thin">easy to</span>
               </div>
               <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4">
-                <p className="font-thin">understand</p>
-                <h1 className="font-semibold">because</h1>
-                <p className="font-thin">simple</p>
+                <span className="font-thin">understand</span>
+                <span className="font-semibold">because</span>
+                <span className="font-thin">simple</span>
               </div>
               <div className="flex gap-1 md:gap-2 lg:gap-3 xl:gap-4">
-                <p className="font-thin">ideas</p>
-                <h1 className="font-semibold">are quicker to</h1>
+                <span className="font-thin">ideas</span>
+                <span className="font-semibold">are quicker to</span>
               </div>
-              <h1 className="font-semibold">grasp...&quot;</h1>
-            </div>
+              <span className="font-semibold">grasp...&quot;</span>
+            </blockquote>
           </div>
         </div>
       </div>

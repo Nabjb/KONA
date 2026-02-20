@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ConditionalNav } from "@/components/layout/conditional-nav";
 import Footer from "@/components/layout/footer";
 import FluidWrapper from "@/components/fluid/fluid-wrapper";
+import { JsonLd, organizationJsonLd } from "@/components/seo/json-ld";
+import { siteConfig } from "@/lib/metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +17,83 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#1a1d18",
+};
+
 export const metadata: Metadata = {
-  title: "Konaverse SOCIALS | Premium Web Design & Social Media Agency",
-  description: "We build websites that print money. Premium web design and social media management for brands that refuse to blend in.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: "Kona-verse | Web Design & Digital Marketing Agency in Europe",
+    template: "%s | Kona-verse",
+  },
+  description: siteConfig.description,
+  keywords: [
+    "web design",
+    "web development",
+    "digital marketing",
+    "social media management",
+    "digital advertising",
+    "web applications",
+    "SaaS development",
+    "UI/UX design",
+    "SEO services",
+    "Europe",
+    "branding",
+    "conversion optimization",
+  ],
+  authors: [{ name: siteConfig.creator, url: siteConfig.url }],
+  creator: siteConfig.creator,
+  publisher: siteConfig.creator,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: siteConfig.url,
+  },
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: "Kona-verse | Web Design & Digital Marketing Agency in Europe",
+    description: siteConfig.description,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Kona-verse — Building Websites That Print Money",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kona-verse | Web Design & Digital Marketing Agency in Europe",
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
+  },
+  verification: {
+    // Replace with actual verification codes after setting up Search Console
+    google: "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE",
+  },
 };
 
 export default function RootLayout({
@@ -30,12 +106,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1a1d18] flex flex-col min-h-screen`}
       >
+        <JsonLd data={organizationJsonLd()} />
         <ConditionalNav />
         <main id="main-content" className="flex-grow">
           {children}
         </main>
         <Footer />
-        {/* Fluid cursor effect - follows mouse with artistic fluid simulation */}
         <FluidWrapper 
           fluidColor="#a89080"
           enabled={true}
@@ -44,4 +120,3 @@ export default function RootLayout({
     </html>
   );
 }
-

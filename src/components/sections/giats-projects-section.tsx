@@ -242,12 +242,12 @@ export function GiatsProjectsSection() {
                           gap: "0.5rem",
                         }}
                       >
-                        <h6
+                        <span
                           className="text-xs font-medium tracking-widest uppercase"
                           style={{ color: "#a89080" }}
                         >
                           {project.year}
-                        </h6>
+                        </span>
                         <h3
                           className="text-xl font-light text-center px-4"
                           style={{
@@ -264,12 +264,12 @@ export function GiatsProjectsSection() {
                     <div className="w-full h-full px-8 lg:px-16 grid grid-cols-2 items-center">
                       {/* Project Details - Left Side (Desktop) */}
                       <div className={`flex flex-col gap-4 z-10 ${index === 0 ? "pr-8 lg:pr-12" : ""}`}>
-                        <h6
+                        <span
                           className="text-sm font-medium tracking-widest uppercase transition-all duration-500"
                           style={{ color: "#a89080" }}
                         >
                           {project.year}
-                        </h6>
+                        </span>
                         <h3
                           className={`font-light transition-all duration-500 ${
                             index === 0 

@@ -1,11 +1,32 @@
-"use client";
+import { buildMetadata } from "@/lib/metadata";
+import { JsonLd, breadcrumbJsonLd } from "@/components/seo/json-ld";
+import WebsiteProjectsContent from "./website-projects-content";
 
-import ProjectsPageSection from "@/components/sections/projects-page-section";
+export const metadata = buildMetadata({
+  title: "Web Projects Portfolio",
+  description:
+    "Browse our portfolio of high-performance websites — fast, scalable, and beautifully crafted digital experiences built with React, Next.js, and modern web technologies.",
+  path: "/projects/website-projects",
+  keywords: [
+    "web design portfolio",
+    "website projects",
+    "React websites",
+    "Next.js development",
+    "web development portfolio Europe",
+  ],
+});
 
 export default function WebsiteProjectsPage() {
   return (
-    <div className="flex flex-col w-full bg-[#1a1d18]">
-      <ProjectsPageSection />
-    </div>
+    <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", href: "/" },
+          { name: "Projects", href: "/projects/website-projects" },
+          { name: "Website Projects", href: "/projects/website-projects" },
+        ])}
+      />
+      <WebsiteProjectsContent />
+    </>
   );
 }

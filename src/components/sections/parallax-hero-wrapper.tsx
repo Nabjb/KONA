@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, type MotionValue } from "framer-motion";
 import { Circle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRef, useState, useEffect } from "react";
@@ -30,8 +30,9 @@ function ElegantShape({
     scrollYProgress?: MotionValue<number>;
     shapeOpacity?: MotionValue<number>;
 }) {
+    const fallbackProgress = useMotionValue(0);
     const y = useTransform(
-        scrollYProgress || { get: () => 0, getVelocity: () => 0 },
+        scrollYProgress ?? fallbackProgress,
         [0, 1],
         [0, parallaxSpeed]
     );
@@ -219,40 +220,40 @@ export default function ParallaxHeroWrapper() {
                     </motion.div>
 
                     {/* Title - HUGE stacked lines */}
-                    <div className="space-y-1 mb-8">
-                        <motion.h1
+                    <h1 className="space-y-1 mb-8">
+                        <motion.span
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] as const }}
-                            className="text-[13vw] leading-[0.9] font-semibold tracking-tight text-white"
+                            className="block text-[13vw] leading-[0.9] font-semibold tracking-tight text-white"
                         >
                             We Build
-                        </motion.h1>
-                        <motion.h1
+                        </motion.span>
+                        <motion.span
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.7, delay: 0.45, ease: [0.25, 0.4, 0.25, 1] as const }}
-                            className="text-[13vw] leading-[0.9] font-semibold tracking-tight text-white"
+                            className="block text-[13vw] leading-[0.9] font-semibold tracking-tight text-white"
                         >
                             Websites
-                        </motion.h1>
-                        <motion.h1
+                        </motion.span>
+                        <motion.span
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.7, delay: 0.6, ease: [0.25, 0.4, 0.25, 1] as const }}
-                            className="text-[13vw] leading-[0.9] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
+                            className="block text-[13vw] leading-[0.9] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
                         >
                             That Print
-                        </motion.h1>
-                        <motion.h1
+                        </motion.span>
+                        <motion.span
                             initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.7, delay: 0.75, ease: [0.25, 0.4, 0.25, 1] as const }}
-                            className="text-[13vw] leading-[0.9] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
+                            className="block text-[13vw] leading-[0.9] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400"
                         >
                             Money
-                        </motion.h1>
-                    </div>
+                        </motion.span>
+                    </h1>
 
                     {/* Subtitle */}
                     <motion.p

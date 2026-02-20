@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, type MotionValue } from "framer-motion";
 import { Circle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRef } from "react";
@@ -24,9 +24,9 @@ function ElegantShape({
     parallaxSpeed?: number;
     scrollYProgress?: MotionValue<number>;
 }) {
-    // Create parallax transform based on scroll
+    const fallbackProgress = useMotionValue(0);
     const y = useTransform(
-        scrollYProgress || { get: () => 0, getVelocity: () => 0 },
+        scrollYProgress ?? fallbackProgress,
         [0, 1],
         [0, parallaxSpeed]
     );
